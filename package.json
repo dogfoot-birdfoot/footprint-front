@@ -22,9 +22,9 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "postinstall": "husky install",
+    "prepare": "husky",
     "format": "prettier --cache --write .",
-    "lint": "eslint --cache ."
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives"
   },
   "eslintConfig": {
     "extends": [
