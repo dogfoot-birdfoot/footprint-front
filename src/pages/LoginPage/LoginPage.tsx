@@ -1,5 +1,5 @@
 import React from "react"
-import SignInForm from "./SignInForm" // SignInForm 컴포넌트의 경로에 맞게 조정해주세요
+import SignInForm from "@/pages/LoginPage/SignInForm" // SignInForm 컴포넌트의 경로에 맞게 조정해주세요
 import {
   FullPageContainer,
   KakaoLoginButton,
