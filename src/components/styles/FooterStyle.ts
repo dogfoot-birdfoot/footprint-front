@@ -7,5 +7,4 @@ export const StyledFooter = styled.footer`
   text-align: center;
   border-top: 1px solid #eaeaea;
   bottom: 0;
-  margin-top: 100px;
 `

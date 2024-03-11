@@ -13,15 +13,25 @@ import {
 } from "@chakra-ui/react"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { AiOutlineBell } from "react-icons/ai"
-import { Logo, MenuTitle, NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "./styles/NavBarStyle"
+import {
+  Logo,
+  MenuTitle,
+  NavBarItems,
+  NavBarStyle,
+  StyledButton,
+  StyledMenuItem
+} from "@/components/styles/NavBarStyle"
+import { useNavigate } from "react-router"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate()
 
-  //로그인상태관리
+  //로그인상태관리 (진짜로 로그인되면 아바타가 바뀌도록 수정해야함)
   const handleLogin = () => {
     setIsLoggedIn(true)
+    navigate("/login")
   }
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수

@@ -1,7 +1,7 @@
 import React from "react"
-import { DetailInfo, ImageTag, ImageTag2, ReviewBox, ReviewImage, ReviewItem } from "./styles/ReviewStyle"
+import { DetailInfo, ImageTag, ImageTag2, ReviewBox, ReviewImage, ReviewItem } from "@/styles/ReviewGalleryStyle"
 
-const Reviews = () => {
+const ReviewsGallery = () => {
   return (
     <>
       <ReviewBox>
@@ -109,4 +109,4 @@ const Reviews = () => {
   )
 }
 
-export default Reviews
+export default ReviewsGallery

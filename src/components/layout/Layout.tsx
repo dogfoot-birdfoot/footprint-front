@@ -1,18 +1,17 @@
 import React from "react"
-import NavBar from "./NavBar"
+import NavBar from "@/components/NavBar"
 import { Divider } from "@chakra-ui/react"
-import Footer from "./Footer"
+import Footer from "@/components/Footer"
+import { Content, LayoutWrapper } from "@/components/styles/LayoutStyle"
+import { Outlet } from "react-router"
 
-import { Content, LayoutWrapper } from "./styles/LayoutStyle"
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-const Layout: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+const Layout = () => {
   return (
     <LayoutWrapper>
       <Content>
         <NavBar />
         <Divider style={{ marginTop: "20px", marginBottom: "20px" }} />
-        <main>{children}</main>
+        <Outlet />
         <Footer />
       </Content>
     </LayoutWrapper>
