@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
 
-  //로그인상태관리
+  //로그인상태관리 (진짜로 로그인되면 아바타가 바뀌도록 수정해야함)
   const handleLogin = () => {
     setIsLoggedIn(true)
     navigate("/login")
