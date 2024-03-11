@@ -1,13 +1,18 @@
 import React from "react"
 import "./App.css"
-import Temp from "@/components/temp"
+import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import MainPage from "./pages/MainPage/MainPage"
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>{/* <Route path="/" element={}></Route> */}</Routes>
-    </BrowserRouter>
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   )
 }
 
