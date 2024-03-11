@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const Logo = styled.h1`
+export const Logo = styled.a`
   margin-left: 20px;
   margin-top: 10px;
   font-size: 40px;

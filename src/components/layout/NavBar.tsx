@@ -30,7 +30,7 @@ const NavBar: React.FC = () => {
   return (
     <>
       <NavBarStyle>
-        <Logo>FootPrint</Logo>
+        <Logo href="#">FootPrint</Logo>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>
