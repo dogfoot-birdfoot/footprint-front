@@ -13,7 +13,14 @@ import {
 } from "@chakra-ui/react"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { AiOutlineBell } from "react-icons/ai"
-import { Logo, MenuTitle, NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "./styles/NavBarStyle"
+import {
+  Logo,
+  MenuTitle,
+  NavBarItems,
+  NavBarStyle,
+  StyledButton,
+  StyledMenuItem
+} from "@/components/layout/styles/NavBarStyle"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)

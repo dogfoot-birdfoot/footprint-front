@@ -1,9 +1,8 @@
 import React from "react"
-import NavBar from "./NavBar"
+import NavBar from "@/components/layout/NavBar"
 import { Divider } from "@chakra-ui/react"
-import Footer from "./Footer"
-
-import { Content, LayoutWrapper } from "./styles/LayoutStyle"
+import Footer from "@/components/layout/Footer"
+import { Content, LayoutWrapper } from "@/components/layout/styles/LayoutStyle"
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const Layout: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
