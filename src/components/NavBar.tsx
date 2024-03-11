@@ -25,6 +25,7 @@ import { useNavigate } from "react-router"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [bellIsOpen, setBellIsOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
 
@@ -36,6 +37,7 @@ const NavBar: React.FC = () => {
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
   const handleMenuToggle = () => setIsOpen(!isOpen)
+  const handleBellToggle = () => setBellIsOpen(!isOpen)
 
   return (
     <>
@@ -75,7 +77,18 @@ const NavBar: React.FC = () => {
           </Breadcrumb>
           <Input placeholder="Search" width="400px" marginRight="10px" borderRadius={"30px"} />
           <div style={{ marginLeft: "20px", marginRight: "20px" }}>
-            <AiOutlineBell size="25px" color="gray" />
+            <Menu isOpen={bellIsOpen} onClose={() => setBellIsOpen(false)}>
+              <MenuButton onClick={handleBellToggle} px={4} py={2}>
+                <AiOutlineBell size="25px" color={bellIsOpen ? "#10bbd5" : "gray"} />
+              </MenuButton>
+              <MenuList>
+                {/* menu Item이 동적으로 들어와야함 */}
+                <StyledMenuItem>OO님이 user nickname 님의 게시물을 즐겨찾기했습니다.</StyledMenuItem>
+                <StyledMenuItem>OO님이 user nickname 님의 게시물을 좋아요했습니다.</StyledMenuItem>
+                <StyledMenuItem>OO님이 user nickname 님의 게시물을 즐겨찾기했습니다.</StyledMenuItem>
+                <StyledMenuItem>OO님이 user nickname 님의 게시물을 좋아요했습니다.</StyledMenuItem>
+              </MenuList>
+            </Menu>
           </div>
           <Wrap>
             <WrapItem>
