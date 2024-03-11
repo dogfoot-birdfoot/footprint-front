@@ -20,7 +20,7 @@ import {
   NavBarStyle,
   StyledButton,
   StyledMenuItem
-} from "@/components/layout/styles/NavBarStyle"
+} from "@/components/styles/NavBarStyle"
 import { useNavigate } from "react-router"
 
 const NavBar: React.FC = () => {
