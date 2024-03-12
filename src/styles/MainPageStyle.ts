@@ -24,6 +24,8 @@ export const TitleBox = styled.div`
 `
 
 export const CardListBox = styled.div`
+  margin-top: 25px;
+  margin-bottom: 25px;
   display: flex;
   margin-left: 50px;
 `
