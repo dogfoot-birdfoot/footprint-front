@@ -1,16 +1,23 @@
-import { NavLink } from "react-router-dom"
-
 import { Flex } from "@chakra-ui/react"
 import { CgProfile } from "react-icons/cg"
 import { CiStar } from "react-icons/ci"
 import { GrFormSchedule } from "react-icons/gr"
-import { SideBarMenu, SideBarText, SideBarWrapper, StyledNav } from "@/components/sidebar/SideBarStyle"
+import {
+  SideBarMenu,
+  SideBarText,
+  SideBarWrapper,
+  StyledNav,
+  MyPageLogo,
+  SideBarMenus,
+  SubMenuNumber
+} from "@/components/sidebar/SideBarStyle"
 
 const SideBar = () => {
   return (
     <SideBarWrapper>
-      <SideBarMenu>
+      <SideBarMenus>
         <Flex width="100%" flexDir="column" alignItems="center">
+          <MyPageLogo>My Page</MyPageLogo>
           <StyledNav to="/profile">
             <SideBarMenu>
               <CgProfile />
@@ -21,16 +28,18 @@ const SideBar = () => {
             <SideBarMenu>
               <GrFormSchedule />
               <SideBarText>내 여행일정</SideBarText>
+              <SubMenuNumber>3</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
           <StyledNav to="/favorite">
             <SideBarMenu>
               <CiStar />
               <SideBarText>내 즐겨찾기</SideBarText>
+              <SubMenuNumber>10</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
         </Flex>
-      </SideBarMenu>
+      </SideBarMenus>
     </SideBarWrapper>
   )
 }
