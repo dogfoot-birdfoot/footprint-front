@@ -5,9 +5,3 @@ export const MyPageWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
-
-export const MyProfile = styled.div`
-  width: 80%;
-  display: flex;
-  justify-content: center;
-`
