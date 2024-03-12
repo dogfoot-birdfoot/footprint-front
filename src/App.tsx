@@ -6,7 +6,9 @@ import MainPage from "@/pages/MainPage/MainPage"
 import LoginPage from "@/pages/LoginPage/LoginPage"
 import Layout from "@/components/layout/Layout"
 import RegisterPage from "@/pages/RegisterPage/RegisterPage"
-import MyPage from "@/pages/MyPage/MyPage"
+import MyProfile from "@/pages/ProfilePage/MyProfile"
+import MySchedule from "@/pages/MySchedulePage/MySchedule"
+import MyFavorite from "@/pages/MyFavoritePage/MyFavorite"
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
-            <Route path="mypage" element={<MyPage />} />
+            <Route path="profile" element={<MyProfile />} />
+            <Route path="schedule" element={<MySchedule />} />
+            <Route path="favorite" element={<MyFavorite />} />
           </Route>
         </Routes>
       </BrowserRouter>
