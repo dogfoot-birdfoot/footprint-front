@@ -7,10 +7,12 @@ import LoginPage from "@/pages/LoginPage/LoginPage"
 import Layout from "@/components/layout/Layout"
 import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import ScheduleSharePage from "./pages/ScheduleSharePage/ScheduleSharePage"
+import theme from "@/styles/theme"
+import { ThemeProvider } from "styled-components"
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>

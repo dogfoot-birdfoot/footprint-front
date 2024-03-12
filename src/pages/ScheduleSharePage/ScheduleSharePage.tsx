@@ -17,7 +17,7 @@ const ScheduleSharePage = () => {
     <>
       <Menu>
         <SortButton>
-          <MenuButton as={Button} rightIcon={<FiChevronDown />} bg="#10bbd5" color="white" _hover={{ bg: "#1C90C1" }}>
+          <MenuButton as={Button} rightIcon={<FiChevronDown />} bg="primary" color="white" _hover={{ bg: "secondary" }}>
             {" "}
             현재지역 : {selectedItem}
           </MenuButton>
