@@ -22,6 +22,7 @@ import {
   StyledMenuItem
 } from "@/components/styles/NavBarStyle"
 import { useNavigate } from "react-router"
+import { Link } from "react-router-dom"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -46,7 +47,9 @@ const NavBar: React.FC = () => {
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">여행일정보기</BreadcrumbLink>
+              <BreadcrumbLink as={Link} to="/plan_share">
+                여행일정보기
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>

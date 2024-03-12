@@ -6,6 +6,7 @@ import MainPage from "@/pages/MainPage/MainPage"
 import LoginPage from "@/pages/LoginPage/LoginPage"
 import Layout from "@/components/layout/Layout"
 import RegisterPage from "@/pages/RegisterPage/RegisterPage"
+import PlanSharePage from "./pages/PlanSharePage/PlanSharePage"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
+            <Route path="plan_share" element={<PlanSharePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
