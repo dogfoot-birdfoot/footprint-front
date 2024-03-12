@@ -47,7 +47,7 @@ const NavBar: React.FC = () => {
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to="/plan_share">
+              <BreadcrumbLink as={Link} to="/schedule_share">
                 여행일정보기
               </BreadcrumbLink>
             </BreadcrumbItem>

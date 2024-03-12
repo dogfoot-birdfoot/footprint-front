@@ -6,7 +6,7 @@ import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/styles/PlanSharePageStyle"
 
-const PlanSharePage = () => {
+const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
@@ -47,4 +47,4 @@ const PlanSharePage = () => {
   )
 }
 
-export default PlanSharePage
+export default ScheduleSharePage
