@@ -9,10 +9,11 @@ import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import MyProfile from "@/pages/ProfilePage/MyProfile"
 import MySchedule from "@/pages/MySchedulePage/MySchedule"
 import MyFavorite from "@/pages/MyFavoritePage/MyFavorite"
+import theme from "@/styles/theme"
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>

@@ -1,5 +1,5 @@
 import SideBar from "@/components/sidebar/SideBar"
-import { MyPageWrapper } from "@/styles/MyPageStyle"
+import { MyPageWrapper } from "@/styles/styles"
 import { Favorite } from "@/pages/MyFavoritePage/MyFavoriteStyle"
 
 const MyFavorite = () => {
