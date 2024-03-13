@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import { IsOpenSwitchProps } from "@/components/switch/type"
+import { PubPrivSwitchProps } from "@/components/switch/type"
 import { Switch } from "@chakra-ui/react"
 
-const PubPrivSwitch: React.FC<IsOpenSwitchProps> = ({ ontext, offtext }) => {
+const PubPrivSwitch: React.FC<PubPrivSwitchProps> = ({ ontext, offtext }) => {
   const [isPublic, setIsPublic] = useState<boolean>(true)
 
   const toggleIsPublic = () => {
