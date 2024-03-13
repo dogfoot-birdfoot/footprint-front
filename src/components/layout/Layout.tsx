@@ -2,7 +2,7 @@ import React from "react"
 import NavBar from "@/components/NavBar"
 import { Divider } from "@chakra-ui/react"
 import Footer from "@/components/Footer"
-import { Content, LayoutWrapper } from "@/components/styles/LayoutStyle"
+import { Content, LayoutWrapper } from "@/components/layout/LayoutStyle"
 import { Outlet } from "react-router"
 
 const Layout = () => {

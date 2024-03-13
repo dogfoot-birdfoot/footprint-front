@@ -22,7 +22,10 @@ import {
   StyledMenuItem
 } from "@/components/styles/NavBarStyle"
 import { useNavigate } from "react-router"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
+import { 
+
+} from "react-router-dom"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -96,7 +99,9 @@ const NavBar: React.FC = () => {
           <Wrap>
             <WrapItem>
               {isLoggedIn ? (
-                <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                <NavLink to="/profile">
+                  <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                </NavLink>
               ) : (
                 <StyledButton onClick={handleLogin}>Login</StyledButton>
               )}
