@@ -55,7 +55,7 @@ export const LinkContainer = styled.div`
 
 export const KakaoLoginButton = styled.button`
   background-color: #ffe351; // 카카오톡 공식 노란색
-  color: #000000; // 텍스트 색상은 검정색
+  color: var(--chakra-colors-textColor); // 텍스트 색상은 검정색
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
@@ -93,7 +93,7 @@ export const LoginInput = styled.input`
 export const LoginButton = styled.button`
   width: 100%;
   padding: 8px 16px;
-  background-color: #10bbd5;
+  background-color: var(--chakra-colors-primary);
   color: white;
   border-radius: 8px;
   &:hover {

@@ -32,7 +32,7 @@ export const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #10bbd5;
+    background-color: var(--chakra-colors-primary);
     color: white;
     border: none;
   }
@@ -48,7 +48,7 @@ export const StyledMenuItem = styled.a`
   text-decoration: none;
 
   &:hover {
-    background-color: #10bbd5;
+    background-color: var(--chakra-colors-primary);
     color: white;
   }
 `
@@ -61,5 +61,5 @@ interface MenuTitleProps {
 export const MenuTitle = styled.div<MenuTitleProps>`
   display: flex;
   align-items: center;
-  color: ${props => (props.isOpen ? "#10bbd5" : "black")};
+  color: ${props => (props.isOpen ? "var(--chakra-colors-primary)" : "black")};
 `

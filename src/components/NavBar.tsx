@@ -82,7 +82,7 @@ const NavBar: React.FC = () => {
           <div style={{ marginLeft: "20px", marginRight: "20px" }}>
             <Menu isOpen={bellIsOpen} onClose={() => setBellIsOpen(false)}>
               <MenuButton onClick={handleBellToggle} px={4} py={2}>
-                <AiOutlineBell size="25px" color={bellIsOpen ? "#10bbd5" : "gray"} />
+                <AiOutlineBell size="25px" color={bellIsOpen ? "var(--chakra-colors-primary)" : "gray"} />
               </MenuButton>
               <MenuList>
                 {/* menu Item이 동적으로 들어와야함 */}

@@ -8,7 +8,7 @@ import {
   LoginContainer,
   LoginStyledLink,
   LoginTitle
-} from "@/styles/LoginPageStyle"
+} from "@/pages/LoginPage/LoginPageStyle"
 import { Image } from "@chakra-ui/image"
 import { FaComment } from "react-icons/fa"
 

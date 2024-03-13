@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import CardItem from "@/components/card/CardItem"
-import { CardListBox } from "@/styles/MainPageStyle"
+import { CardListBox } from "@/pages/MainPage/MainPageStyle"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
-import { SortButton } from "@/styles/PlanSharePageStyle"
+import { SortButton } from "@/pages/ScheduleSharePage/PlanSharePageStyle"
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
@@ -17,7 +17,7 @@ const ScheduleSharePage = () => {
     <>
       <Menu>
         <SortButton>
-          <MenuButton as={Button} rightIcon={<FiChevronDown />} bg="#10bbd5" color="white" _hover={{ bg: "#1C90C1" }}>
+          <MenuButton as={Button} rightIcon={<FiChevronDown />} bg="primary" color="white" _hover={{ bg: "secondary" }}>
             {" "}
             현재지역 : {selectedItem}
           </MenuButton>
