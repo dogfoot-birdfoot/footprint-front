@@ -8,8 +8,6 @@ import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { Link } from "react-router-dom"
 
-
-
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
