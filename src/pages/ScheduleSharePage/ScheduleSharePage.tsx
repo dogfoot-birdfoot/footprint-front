@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import CardItem from "@/components/card/CardItem"
-import { CardListBox } from "@/pages/MainPage/MainPageStyle"
+import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
