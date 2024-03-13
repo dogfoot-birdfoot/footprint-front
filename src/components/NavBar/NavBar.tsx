@@ -20,7 +20,7 @@ import {
   NavBarStyle,
   StyledButton,
   StyledMenuItem
-} from "@/components/Styles/NavBarStyle"
+} from "@/components/NavBar/NavBar.style"
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"

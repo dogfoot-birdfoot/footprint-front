@@ -15,7 +15,7 @@ import {
   RegisterDate,
   ReviewNumber,
   UploadImageButton
-} from "@/pages/ProfilePage/MyProfileStyle"
+} from "@/pages/ProfilePage/MyProfile.style"
 import { Avatar } from "@chakra-ui/react"
 import { MdEdit } from "react-icons/md"
 

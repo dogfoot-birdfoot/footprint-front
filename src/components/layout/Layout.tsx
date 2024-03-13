@@ -1,11 +1,9 @@
 import React from "react"
-import NavBar from "@/components/NavBar"
+import NavBar from "@/components/NavBar/NavBar"
 import { Divider } from "@chakra-ui/react"
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer/Footer"
 
-import { Content, LayoutWrapper } from "@/components/Styles/LayoutStyle"
-
-
+import { Content, LayoutWrapper } from "@/components/Layout/Layout.style"
 
 import { Outlet } from "react-router"
 
