@@ -1,5 +1,11 @@
 import styled from "styled-components"
 
+export const MyPageWrapper = styled.div`
+  width: 1280px;
+  display: flex;
+  justify-content: center;
+`
+
 export const Profile = styled.div`
   display: flex;
   flex-direction: column;

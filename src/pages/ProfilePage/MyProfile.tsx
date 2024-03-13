@@ -1,7 +1,7 @@
 import SideBar from "@/components/sidebar/SideBar"
 import { MyPageWrapper } from "@/styles/styles"
+
 import {
-  ChangePassWordButton,
   ChangePasswordButton,
   ContentBody,
   ContentHeader,
