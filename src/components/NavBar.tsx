@@ -23,6 +23,9 @@ import {
 } from "@/components/styles/NavBarStyle"
 import { useNavigate } from "react-router"
 import { NavLink } from "react-router-dom"
+import { 
+
+} from "react-router-dom"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -47,7 +50,9 @@ const NavBar: React.FC = () => {
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">여행일정보기</BreadcrumbLink>
+              <BreadcrumbLink as={Link} to="/schedule_share">
+                여행일정보기
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
@@ -80,7 +85,7 @@ const NavBar: React.FC = () => {
           <div style={{ marginLeft: "20px", marginRight: "20px" }}>
             <Menu isOpen={bellIsOpen} onClose={() => setBellIsOpen(false)}>
               <MenuButton onClick={handleBellToggle} px={4} py={2}>
-                <AiOutlineBell size="25px" color={bellIsOpen ? "#10bbd5" : "gray"} />
+                <AiOutlineBell size="25px" color={bellIsOpen ? "var(--chakra-colors-primary)" : "gray"} />
               </MenuButton>
               <MenuList>
                 {/* menu Item이 동적으로 들어와야함 */}

@@ -9,7 +9,9 @@ import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import MyProfile from "@/pages/ProfilePage/MyProfile"
 import MySchedule from "@/pages/MySchedulePage/MySchedule"
 import MyFavorite from "@/pages/MyFavoritePage/MyFavorite"
+import ScheduleSharePage from "./pages/ScheduleSharePage/ScheduleSharePage"
 import theme from "@/styles/theme"
+import { ThemeProvider } from "styled-components"
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
             <Route path="profile" element={<MyProfile />} />
             <Route path="schedule" element={<MySchedule />} />
             <Route path="favorite" element={<MyFavorite />} />
+            <Route path="schedule_share" element={<ScheduleSharePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
