@@ -5,13 +5,12 @@ import { DayDestination, DayHeader, DestinationItem } from "./DaySummary.style"
 
 interface DaySummaryProps {
   selectedDay: string
+  destinations: string[]
 }
 
-const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay }) => {
-  // 나중에 destination을 동적으로 받아와야함
-  const destinations = ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"]
+const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations }) => {
   return (
-    <Card width="500px">
+    <Card width="500px" borderRadius="30px">
       <CardBody display="flex" justifyContent="center">
         <DayHeader>{selectedDay}.</DayHeader>
         <DayDestination>

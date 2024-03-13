@@ -1,9 +1,11 @@
 import React, { useState } from "react"
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs"
 import DaySummary from "@/components/DaySummary/DaySummary"
-import { Card, CardBody } from "@chakra-ui/card"
 
-const DayTab = () => {
+export interface DayTabProps {
+  destinations: string[]
+}
+const DayTab: React.FC<DayTabProps> = ({ destinations }) => {
   const [tabIndex, setTabIndex] = useState(0)
   return (
     <>
@@ -15,13 +17,13 @@ const DayTab = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <DaySummary selectedDay={`Day ${tabIndex + 1}`} />
+            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} />
           </TabPanel>
           <TabPanel>
-            <DaySummary selectedDay={`Day ${tabIndex + 1}`} />
+            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} />
           </TabPanel>
           <TabPanel>
-            <DaySummary selectedDay={`Day ${tabIndex + 1}`} />
+            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} />
           </TabPanel>
         </TabPanels>
       </Tabs>

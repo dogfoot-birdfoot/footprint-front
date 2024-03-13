@@ -17,8 +17,8 @@ const HorizontalCard = () => {
     <>
       <Card direction={{ base: "column", sm: "row" }} overflow="hidden" variant="outline">
         <Image
-          src="https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="강원도 산 사진"
+          src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="광안대교사진"
           width="300px"
           height="250px"
           ml="5"
@@ -46,7 +46,7 @@ const HorizontalCard = () => {
                 maxWidth: "18ch" // 18글자를 넘어가면 잘라내고 "..." 표시
               }}
             >
-              OO이랑 떠나는 강원도 여행
+              OO이랑 떠나는 부산 여행
             </Heading>
             <Text color="gray.500" fontSize="11px" ml="5px" mt="1">
               총 예상 경비 : 550,000원
