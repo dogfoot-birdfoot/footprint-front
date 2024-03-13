@@ -1,6 +1,8 @@
+import { switchTheme } from "@/components/switch/SwitchTheme"
 import { extendTheme } from "@chakra-ui/react"
 
 const theme = extendTheme({
+  components: { Switch: switchTheme },
   colors: {
     primary: "#10bbd5",
     secondary: "#1C90C1",

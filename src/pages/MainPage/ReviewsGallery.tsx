@@ -6,7 +6,10 @@ import {
   ReviewBox,
   ReviewImage,
   ReviewItem
+
 } from "@/pages/MainPage/ReviewGallery.style"
+
+
 
 const ReviewsGallery = () => {
   return (
