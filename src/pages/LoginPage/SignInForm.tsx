@@ -1,4 +1,4 @@
-import { LoginButton, LoginForm, LoginInput } from "@/styles/LoginPageStyle"
+import { LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/LoginPageStyle"
 import React, { FC } from "react"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
