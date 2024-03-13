@@ -36,7 +36,16 @@ const HorizontalCard = () => {
                 2024.03.05 ~ 2024.03.07
               </Text>
             </Box>
-            <Heading size="md" mt="2">
+            <Heading
+              size="md"
+              mt="2"
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: "18ch" // 18글자를 넘어가면 잘라내고 "..." 표시
+              }}
+            >
               OO이랑 떠나는 강원도 여행
             </Heading>
             <Text color="gray.500" fontSize="11px" ml="5px" mt="1">
