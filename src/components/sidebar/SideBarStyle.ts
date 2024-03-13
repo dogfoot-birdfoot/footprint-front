@@ -36,14 +36,14 @@ export const SideBarText = styled.div`
 `
 
 export const StyledNav = styled(NavLink)`
-  color: #3f3f3f;
+  color: var(--chakra-colors-textColor);
   background-color: white;
   width: 100%;
   font-weight: bold;
 
   &.active {
     color: white;
-    background-color: #10bbd5;
+    background-color: var(--chakra-colors-primary);
   }
 `
 
