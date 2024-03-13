@@ -10,7 +10,7 @@ const MyFavorite = () => {
       <SideBar />
       <Favorite>
         <FavoriteTitle>
-          <CiStar size="2rem" />
+          <CiStar size="1.8rem" />
           일정 즐겨찾기 목록
         </FavoriteTitle>
         <FavoriteList>
