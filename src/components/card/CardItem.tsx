@@ -1,6 +1,6 @@
 import React from "react"
 import { Avatar, Badge, Box, Card, CardBody, Heading, Image, Stack, Text } from "@chakra-ui/react"
-import { ImageContainer, PositionedAvatar } from "@/components/card/styles/CardItemStyle"
+import { ImageContainer, PositionedAvatar } from "@/components/Card/styles/CardItem.style"
 
 const CardItem = () => {
   return (

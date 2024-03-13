@@ -4,14 +4,14 @@ import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainPage from "@/pages/MainPage/MainPage"
 import LoginPage from "@/pages/LoginPage/LoginPage"
-import Layout from "@/components/layout/Layout"
+import Layout from "@/components/Layout/Layout"
 import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import MyProfile from "@/pages/ProfilePage/MyProfile"
 import MySchedule from "@/pages/MySchedulePage/MySchedule"
 import MyFavorite from "@/pages/MyFavoritePage/MyFavorite"
 import ScheduleSharePage from "./pages/ScheduleSharePage/ScheduleSharePage"
 import theme from "@/styles/theme"
-import { ThemeProvider } from "styled-components"
+import ScheduleDetailPage from "./pages/ScheduleDetailPage/ScheduleDetailPage"
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
             <Route path="schedule" element={<MySchedule />} />
             <Route path="favorite" element={<MyFavorite />} />
             <Route path="schedule_share" element={<ScheduleSharePage />} />
+            <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

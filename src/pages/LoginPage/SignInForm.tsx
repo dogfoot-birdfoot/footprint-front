@@ -1,6 +1,7 @@
-import { LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/LoginPageStyle"
+import { LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/LoginPage.style"
 import React, { FC } from "react"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
+import KakaoButton from "@/components/KakaoButton/KakaoButton"
 
 const SignInForm: FC<{ title: string; getDataForm: (email: string, password: string) => void }> = ({
   title,
@@ -27,6 +28,11 @@ const SignInForm: FC<{ title: string; getDataForm: (email: string, password: str
     }
   }
 
+  const handleKakaoLogin = () => {
+    // 카카오톡 로그인 처리 로직
+    console.log("카카오톡 로그인 처리")
+  }
+
   return (
     <LoginForm onSubmit={handleSubmit(onSubmit)}>
       <div>
@@ -36,6 +42,8 @@ const SignInForm: FC<{ title: string; getDataForm: (email: string, password: str
         <LoginInput type="password" placeholder="Password" {...register("password", userPassword)} />
       </div>
       <LoginButton type="submit">{title}</LoginButton>
+
+      <KakaoButton onClick={handleKakaoLogin}>Login for Kakao</KakaoButton>
     </LoginForm>
   )
 }
