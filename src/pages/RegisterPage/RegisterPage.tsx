@@ -6,7 +6,7 @@ import {
   LoginContainer,
   LoginStyledLink,
   LoginTitle
-} from "@/pages/LoginPage/LoginPageStyle"
+} from "@/pages/LoginPage/LoginPage.style"
 import { Image } from "@chakra-ui/image"
 import RegisterForm from "./RegisterForm"
 
