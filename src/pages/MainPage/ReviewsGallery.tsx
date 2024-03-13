@@ -1,5 +1,12 @@
 import React from "react"
-import { DetailInfo, ImageTag, ImageTag2, ReviewBox, ReviewImage, ReviewItem } from "@/styles/ReviewGallery.style"
+import {
+  DetailInfo,
+  ImageTag,
+  ImageTag2,
+  ReviewBox,
+  ReviewImage,
+  ReviewItem
+} from "@/pages/MainPage/ReviewGallery.style"
 
 const ReviewsGallery = () => {
   return (

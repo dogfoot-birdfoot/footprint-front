@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import CardItem from "@/components/card/CardItem"
+import CardItem from "@/components/Card/CardItem"
 import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
+import { Link } from "react-router-dom"
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
@@ -31,7 +32,10 @@ const ScheduleSharePage = () => {
         </MenuList>
       </Menu>
       <CardListBox>
-        <CardItem />
+        {/* 나중에는 링크를 동적으로 받아와야함 */}
+        <Link to="/schedule_share_detail">
+          <CardItem />
+        </Link>
         <CardItem />
         <CardItem />
         <CardItem />

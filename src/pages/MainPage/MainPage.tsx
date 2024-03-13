@@ -1,6 +1,6 @@
 import { Box, Divider } from "@chakra-ui/react"
 import { BannerStyle, CardListBox, ReviewTitle, Title, TitleBox } from "@/pages/MainPage/MainPage.style"
-import CardItem from "@/components/card/CardItem"
+import CardItem from "@/components/Card/CardItem"
 import Reviews from "@/pages/MainPage/ReviewsGallery"
 
 const MainPage = () => {

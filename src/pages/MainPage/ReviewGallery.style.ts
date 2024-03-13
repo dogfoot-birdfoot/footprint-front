@@ -52,7 +52,8 @@ const commonTagStyles = css`
   position: absolute;
   top: 10px;
   z-index: 10;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: #10bbd5;
+  color: white;
   padding: 5px;
   font-size: 11px;
   border-radius: 10px;
