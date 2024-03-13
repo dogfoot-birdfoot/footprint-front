@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const ScheduleDetailStyle = styled.div`
   margin-left: 50px;
   justify-content: space-between;
+  margin-top: -230px;
 `
 export const IndexStyle = styled.div`
   background-color: #10bbd5;

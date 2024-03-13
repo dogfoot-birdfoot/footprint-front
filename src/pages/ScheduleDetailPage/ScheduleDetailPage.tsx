@@ -1,15 +1,15 @@
 import React from "react"
-import HorizontalCard from "@/components/ HorizontalCard/HorizontalCard"
+import HorizontalCard from "@/components/HorizontalCard/HorizontalCard"
 import DayTab from "@/components/DayTab/DayTab"
-import { Card, CardBody, CardFooter, CardHeader } from "@chakra-ui/card"
-import { Box, Heading, Text } from "@chakra-ui/layout"
+import { Card, CardBody, CardHeader } from "@chakra-ui/card"
+import { Box, Text } from "@chakra-ui/layout"
 import { Editable, EditablePreview, EditableTextarea } from "@chakra-ui/editable"
 import { IndexStyle, ScheduleDetailStyle } from "./ScheduleDetailPage.style"
 
 const destinations = ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"]
 const ScheduleDetailPage = () => {
   return (
-    <>
+    <Box ml="180px" mb="30px">
       <HorizontalCard />
       <DayTab destinations={destinations} />
 
@@ -39,7 +39,7 @@ const ScheduleDetailPage = () => {
           </Box>
         ))}
       </ScheduleDetailStyle>
-    </>
+    </Box>
   )
 }
 

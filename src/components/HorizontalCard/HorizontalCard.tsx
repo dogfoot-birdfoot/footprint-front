@@ -18,7 +18,7 @@ const HorizontalCard = () => {
     <>
       <Card
         justifyContent="space-between"
-        width="900px"
+        width="1040px"
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
@@ -88,8 +88,11 @@ const HorizontalCard = () => {
           <Box mr="2">
             <Buttons text="수정" size="xs" />
           </Box>
-          <Box mr="10">
+          <Box mr="2">
             <Buttons text="삭제" size="xs" />
+          </Box>
+          <Box mr="10">
+            <Buttons text="리뷰작성" size="xs" />
           </Box>
         </Box>
       </Card>

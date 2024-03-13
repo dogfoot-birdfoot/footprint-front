@@ -4,6 +4,7 @@ import { SlArrowRight } from "react-icons/sl"
 import { DayDestination, DayHeader, DestinationItem } from "./DaySummary.style"
 import { Box } from "@chakra-ui/layout"
 import Buttons from "@/components/Buttons/Buttons"
+import Map from "../Map/Map"
 
 interface DaySummaryProps {
   selectedDay: string
@@ -13,7 +14,7 @@ interface DaySummaryProps {
 const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations }) => {
   return (
     <Box display="flex">
-      <Card width="500px" borderRadius="30px">
+      <Card width="500px" borderRadius="30px" maxWidth="500px" maxHeight="70px">
         <CardBody display="flex" justifyContent="center">
           <DayHeader>{selectedDay}.</DayHeader>
           <DayDestination>
@@ -26,9 +27,9 @@ const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations }) =>
           </DayDestination>
         </CardBody>
       </Card>
-      {/* 지도 들어갈 부분 */}
-      <Box ml="300px">
-        <Buttons text="리뷰작성" size="xs" />
+
+      <Box ml="100px" display="flex" justifyContent="flex-end">
+        <Map />
       </Box>
     </Box>
   )
