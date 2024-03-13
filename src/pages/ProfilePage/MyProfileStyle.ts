@@ -38,7 +38,7 @@ export const ProfileText = styled.div`
 `
 
 export const RegisterDate = styled.div`
-  color: #3f3f3f;
+  color: var(--chakra-colors-textColor);
   font-weight: 600;
   margin-left: 0.1rem;
   margin-bottom: 0.1rem;
