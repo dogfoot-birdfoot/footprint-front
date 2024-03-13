@@ -4,7 +4,7 @@ import { CardListBox } from "@/pages/MainPage/MainPageStyle"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
-import { SortButton } from "@/pages/ScheduleSharePage/PlanSharePageStyle"
+import { SortButton } from "@/pages/ScheduleSharePage/PlanSharePage.style"
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
