@@ -201,9 +201,6 @@ const SearchResultsPage: React.FC = () => {
                           {item.days}
                         </Badge>
                         <Box display="flex" gap="2">
-                          <Badge borderRadius="10px" colorScheme="red">
-                            즐겨찾기 {item.favorite}
-                          </Badge>
                           <Badge borderRadius="10px" colorScheme="yellow">
                             좋아요 30
                           </Badge>
