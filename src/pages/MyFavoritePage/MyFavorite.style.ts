@@ -15,7 +15,7 @@ export const FavoriteTitle = styled.div`
   width: 90%;
   text-align: left;
   font-family: "Noto Sans";
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
 `
 export const FavoriteList = styled.div``

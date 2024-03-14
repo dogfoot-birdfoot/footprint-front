@@ -14,7 +14,7 @@ interface DaySummaryProps {
 const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations }) => {
   return (
     <Box display="flex">
-      <Card width="500px" borderRadius="30px" maxWidth="500px" maxHeight="70px">
+      <Card width="410px" mt="10px" borderRadius="30px" maxWidth="500px" maxHeight="60px">
         <CardBody display="flex" justifyContent="center">
           <DayHeader>{selectedDay}.</DayHeader>
           <DayDestination>
@@ -27,10 +27,6 @@ const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations }) =>
           </DayDestination>
         </CardBody>
       </Card>
-
-      <Box ml="100px" display="flex" justifyContent="flex-end">
-        <Map />
-      </Box>
     </Box>
   )
 }
