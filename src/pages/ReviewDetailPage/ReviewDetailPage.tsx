@@ -7,7 +7,6 @@ import { DaySchedule } from "../MySchedulePage/DetailSchedule.style"
 import Buttons from "@/components/Buttons/Buttons"
 import { CardInfo, UserInfo } from "@/components/HorizontalCard/HorizontalCard"
 import { FaRegThumbsUp } from "react-icons/fa"
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io"
 import { ImageSlider } from "./ImageSlider"
 
 const shareScheduleWithKakao = () => {
