@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
 export const DaySchedule = styled.div`
-  padding-left: 10px;
-  width: 450px;
+  margin-left: 10px;
+  width: 420px;
 `
 export const ScheduleDetail = styled.div`
   display: flex;

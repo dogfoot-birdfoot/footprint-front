@@ -35,4 +35,5 @@ export const ScheduleList = styled.div`
   display: flex;
   width: 95%;
   flex-direction: column;
+  flex-wrap: wrap;
 `

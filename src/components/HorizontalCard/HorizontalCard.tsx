@@ -9,6 +9,7 @@ import Buttons from "@/components/Buttons/Buttons"
 import { HorizontalCardContentProps } from "@components/HorizontalCard/type"
 import { Badge } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
+import { CardInfoProps } from "./type"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -17,6 +18,8 @@ const shareScheduleWithKakao = () => {
 }
 
 export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ size }) => {
+  const mlsize: string = size === "lg" ? "50px" : "10px"
+
   return (
     <>
       <Box display="flex" mt="20px" mb="20px" alignItems="center">
@@ -30,12 +33,12 @@ export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ si
         />
 
         <Box>
-          <CardInfo />
-          <Box width="400px" ml="50px" mt="10px">
+          <CardInfo ml_size={mlsize} />
+          <Box width="260px" ml={mlsize} mt="10px">
             <Text color="gray.500" fontSize="12px" ml="5px" mt="1">
               총 예상 경비 : 550,000원
             </Text>
-            <Box mt="5" width="300px">
+            <Box mt="5" width="100%">
               <KakaoButton onClick={shareScheduleWithKakao}>카카오톡으로 일정 공유하기</KakaoButton>
             </Box>
             <TagBox>
@@ -52,10 +55,10 @@ export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ si
   )
 }
 
-export const CardInfo = () => {
+export const CardInfo: React.FC<CardInfoProps> = ({ ml_size }) => {
   return (
     <>
-      <Box width="400px" ml="50px" mt="10px">
+      <Box width="260px" ml={ml_size} mt="10px">
         <Box mt="-2" display="flex">
           <Badge variant="subtle" colorScheme="green" minWidth="50px" mt="5">
             2박 3일
