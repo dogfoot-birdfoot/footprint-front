@@ -59,7 +59,9 @@ const NavBar: React.FC = () => {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">리뷰작성</BreadcrumbLink>
+              <BreadcrumbLink as={Link} to="/addreview">
+                리뷰작성
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem style={{ marginRight: "20px" }}>
