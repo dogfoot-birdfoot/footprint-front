@@ -41,6 +41,12 @@ export const ReviewItem = styled.div`
   }
 `
 
+export const ReviewTitle = styled.h1`
+  text-align: center;
+  font-size: 30px;
+  font-family: "Lobster";
+`
+
 export const ReviewImage = styled.img`
   width: 100%; // 컨테이너의 너비에 맞춤
   height: 100%; // 컨테이너의 높이에 맞춤
