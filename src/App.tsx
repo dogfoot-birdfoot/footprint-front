@@ -14,6 +14,7 @@ import theme from "@/styles/theme"
 import ScheduleDetailPage from "@/pages/ScheduleDetailPage/ScheduleDetailPage"
 import ReviewSharePage from "@/pages/ReviewSharePage/ReviewSharePage"
 import ReviewDetailPage from "@/pages/ReviewDetailPage/ReviewDetailPage"
+import SearchResultsPage from "./pages/SearchResultPage/SearchResultPage"
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="review_share" element={<ReviewSharePage />} />
             <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
             <Route path="review_share_detail" element={<ReviewDetailPage />} />
+            <Route path="search" element={<SearchResultsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

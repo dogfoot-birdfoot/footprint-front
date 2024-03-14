@@ -24,6 +24,7 @@ import {
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"
+import SearchBar from "./SearchBar"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -81,10 +82,10 @@ const NavBar: React.FC = () => {
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-          <Input placeholder="Search" width="400px" marginRight="10px" borderRadius={"30px"} />
+          <SearchBar />
           <div style={{ marginLeft: "20px", marginRight: "20px" }}>
             <Menu isOpen={bellIsOpen} onClose={() => setBellIsOpen(false)}>
-              <MenuButton onClick={handleBellToggle} px={4} py={2}>
+              <MenuButton onClick={handleBellToggle} px={1} py={2}>
                 <AiOutlineBell size="25px" color={bellIsOpen ? "var(--chakra-colors-primary)" : "gray"} />
               </MenuButton>
               <MenuList>
