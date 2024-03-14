@@ -26,12 +26,12 @@ export const HorizontalCardContent = () => {
         />
 
         <Box>
-          <Box ml="30px" mt="20px">
+          <Box width="400px" ml="50px" mt="10px">
             <Box mt="-2" display="flex">
               <Badge variant="subtle" colorScheme="green" minWidth="50px" mt="5">
                 2박 3일
               </Badge>
-              <Text color="gray.500" fontSize="9px" ml="5px" mt="6">
+              <Text color="gray.500" fontSize="10px" ml="5px" mt="6">
                 2024.03.05 ~ 2024.03.07
               </Text>
             </Box>
@@ -47,10 +47,10 @@ export const HorizontalCardContent = () => {
             >
               OO이랑 떠나는 부산 여행
             </Heading>
-            <Text color="gray.500" fontSize="11px" ml="5px" mt="1">
+            <Text color="gray.500" fontSize="12px" ml="5px" mt="1">
               총 예상 경비 : 550,000원
             </Text>
-            <Box mt="5">
+            <Box mt="5" width="300px">
               <KakaoButton onClick={shareScheduleWithKakao}>카카오톡으로 일정 공유하기</KakaoButton>
             </Box>
             <TagBox>
@@ -62,7 +62,7 @@ export const HorizontalCardContent = () => {
 
             <Box display="flex" justifyContent="flex-end">
               <Box mt="5">
-                <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
+                <Text textAlign="end" color="gray.500" fontSize="10px" mr="5px">
                   UserNickName
                 </Text>
                 <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">

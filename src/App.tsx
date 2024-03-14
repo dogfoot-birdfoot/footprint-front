@@ -12,6 +12,7 @@ import MyFavorite from "@/pages/MyFavoritePage/MyFavorite"
 import ScheduleSharePage from "./pages/ScheduleSharePage/ScheduleSharePage"
 import theme from "@/styles/theme"
 import ScheduleDetailPage from "./pages/ScheduleDetailPage/ScheduleDetailPage"
+import ReviewSharePage from "./pages/ReviewSharePage/ReviewSharePage"
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="schedule" element={<MySchedule />} />
             <Route path="favorite" element={<MyFavorite />} />
             <Route path="schedule_share" element={<ScheduleSharePage />} />
+            <Route path="review_share" element={<ReviewSharePage />} />
             <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
           </Route>
         </Routes>
