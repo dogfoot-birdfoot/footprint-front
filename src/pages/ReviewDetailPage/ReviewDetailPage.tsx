@@ -7,6 +7,8 @@ import { DaySchedule } from "../MySchedulePage/DetailSchedule.style"
 import Buttons from "@/components/Buttons/Buttons"
 import { CardInfo, UserInfo } from "@/components/HorizontalCard/HorizontalCard"
 import { FaRegThumbsUp } from "react-icons/fa"
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io"
+import { ImageSlider } from "./ImageSlider"
 
 const shareScheduleWithKakao = () => {
   // 여기에 카카오톡 공유 로직을 구현합니다.
@@ -67,8 +69,6 @@ const ReviewDetailPage = () => {
 
       <Divider mt="50px" />
       <DayReviews />
-      <DayReviews />
-      <DayReviews />
     </Box>
   )
 }
@@ -78,12 +78,21 @@ export default ReviewDetailPage
 export const DayReviews = () => {
   return (
     <Box mt="10" display="flex">
-      <Image
-        src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="광안대교사진"
-        width="500px"
-        borderRadius="10px"
-      />
+      {/* <Box position="relative" width="500px" height="auto">
+        <Image
+          src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgefHx8fGVufDB8fHx8fA%3D%3D"
+          alt="광안대교사진"
+          width="100%"
+          borderRadius="10px"
+        />
+        <Box position="absolute" top="50%" left="16px" transform="translateY(-50%)" zIndex="overlay">
+          <IoIosArrowBack size="24px" color="white" />
+        </Box>
+        <Box position="absolute" top="50%" right="16px" transform="translateY(-50%)" zIndex="overlay">
+          <IoIosArrowForward size="24px" color="white" />
+        </Box>
+      </Box> */}
+      <ImageSlider />
       <Box width="500px" ml="45px">
         <Text color="gray.500" fontSize="12px" mt="15px">
           2024.03.05

@@ -6,7 +6,7 @@ export const ScheduleDetailStyle = styled.div`
   margin-top: -270px;
 `
 export const IndexStyle = styled.div`
-  background-color: #10bbd5;
+  background-color: var(--chakra-colors-primary);
   border-radius: 20px;
   padding-left: 7px;
   padding-right: 7px;
