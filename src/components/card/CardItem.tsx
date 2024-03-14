@@ -1,8 +1,12 @@
 import React from "react"
 import { Avatar, Badge, Box, Card, CardBody, Heading, Image, Stack, Text } from "@chakra-ui/react"
 import { ImageContainer, PositionedAvatar } from "@/components/Card/CardItem.style"
+import { useLocation } from "react-router-dom"
 
 const CardItem = () => {
+  const location = useLocation()
+  const path = location.pathname
+
   return (
     <>
       <Card maxW="xs" marginLeft="10px">
@@ -28,14 +32,18 @@ const CardItem = () => {
                   2박 3일
                 </Badge>
               </Box>
+              {/* pathname에 따라서 즐겨찾기와 좋아요 동적으로 노출 */}
               <Box display="flex" gap="2">
-                {/* 배지 사이에 간격을 추가하기 위해 display와 gap 속성을 사용 */}
-                <Badge variant="subtle" colorScheme="red" minWidth="50px">
-                  즐겨찾기 15
-                </Badge>
-                <Badge variant="subtle" colorScheme="yellow" minWidth="40px">
-                  좋아요 30
-                </Badge>
+                {path.includes("schedule_share") && (
+                  <Badge variant="subtle" colorScheme="red" minWidth="50px">
+                    즐겨찾기 15
+                  </Badge>
+                )}
+                {(path.includes("schedule_share") || path.includes("review_share")) && (
+                  <Badge variant="subtle" colorScheme="yellow" minWidth="40px">
+                    좋아요 30
+                  </Badge>
+                )}
               </Box>
             </Box>
             <Text color="gray.500" fontSize="9px" mt="-2" mb="-2">

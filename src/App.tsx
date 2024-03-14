@@ -9,9 +9,11 @@ import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import MyProfile from "@/pages/ProfilePage/MyProfile"
 import MySchedule from "@/pages/MySchedulePage/MySchedule"
 import MyFavorite from "@/pages/MyFavoritePage/MyFavorite"
-import ScheduleSharePage from "./pages/ScheduleSharePage/ScheduleSharePage"
+import ScheduleSharePage from "@/pages/ScheduleSharePage/ScheduleSharePage"
 import theme from "@/styles/theme"
-import ScheduleDetailPage from "./pages/ScheduleDetailPage/ScheduleDetailPage"
+import ScheduleDetailPage from "@/pages/ScheduleDetailPage/ScheduleDetailPage"
+import ReviewSharePage from "@/pages/ReviewSharePage/ReviewSharePage"
+import ReviewDetailPage from "@/pages/ReviewDetailPage/ReviewDetailPage"
 
 function App() {
   return (
@@ -26,7 +28,9 @@ function App() {
             <Route path="schedule" element={<MySchedule />} />
             <Route path="favorite" element={<MyFavorite />} />
             <Route path="schedule_share" element={<ScheduleSharePage />} />
+            <Route path="review_share" element={<ReviewSharePage />} />
             <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
+            <Route path="review_share_detail" element={<ReviewDetailPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

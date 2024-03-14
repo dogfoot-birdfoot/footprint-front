@@ -3,10 +3,10 @@ import styled from "styled-components"
 export const ScheduleDetailStyle = styled.div`
   margin-left: 50px;
   justify-content: space-between;
-  margin-top: -230px;
+  margin-top: -270px;
 `
 export const IndexStyle = styled.div`
-  background-color: #10bbd5;
+  background-color: var(--chakra-colors-primary);
   border-radius: 20px;
   padding-left: 7px;
   padding-right: 7px;

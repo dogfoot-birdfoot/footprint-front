@@ -3,10 +3,8 @@ import { Card, CardBody } from "@chakra-ui/card"
 import { SlArrowRight } from "react-icons/sl"
 import { DayDestination, DayHeader, DestinationItem, DestinationSmallItem } from "./DaySummary.style"
 import { Box } from "@chakra-ui/layout"
-import Buttons from "@/components/Buttons/Buttons"
-import Map from "../Map/Map"
 
-interface DaySummaryProps {
+export interface DaySummaryProps {
   selectedDay: string
   destinations: string[]
   size: string

@@ -14,13 +14,13 @@ const ScheduleDetailPage = () => {
     <Box ml="100px" mb="30px">
       <HorizontalCard />
       <DayTab destinations={destinations} />
-      <Box ml="100px" display="flex" justifyContent="flex-end">
+      <Box display="flex" mt="-3" ml="600px">
         <Map />
       </Box>
       <ScheduleDetailStyle>
         {destinations.map((destination, index) => (
-          <Box width="500px" mt="10px" key={index}>
-            <Card fontSize="15px" fontWeight="bold">
+          <Box width="500px" mt="10px" key={index} ml="-10px">
+            <Card fontSize="15px" fontWeight="bold" ml="-10px">
               <CardHeader display="flex" justifyContent="space-between">
                 <Box display="flex">
                   <IndexStyle>{index + 1}</IndexStyle>
