@@ -34,19 +34,19 @@ const CardItem = () => {
               </Box>
               {/* path name에 따라 동적으로 노출 */}
               <Box display="flex" gap="2">
-                {path.includes("schedule_share") ||
-                  (path.includes("") && (
-                    <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
-                      즐겨찾기 15
-                    </Badge>
-                  ))}
-                {path.includes("schedule_share") ||
-                  path.includes("review_share") ||
-                  (path.includes("") && (
-                    <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
-                      좋아요 30
-                    </Badge>
-                  ))}
+                {/* 엔드포인트가 'schedule_share' 이거나 경로에 아무 것도 없을 때 '즐겨찾기' 배지 표시 */}
+                {(path.includes("schedule_share") || path === "/") && (
+                  <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
+                    즐겨찾기 15
+                  </Badge>
+                )}
+
+                {/* 엔드포인트가 'schedule_share', 'review_share', 또는 경로에 아무 것도 없을 때 '좋아요' 배지 표시 */}
+                {(path.includes("schedule_share") || path.includes("review_share") || path === "/") && (
+                  <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
+                    좋아요 30
+                  </Badge>
+                )}
               </Box>
             </Box>
 
