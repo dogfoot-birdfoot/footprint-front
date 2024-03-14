@@ -28,24 +28,28 @@ const CardItem = () => {
           <Stack mt="3" spacing="3">
             <Box display="flex" justifyContent="space-between" mt="-79">
               <Box>
-                <Badge variant="subtle" colorScheme="green" minWidth="50px">
+                <Badge borderRadius="10px" colorScheme="green" minWidth="50px">
                   2박 3일
                 </Badge>
               </Box>
-              {/* pathname에 따라서 즐겨찾기와 좋아요 동적으로 노출 */}
+              {/* path name에 따라 동적으로 노출 */}
               <Box display="flex" gap="2">
-                {path.includes("schedule_share") && (
-                  <Badge variant="subtle" colorScheme="red" minWidth="50px">
-                    즐겨찾기 15
-                  </Badge>
-                )}
-                {(path.includes("schedule_share") || path.includes("review_share")) && (
-                  <Badge variant="subtle" colorScheme="yellow" minWidth="40px">
-                    좋아요 30
-                  </Badge>
-                )}
+                {path.includes("schedule_share") ||
+                  (path.includes("") && (
+                    <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
+                      즐겨찾기 15
+                    </Badge>
+                  ))}
+                {path.includes("schedule_share") ||
+                  path.includes("review_share") ||
+                  (path.includes("") && (
+                    <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
+                      좋아요 30
+                    </Badge>
+                  ))}
               </Box>
             </Box>
+
             <Text color="gray.500" fontSize="9px" mt="-2" mb="-2">
               2024.03.05 ~ 2024.03.07
             </Text>
