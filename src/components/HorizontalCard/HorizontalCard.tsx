@@ -21,12 +21,12 @@ export const HorizontalCardContent = () => {
           src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="광안대교사진"
           width="260px"
-          ml="10px"
+          ml="53px"
           borderRadius="10px"
         />
 
         <Box>
-          <Box ml="20px" mt="20px">
+          <Box ml="30px" mt="20px">
             <Box mt="-2" display="flex">
               <Badge variant="subtle" colorScheme="green" minWidth="50px" mt="5">
                 2박 3일

@@ -8,7 +8,7 @@ export const DayHeader = styled.h1`
 export const DestinationItem = styled.span`
   display: inline-flex;
   align-items: center;
-  font-size: 10px;
+  font-size: 12px;
 
   & + & {
     margin-left: 8px;
