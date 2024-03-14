@@ -44,7 +44,7 @@ const NavBar: React.FC = () => {
   return (
     <>
       <NavBarStyle>
-        <Logo href="#">FootPrint</Logo>
+        <Logo href="/">FootPrint</Logo>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>
@@ -54,7 +54,9 @@ const NavBar: React.FC = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">리뷰보기</BreadcrumbLink>
+              <BreadcrumbLink as={Link} to="/review_share">
+                리뷰보기
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem>
               <BreadcrumbLink href="#">리뷰작성</BreadcrumbLink>

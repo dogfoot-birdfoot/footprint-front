@@ -2,7 +2,7 @@ import React from "react"
 import { KakaoButtonStyle } from "./KakaoButton.style"
 import { ImBubble } from "react-icons/im"
 
-interface KakaoButtonProps {
+export interface KakaoButtonProps {
   onClick: () => void
   children: React.ReactNode
 }
