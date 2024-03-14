@@ -6,6 +6,7 @@ import KakaoButton from "../KakaoButton/KakaoButton"
 import { TagBox, TagStyle } from "./HorizontalCard.style"
 import { Avatar } from "@chakra-ui/avatar"
 import Buttons from "@/components/Buttons/Buttons"
+import { HorizontalCardContentProps } from "@components/HorizontalCard/type"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -13,14 +14,15 @@ const shareScheduleWithKakao = () => {
   console.log("카카오톡으로 일정 공유하기")
 }
 
-export const HorizontalCardContent = () => {
+export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ size }) => {
   return (
     <>
-      <Box display="flex" mt="20px" mb="20px">
+      <Box display="flex" mt="20px" mb="20px" alignItems="center">
         <Image
           src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="광안대교사진"
-          width="260px"
+          width={size === "sm" ? "230px" : "300px"}
+          height={size === "sm" ? "200px" : "250px"}
           ml="10px"
           borderRadius="10px"
         />
@@ -50,7 +52,7 @@ export const HorizontalCardContent = () => {
             <Text color="gray.500" fontSize="11px" ml="5px" mt="1">
               총 예상 경비 : 550,000원
             </Text>
-            <Box mt="5">
+            <Box mt="4">
               <KakaoButton onClick={shareScheduleWithKakao}>카카오톡으로 일정 공유하기</KakaoButton>
             </Box>
             <TagBox>
@@ -87,7 +89,7 @@ export const ScheduleButtons = () => {
       <Box mr="2">
         <Buttons text="삭제" size="xs" />
       </Box>
-      <Box mr="10">
+      <Box mr="4">
         <Buttons text="리뷰작성" size="xs" />
       </Box>
     </Box>
@@ -104,7 +106,7 @@ export const HorizontalCard = () => {
         overflow="hidden"
         variant="outline"
       >
-        <HorizontalCardContent />
+        <HorizontalCardContent size="lg" />
         {/* 게시자에게만 보이도록 로직 수정 */}
         <ScheduleButtons />
       </Card>

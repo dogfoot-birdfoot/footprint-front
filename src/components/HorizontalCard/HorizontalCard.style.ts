@@ -11,5 +11,5 @@ export const TagStyle = styled.span`
   padding-right: 9px;
 `
 export const TagBox = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
 `

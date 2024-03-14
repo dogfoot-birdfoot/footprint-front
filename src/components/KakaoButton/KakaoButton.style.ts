@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const KakaoButtonStyle = styled.button`
   background-color: #ffe351; // 카카오톡 공식 노란색
   color: var(--chakra-colors-textColor); // 텍스트 색상은 검정색
-  padding: 10px 15px;
+  padding: 10px 10px;
   border: none;
   border-radius: 8px;
   font-weight: bold;

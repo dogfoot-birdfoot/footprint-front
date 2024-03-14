@@ -5,6 +5,7 @@ export const Schedule = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow-y: hidden;
 `
 
 export const ScheduleTitle = styled.div`
