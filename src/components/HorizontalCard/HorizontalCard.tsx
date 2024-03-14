@@ -1,11 +1,13 @@
 import React from "react"
-import { Card, CardBody, CardFooter } from "@chakra-ui/card"
+import { Card } from "@chakra-ui/card"
 import { Image } from "@chakra-ui/image"
-import { Badge, Box, Heading, Stack, Text } from "@chakra-ui/layout"
+import { Box, Text } from "@chakra-ui/layout"
 import KakaoButton from "../KakaoButton/KakaoButton"
-import { TagBox, TagStyle } from "./HorizontalCard.style"
+import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import { Avatar } from "@chakra-ui/avatar"
 import Buttons from "@/components/Buttons/Buttons"
+import { Badge } from "@chakra-ui/react"
+import { Heading } from "@chakra-ui/react"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -26,27 +28,8 @@ export const HorizontalCardContent = () => {
         />
 
         <Box>
+          <CardInfo />
           <Box width="400px" ml="50px" mt="10px">
-            <Box mt="-2" display="flex">
-              <Badge variant="subtle" colorScheme="green" minWidth="50px" mt="5">
-                2박 3일
-              </Badge>
-              <Text color="gray.500" fontSize="10px" ml="5px" mt="6">
-                2024.03.05 ~ 2024.03.07
-              </Text>
-            </Box>
-            <Heading
-              size="md"
-              mt="2"
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                maxWidth: "18ch" // 18글자를 넘어가면 잘라내고 "..." 표시
-              }}
-            >
-              OO이랑 떠나는 부산 여행
-            </Heading>
             <Text color="gray.500" fontSize="12px" ml="5px" mt="1">
               총 예상 경비 : 550,000원
             </Text>
@@ -59,22 +42,56 @@ export const HorizontalCardContent = () => {
               <TagStyle>휴식</TagStyle>
               <TagStyle>바다여행</TagStyle>
             </TagBox>
-
-            <Box display="flex" justifyContent="flex-end">
-              <Box mt="5">
-                <Text textAlign="end" color="gray.500" fontSize="10px" mr="5px">
-                  UserNickName
-                </Text>
-                <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
-                  2024.03.01 20:45작성
-                </Text>
-              </Box>
-              <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />
-            </Box>
+            <UserInfo />
           </Box>
         </Box>
       </Box>
     </>
+  )
+}
+
+export const CardInfo = () => {
+  return (
+    <>
+      <Box width="400px" ml="50px" mt="10px">
+        <Box mt="-2" display="flex">
+          <Badge variant="subtle" colorScheme="green" minWidth="50px" mt="5">
+            2박 3일
+          </Badge>
+          <Text color="gray.500" fontSize="10px" ml="5px" mt="6">
+            2024.03.05 ~ 2024.03.07
+          </Text>
+        </Box>
+        <Heading
+          size="md"
+          mt="2"
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            maxWidth: "18ch" // 18글자를 넘어가면 잘라내고 "..." 표시
+          }}
+        >
+          OO이랑 떠나는 부산 여행
+        </Heading>
+      </Box>
+    </>
+  )
+}
+
+export const UserInfo = () => {
+  return (
+    <Box display="flex" justifyContent="flex-end">
+      <Box mt="5">
+        <Text textAlign="end" color="gray.500" fontSize="10px" mr="5px">
+          UserNickName
+        </Text>
+        <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
+          2024.03.01 20:45작성
+        </Text>
+      </Box>
+      <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />
+    </Box>
   )
 }
 

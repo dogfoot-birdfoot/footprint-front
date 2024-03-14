@@ -8,7 +8,6 @@ export const KakaoButtonStyle = styled.button`
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px; // 다른 버튼과의 간격
   width: 100%; // 부모 요소의 전체 너비를 차지하도록 설정
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;

@@ -34,7 +34,7 @@ const ReviewSharePage = () => {
       </Menu>
       <CardListBox>
         {/* 나중에는 링크를 동적으로 받아와야함 */}
-        <Link to="/schedule_share_detail">
+        <Link to="/review_share_detail">
           <CardItem />
         </Link>
         <CardItem />

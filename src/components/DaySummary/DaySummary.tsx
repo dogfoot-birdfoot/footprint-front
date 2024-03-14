@@ -4,7 +4,7 @@ import { SlArrowRight } from "react-icons/sl"
 import { DayDestination, DayHeader, DestinationItem } from "./DaySummary.style"
 import { Box } from "@chakra-ui/layout"
 
-interface DaySummaryProps {
+export interface DaySummaryProps {
   selectedDay: string
   destinations: string[]
 }
@@ -12,7 +12,7 @@ interface DaySummaryProps {
 const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations }) => {
   return (
     <Box display="flex">
-      <Card width="500px" mt="10px" borderRadius="30px" maxWidth="500px" maxHeight="60px">
+      <Card width="410px" mt="10px" borderRadius="30px" maxWidth="500px" maxHeight="60px">
         <CardBody display="flex" justifyContent="center">
           <DayHeader>{selectedDay}.</DayHeader>
           <DayDestination>
