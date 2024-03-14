@@ -1,22 +1,36 @@
-import { Image } from "@chakra-ui/react"
-import { AddReview, AddReviewIntro, ReviewIntroBody, ReviewIntroHeader, ReviewPage } from "./AddReviewPage.style"
+import { Box, Button } from "@chakra-ui/react"
+import { AddReview, ButtonBox, ReviewPage } from "./AddReviewPage.style"
+import React, { useState } from "react"
+import AddIntro from "@/pages/AddReviewPage/AddIntro"
+import AddPictures from "./AddPictures"
+import { AddReviewPageProps } from "./type"
 
-const AddReviewPage = () => {
+const AddReviewPage: React.FC<AddReviewPageProps> = ({ initialStep }) => {
+  const [step, setStep] = useState<number>(initialStep)
+
+  function prevStep() {
+    setStep(Math.max(1, step - 1))
+  }
+
+  function nextStep() {
+    setStep(Math.min(3, step + 1))
+  }
+
   return (
     <ReviewPage>
       <AddReview>
-        <AddReviewIntro>
-          <ReviewIntroHeader>나만의 리뷰를 만들어보세요</ReviewIntroHeader>
-          <ReviewIntroBody>최근에 다녀온 여행지가 있으신가요?</ReviewIntroBody>
-          <ReviewIntroBody>내가 다녀온 여행지를 리뷰해주세요.</ReviewIntroBody>
-        </AddReviewIntro>
-        <Image
-          src="https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="강원도 산 사진"
-          borderRadius="lg"
-          width={"330px"}
-          height={"230px"}
-        />
+        <ButtonBox></ButtonBox>
+        {step === 1 && <AddIntro nextStep={nextStep} />}
+        {step === 2 && <AddPictures prevStep={prevStep} nextStep={nextStep} />}
+        {step === 3 && <Box>AddPost</Box>}
+
+        <ButtonBox>
+          {step !== 1 && (
+            <Button borderRadius="20px" marginBottom="20px" onClick={nextStep}>
+              {">"}
+            </Button>
+          )}
+        </ButtonBox>
       </AddReview>
     </ReviewPage>
   )
