@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const TagStyle = styled.span`
-  background-color: #10bbd5;
+  background-color: var(--chakra-colors-primary);
   color: white;
   padding: 5px;
   font-size: 11px;

@@ -58,7 +58,7 @@ const commonTagStyles = css`
   position: absolute;
   top: 10px;
   z-index: 10;
-  background-color: #10bbd5;
+  background-color: var(--chakra-colors-primary);
   color: white;
   padding: 5px;
   font-size: 11px;
