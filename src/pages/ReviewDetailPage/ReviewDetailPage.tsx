@@ -78,20 +78,6 @@ export default ReviewDetailPage
 export const DayReviews = () => {
   return (
     <Box mt="10" display="flex">
-      {/* <Box position="relative" width="500px" height="auto">
-        <Image
-          src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgefHx8fGVufDB8fHx8fA%3D%3D"
-          alt="광안대교사진"
-          width="100%"
-          borderRadius="10px"
-        />
-        <Box position="absolute" top="50%" left="16px" transform="translateY(-50%)" zIndex="overlay">
-          <IoIosArrowBack size="24px" color="white" />
-        </Box>
-        <Box position="absolute" top="50%" right="16px" transform="translateY(-50%)" zIndex="overlay">
-          <IoIosArrowForward size="24px" color="white" />
-        </Box>
-      </Box> */}
       <ImageSlider />
       <Box width="500px" ml="45px">
         <Text color="gray.500" fontSize="12px" mt="15px">
