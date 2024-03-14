@@ -32,7 +32,7 @@ function App() {
             <Route path="review_share" element={<ReviewSharePage />} />
             <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
             <Route path="review_share_detail" element={<ReviewDetailPage />} />
-            <Route path="addreview" element={<AddReviewPage />} />
+            <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 export const Logo = styled.a`
   margin-left: 20px;
+
   margin-top: 10px;
   font-size: 40px;
   font-family: "Lobster";
@@ -10,14 +11,15 @@ export const Logo = styled.a`
 export const NavBarStyle = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flow-start;
 `
 
 export const NavBarItems = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 25px;
+  margin: 10px 0px 0px 100px;
+  height: 60px;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
 `
