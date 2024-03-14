@@ -98,7 +98,7 @@ export const DayReviews = () => {
           2024.03.05
         </Text>
         <Heading size="lg" mt="2">
-          Day 1
+          Review Title
         </Heading>
         <Text width="500px" mt="20px">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio sapiente, at assumenda maiores error ab
