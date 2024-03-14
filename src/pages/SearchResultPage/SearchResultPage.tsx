@@ -115,7 +115,7 @@ const SearchResultsPage: React.FC = () => {
   )
 
   return (
-    <Box>
+    <Box mb="30px">
       <Heading size="sm" mt="30px" mb="30px" ml="40px">
         {`"${query}"에 대한 여행일정 검색결과입니다.`}
       </Heading>
