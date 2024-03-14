@@ -11,11 +11,11 @@ const DetailSchedule = () => {
   ]
   return (
     <ScheduleDetail>
-      <HorizontalCardContent />
+      <HorizontalCardContent size="sm" />
       <DaySchedule>
         {destinations.map((destination, index) => (
           <Box key={index}>
-            <DaySummary selectedDay={`Day ${index + 1}`} destinations={destination} />
+            <DaySummary selectedDay={`Day ${index + 1}`} destinations={destination} size="sm" />
           </Box>
         ))}
         <Box display="flex" justifyContent="flex-end">

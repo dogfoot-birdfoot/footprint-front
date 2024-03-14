@@ -17,13 +17,13 @@ const DayTab: React.FC<DayTabProps> = ({ destinations }) => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} />
+            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} size="lg" />
           </TabPanel>
           <TabPanel>
-            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} />
+            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} size="lg" />
           </TabPanel>
           <TabPanel>
-            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} />
+            <DaySummary selectedDay={`Day ${tabIndex + 1}`} destinations={destinations} size="lg" />
           </TabPanel>
         </TabPanels>
       </Tabs>

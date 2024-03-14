@@ -5,6 +5,7 @@ export const Schedule = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow-y: hidden;
 `
 
 export const ScheduleTitle = styled.div`
@@ -34,4 +35,5 @@ export const ScheduleList = styled.div`
   display: flex;
   width: 95%;
   flex-direction: column;
+  flex-wrap: wrap;
 `
