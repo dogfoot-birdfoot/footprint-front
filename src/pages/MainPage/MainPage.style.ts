@@ -11,21 +11,13 @@ export const Title = styled.h1`
   font-family: "Lobster";
 `
 
-export const ReviewTitle = styled.h1`
-  text-align: center;
-  font-size: 30px;
-  font-family: "Lobster";
-`
-
 export const TitleBox = styled.div`
   margin-top: 50px;
-  margin-left: 45px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 `
 
 export const CardListBox = styled.div`
   margin-top: 25px;
   margin-bottom: 25px;
   display: flex;
-  margin-left: 50px;
 `

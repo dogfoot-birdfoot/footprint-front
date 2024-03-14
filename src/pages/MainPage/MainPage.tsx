@@ -1,7 +1,8 @@
 import { Box, Divider } from "@chakra-ui/react"
-import { BannerStyle, CardListBox, ReviewTitle, Title, TitleBox } from "@/pages/MainPage/MainPage.style"
+import { BannerStyle, CardListBox, Title, TitleBox } from "@/pages/MainPage/MainPage.style"
 import CardItem from "@/components/Card/CardItem"
-import Reviews from "@/pages/MainPage/ReviewsGallery"
+import ReviewsGallery from "@/pages/MainPage/ReviewsGallery"
+import { ReviewTitle } from "./ReviewGallery.style"
 
 const MainPage = () => {
   return (
@@ -33,7 +34,7 @@ const MainPage = () => {
       <TitleBox>
         <ReviewTitle>Popular Reviews</ReviewTitle>
       </TitleBox>
-      <Reviews></Reviews>
+      <ReviewsGallery></ReviewsGallery>
     </>
   )
 }

@@ -9,7 +9,7 @@ import { IndexStyle, ScheduleDetailStyle } from "./ScheduleDetailPage.style"
 const destinations = ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"]
 const ScheduleDetailPage = () => {
   return (
-    <Box ml="180px" mb="30px">
+    <Box ml="100px" mb="30px">
       <HorizontalCard />
       <DayTab destinations={destinations} />
 
