@@ -101,6 +101,7 @@ const Calendar: React.FC = () => {
         <DayPicker
           formatters={{ formatCaption }}
           mode="range"
+          max={10}
           selected={selectedRange}
           onSelect={handleRangeSelect}
           modifiersClassNames={{
