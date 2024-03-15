@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const SliderContainer = styled.div`
   position: relative;
-  width: 500px;
+  width: 500px
   height: 400px;
   overflow: hidden;
 `
@@ -11,6 +11,19 @@ export const SlideImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`
+
+export const ImageNumber = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5%;
+  right: 5%;
 `
 
 export const ArrowButton = styled.button`
