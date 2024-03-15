@@ -1,4 +1,4 @@
-export interface PubPrivSwitchProps {
+export interface OnOffSwitchProps {
   ontext: string
   offtext: string
 }

@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import { PubPrivSwitchProps } from "@/components/Switch/type"
+import { OnOffSwitchProps } from "@/components/Switch/type"
 import { Switch } from "@chakra-ui/react"
 
-const PubPrivSwitch: React.FC<PubPrivSwitchProps> = ({ ontext, offtext }) => {
+const OnOffSwitch: React.FC<OnOffSwitchProps> = ({ ontext, offtext }) => {
   const [isPublic, setIsPublic] = useState<boolean>(true)
 
   const toggleIsPublic = () => {
@@ -15,6 +15,7 @@ const PubPrivSwitch: React.FC<PubPrivSwitchProps> = ({ ontext, offtext }) => {
         colorScheme="green"
         isChecked={isPublic}
         onChange={toggleIsPublic}
+        marginLeft="10px"
         sx={{
           ".chakra-switch__track::after": {
             content: isPublic ? `'${ontext}'` : `'${offtext}'`,
@@ -23,7 +24,7 @@ const PubPrivSwitch: React.FC<PubPrivSwitchProps> = ({ ontext, offtext }) => {
             position: "absolute",
             transform: "translate(-50%,-50%)",
             top: "0.9rem",
-            left: isPublic ? "48%" : "80%",
+            left: isPublic ? "48%" : "75%",
             width: "2rem",
             fontSize: "2xs"
           }
@@ -33,4 +34,4 @@ const PubPrivSwitch: React.FC<PubPrivSwitchProps> = ({ ontext, offtext }) => {
   )
 }
 
-export default PubPrivSwitch
+export default OnOffSwitch

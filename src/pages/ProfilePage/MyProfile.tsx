@@ -19,7 +19,7 @@ import {
 import { Avatar } from "@chakra-ui/react"
 import { MdEdit } from "react-icons/md"
 
-import PubPrivSwitch from "@/components/Switch/PubPrivSwitch"
+import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 
 const MyProfile = () => {
   return (
@@ -37,7 +37,7 @@ const MyProfile = () => {
             <ReviewNumber>리뷰 24</ReviewNumber>
             <UploadImageButton>사진 업로드</UploadImageButton>
           </ProfileInformation>
-          <PubPrivSwitch ontext="공개" offtext="비공개" />
+          <OnOffSwitch ontext="공개" offtext="비공개" />
         </ProfileHeader>
 
         {/* Profile Body */}
