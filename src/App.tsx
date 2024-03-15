@@ -14,7 +14,8 @@ import theme from "@/styles/theme"
 import ScheduleDetailPage from "@/pages/ScheduleDetailPage/ScheduleDetailPage"
 import ReviewSharePage from "@/pages/ReviewSharePage/ReviewSharePage"
 import ReviewDetailPage from "@/pages/ReviewDetailPage/ReviewDetailPage"
-import SearchResultsPage from "./pages/SearchResultPage/SearchResultPage"
+import SearchResultsPage from "@/pages/SearchResultPage/SearchResultPage"
+import CreateSchedulePage from "@/pages/CreateSchedulePage/CreateSchedulePage"
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
             <Route path="review_share_detail" element={<ReviewDetailPage />} />
             <Route path="search" element={<SearchResultsPage />} />
+            <Route path="create_schedule" element={<CreateSchedulePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

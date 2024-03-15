@@ -76,7 +76,9 @@ const NavBar: React.FC = () => {
                   </MenuButton>
                   <MenuList minWidth="200px">
                     {/* MenuItems are not rendered unless Menu is open : is Lazy 때문에 */}
-                    <StyledMenuItem href="#">일정생성</StyledMenuItem>
+                    <StyledMenuItem as={Link} to="/create_schedule">
+                      일정생성
+                    </StyledMenuItem>
                     <StyledMenuItem href="#">내 여행일정 조회</StyledMenuItem>
                     <StyledMenuItem href="#">내 여행 리뷰쓰기</StyledMenuItem>
                   </MenuList>
