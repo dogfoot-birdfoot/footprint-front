@@ -6,12 +6,23 @@ import Calendar from "./Calendar"
 import AddSchedule from "./AddSchedule"
 import AddPost from "./AddPost"
 
-const CreateScheduleForm = () => {
+export interface CreateScheduleFormProps {
+  selectedDates: Date[]
+  setSelectedDates: React.Dispatch<React.SetStateAction<Date[]>>
+  showSearchBox: boolean // 부모 컴포넌트로부터 전달받을 새로운 prop
+  setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>> // 부모 컴포넌트로부터 전달받을 새로운 prop
+}
+
+const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
+  selectedDates,
+  setSelectedDates,
+  showSearchBox,
+  setShowSearchBox
+}) => {
   const [isDestinationBoxVisible, setIsDestinationBoxVisible] = useState(false)
   const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
   const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
   const [isPostBoxVisible, setIsPostBoxVisible] = useState(false)
-  const [selectedDates, setSelectedDates] = useState<Date[]>([])
 
   const updateSelectedDates = (dates: Date[]) => {
     setSelectedDates(dates)
@@ -71,7 +82,7 @@ const CreateScheduleForm = () => {
           {isScheduleBoxVisible && (
             <Card mt="10px">
               <CardBody>
-                <AddSchedule dates={selectedDates} />
+                <AddSchedule dates={selectedDates} showSearchBox={showSearchBox} setShowSearchBox={setShowSearchBox} />
               </CardBody>
             </Card>
           )}
