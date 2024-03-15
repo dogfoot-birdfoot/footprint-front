@@ -54,7 +54,7 @@ const CreateScheduleForm = () => {
           </Card>
           {isCalendarBoxVisible && (
             <Card mt="10px">
-              <CardBody>
+              <CardBody display="flex" justifyContent="center">
                 <AddCalendar />
               </CardBody>
             </Card>
