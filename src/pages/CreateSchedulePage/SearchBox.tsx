@@ -1,5 +1,20 @@
 import React, { useState } from "react"
-import { Box, Input, VStack, Text } from "@chakra-ui/react"
+import {
+  VStack,
+  Input,
+  Box,
+  Checkbox,
+  Wrap,
+  Tag,
+  TagLabel,
+  TagCloseButton,
+  SimpleGrid,
+  Card,
+  InputGroup,
+  InputLeftElement,
+  Button
+} from "@chakra-ui/react"
+import { IconStyle } from "@/components/NavBar/SearchBar.style"
 
 // 예시로 사용할 모의 한국 지역 및 여행지 데이터
 const mockLocations = [
@@ -13,6 +28,8 @@ const mockLocations = [
   "순천만 자연생태공원",
   "다도해 해상 국립공원",
   "제주도 오름",
+  "제주도 바다",
+  "제주도 협재 해변",
   "강릉 경포대",
   "전주 한옥 마을",
   "순천 드라마 촬영장",
@@ -23,6 +40,7 @@ const mockLocations = [
 const SearchBox = () => {
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<string[]>([])
+  const [selectedResults, setSelectedResults] = useState<string[]>([])
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase()
@@ -33,15 +51,60 @@ const SearchBox = () => {
     setResults(filteredResults)
   }
 
+  const handleCheckboxChange = (result: string) => {
+    setSelectedResults(prevSelected =>
+      prevSelected.includes(result) ? prevSelected.filter(item => item !== result) : [...prevSelected, result]
+    )
+  }
+
+  const removeResult = (result: string) => {
+    setSelectedResults(prevSelected => prevSelected.filter(item => item !== result))
+  }
+
   return (
-    <VStack spacing={4}>
-      <Input placeholder="장소 검색..." value={query} onChange={handleSearch} />
-      <Box>
-        {results.map((result, index) => (
-          <Text key={index}>{result}</Text>
-        ))}
+    <Card>
+      <VStack spacing={4} width="100%">
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <IconStyle />
+          </InputLeftElement>
+          <Input placeholder="장소 검색..." value={query} onChange={handleSearch} variant="flushed" />
+        </InputGroup>
+        <Box width="100%" bg="white" borderRadius="md" maxH="400px" p={4} overflowY="auto">
+          <SimpleGrid columns={2} spacing={2} mt="-4" ml="50px">
+            {results.map((result, index) => (
+              <Box display="flex" key={index} mb="5px">
+                <Checkbox
+                  colorScheme="green"
+                  isChecked={selectedResults.includes(result)}
+                  onChange={() => handleCheckboxChange(result)}
+                ></Checkbox>
+                <Box ml="3">{result}</Box>
+              </Box>
+            ))}
+          </SimpleGrid>
+          <Wrap spacing={2} ml="40px" mt="20px">
+            {selectedResults.map((result, index) => (
+              <Tag size="md" key={index} borderRadius="full" variant="outline" colorScheme="blue">
+                <TagLabel>{result}</TagLabel>
+                <TagCloseButton onClick={() => removeResult(result)} />
+              </Tag>
+            ))}
+          </Wrap>
+        </Box>
+      </VStack>
+      <Box display="flex" justifyContent="end" mb="10px" mr="10px">
+        <Button
+          _hover={{ bg: "secondary", color: "#fff" }}
+          backgroundColor="primary"
+          color="#fff"
+          size="sm"
+          height="40px"
+        >
+          장소추가
+        </Button>
       </Box>
-    </VStack>
+    </Card>
   )
 }
 
