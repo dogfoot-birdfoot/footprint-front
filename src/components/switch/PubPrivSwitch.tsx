@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { PubPrivSwitchProps } from "@/components/switch/type"
+import { PubPrivSwitchProps } from "@/components/Switch/type"
 import { Switch } from "@chakra-ui/react"
 
 const PubPrivSwitch: React.FC<PubPrivSwitchProps> = ({ ontext, offtext }) => {

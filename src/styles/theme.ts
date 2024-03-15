@@ -1,4 +1,4 @@
-import { switchTheme } from "@/components/switch/SwitchTheme"
+import { switchTheme } from "@/components/Switch/SwitchTheme"
 import { extendTheme } from "@chakra-ui/react"
 
 const theme = extendTheme({

@@ -1,4 +1,4 @@
-import SideBar from "@/components/sidebar/SideBar"
+import SideBar from "@/components/Sidebar/SideBar"
 import { MyPageWrapper } from "@/styles/styles"
 import {
   Schedule,

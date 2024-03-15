@@ -1,4 +1,4 @@
-import SideBar from "@/components/sidebar/SideBar"
+import SideBar from "@/components/Sidebar/SideBar"
 import { MyPageWrapper } from "@/styles/styles"
 
 import {
@@ -19,7 +19,7 @@ import {
 import { Avatar } from "@chakra-ui/react"
 import { MdEdit } from "react-icons/md"
 
-import PubPrivSwitch from "@/components/switch/PubPrivSwitch"
+import PubPrivSwitch from "@/components/Switch/PubPrivSwitch"
 
 const MyProfile = () => {
   return (

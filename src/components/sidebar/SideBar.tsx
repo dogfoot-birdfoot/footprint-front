@@ -11,7 +11,7 @@ import {
   MyPageLogo,
   SideBarMenus,
   SubMenuNumber
-} from "@/components/sidebar/SideBar.style"
+} from "@/components/Sidebar/SideBar.style"
 
 const SideBar = () => {
   return (
