@@ -28,12 +28,7 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ size }) => {
   }
 
   return (
-    <Box
-      position="relative"
-      width={size === "lg" ? "500px" : "300px"}
-      height={size === "lg" ? "400px" : "300px"}
-      overflow="hidden"
-    >
+    <SliderContainer size={size}>
       <ImageNumber>{currentIndex + 1}</ImageNumber>
       <SlideImage src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
       <ArrowButton className="left" onClick={goToPrevious}>
@@ -42,6 +37,6 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ size }) => {
       <ArrowButton className="right" onClick={goToNext}>
         <IoIosArrowForward />
       </ArrowButton>
-    </Box>
+    </SliderContainer>
   )
 }

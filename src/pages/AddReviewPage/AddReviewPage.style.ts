@@ -16,7 +16,7 @@ export const AddReview = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  width: 550px;
+  width: 750px;
   height: 550px;
   font-family: "Noto Sans";
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -24,8 +24,15 @@ export const AddReview = styled.div`
 
 export const ButtonBox = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 100%;
+  justify-content: center;
   width: 50px;
+  height: 100%;
+`
+
+export const ContentBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 650px;
+  height: 100%;
 `

@@ -1,9 +1,15 @@
 import styled from "styled-components"
 
-export const SliderContainer = styled.div`
+interface SliderContainerProps {
+  size: string
+}
+
+export const SliderContainer = styled.div<SliderContainerProps>`
   position: relative;
-  width: 500px
-  height: 400px;
+  width: ${props => (props.size === "lg" ? "500px" : "300px")};
+  height: ${props => (props.size === "lg" ? "400px" : "300px")};
+  border="1px solid lightgray"
+  borderRadius="10px"
   overflow: hidden;
 `
 

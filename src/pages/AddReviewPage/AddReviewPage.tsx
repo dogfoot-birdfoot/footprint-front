@@ -1,9 +1,10 @@
 import { Box, Button } from "@chakra-ui/react"
-import { AddReview, ButtonBox, ReviewPage } from "./AddReviewPage.style"
+import { AddReview, ButtonBox, ContentBox, ReviewPage } from "./AddReviewPage.style"
 import React, { useState } from "react"
-import AddIntro from "@/pages/AddReviewPage/AddIntro"
 import AddPictures from "./AddPictures"
-import { AddReviewPageProps } from "./type"
+import AddIntro from "@/pages/AddReviewPage/AddIntro"
+import AddPost from "@/pages/AddReviewPage/AddPost"
+import { AddReviewPageProps } from "@/pages/AddReviewPage/type"
 
 const AddReviewPage: React.FC<AddReviewPageProps> = ({ initialStep }) => {
   const [step, setStep] = useState<number>(initialStep)
@@ -19,14 +20,36 @@ const AddReviewPage: React.FC<AddReviewPageProps> = ({ initialStep }) => {
   return (
     <ReviewPage>
       <AddReview>
-        <ButtonBox></ButtonBox>
-        {step === 1 && <AddIntro nextStep={nextStep} />}
-        {step === 2 && <AddPictures prevStep={prevStep} nextStep={nextStep} />}
-        {step === 3 && <Box>AddPost</Box>}
+        <ButtonBox>
+          {step === 3 && (
+            <Button
+              size="xs"
+              borderRadius="20px"
+              marginTop="20px"
+              marginBottom="20px"
+              backgroundColor="white"
+              onClick={prevStep}
+            >
+              {"<"}
+            </Button>
+          )}
+        </ButtonBox>
+        <ContentBox>
+          {step === 1 && <AddIntro nextStep={nextStep} />}
+          {step === 2 && <AddPictures />}
+          {step === 3 && <AddPost />}
+        </ContentBox>
 
         <ButtonBox>
-          {step !== 1 && (
-            <Button borderRadius="20px" marginBottom="20px" onClick={nextStep}>
+          {step === 2 && (
+            <Button
+              size="xs"
+              borderRadius="20px"
+              marginTop="20px"
+              marginBottom="20px"
+              backgroundColor="white"
+              onClick={nextStep}
+            >
               {">"}
             </Button>
           )}

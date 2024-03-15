@@ -5,8 +5,3 @@ export interface AddReviewPageProps {
 export interface AddIntroProps {
   nextStep: () => void
 }
-
-export interface AddPicturesProps {
-  prevStep: () => void
-  nextStep: () => void
-}
