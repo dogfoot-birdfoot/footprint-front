@@ -26,7 +26,6 @@ const CreateSchedulePage = () => {
             <Buttons size="sm" text="임시저장" />
           </Box>
         </Box>
-        <AddSchedule dates={selectedDates} showSearchBox={showSearchBox} setShowSearchBox={setShowSearchBox} />
       </Box>
     </>
   )
