@@ -16,6 +16,7 @@ import ReviewSharePage from "@/pages/ReviewSharePage/ReviewSharePage"
 import ReviewDetailPage from "@/pages/ReviewDetailPage/ReviewDetailPage"
 import SearchResultsPage from "./pages/SearchResultPage/SearchResultPage"
 import AddReviewPage from "@/pages/AddReviewPage/AddReviewPage"
+import CreateSchedulePage from "@/pages/CreateSchedulePage/CreateSchedulePage"
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="review_share_detail" element={<ReviewDetailPage />} />
             <Route path="search" element={<SearchResultsPage />} />
             <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
+            <Route path="create_schedule" element={<CreateSchedulePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
