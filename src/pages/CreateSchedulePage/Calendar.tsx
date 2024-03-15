@@ -1,7 +1,7 @@
-import { Button } from "@chakra-ui/react"
+import { Box, Button } from "@chakra-ui/react"
+import "react-day-picker/dist/style.css"
 import { format, parse, isValid, isAfter, isBefore } from "date-fns"
 import React, { ChangeEvent, useState } from "react"
-import "react-day-picker/dist/style.css"
 import { DateFormatter, DateRange, DayPicker, SelectRangeEventHandler } from "react-day-picker"
 const seasonEmoji: Record<string, string> = {
   winter: "⛄️",
@@ -30,7 +30,25 @@ const formatCaption: DateFormatter = (month, options) => {
   )
 }
 
-const AddCalendar: React.FC = () => {
+const css = `
+  .my-selected:not([disabled]) { 
+    font-weight: bold; 
+   background-color: #10bbd5;
+   color: #fff;
+  
+  }
+  .my-selected:hover:not([disabled]) { 
+    background-color: #10bbd5;
+    color: #fff;
+  }
+  .my-today { 
+    font-weight: bold;
+    font-size: 140%; 
+    color: #1C90C1;
+  }
+`
+
+const Calendar: React.FC = () => {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>()
   const [fromValue, setFromValue] = useState<string>("")
   const [toValue, setToValue] = useState<string>("")
@@ -78,24 +96,32 @@ const AddCalendar: React.FC = () => {
 
   return (
     <>
-      <DayPicker
-        formatters={{ formatCaption }}
-        mode="range"
-        selected={selectedRange}
-        onSelect={handleRangeSelect}
-        numberOfMonths={2}
-        footer={
+      <style>{css}</style>
+      <Box>
+        <DayPicker
+          formatters={{ formatCaption }}
+          mode="range"
+          selected={selectedRange}
+          onSelect={handleRangeSelect}
+          modifiersClassNames={{
+            selected: "my-selected",
+            today: "my-today"
+          }}
+          modifiersStyles={{
+            disabled: { fontSize: "75%" }
+          }}
+        />
+        <Box display="flex" justifyContent="center">
           <form>
-            <Button>
-              <input size={10} placeholder="From Date" value={fromValue} onChange={handleFromChange} />
-              {" ~ "}
-              <input size={10} placeholder="To Date" value={toValue} onChange={handleToChange} />
+            <Button backgroundColor="#fff" border="1px solid #CBD5E0" borderRadius="20px">
+              <input size={11} placeholder="From Date" value={fromValue} onChange={handleFromChange} />
+              {"~"} <input size={11} placeholder="To Date" value={toValue} onChange={handleToChange} />
             </Button>
           </form>
-        }
-      />
+        </Box>
+      </Box>
     </>
   )
 }
 
-export default AddCalendar
+export default Calendar

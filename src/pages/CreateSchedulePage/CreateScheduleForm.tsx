@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import { Box, Card, CardBody, Heading } from "@chakra-ui/react"
 import { FiChevronDown } from "react-icons/fi"
-import Buttons from "@/components/Buttons/Buttons"
 import AddDestination from "./AddDestination"
-import AddCalendar from "./AddCalendar"
+import Calendar from "./Calendar"
 import AddSchedule from "./AddSchedule"
 import AddPost from "./AddPost"
 
@@ -55,7 +54,7 @@ const CreateScheduleForm = () => {
           {isCalendarBoxVisible && (
             <Card mt="10px">
               <CardBody display="flex" justifyContent="center">
-                <AddCalendar />
+                <Calendar />
               </CardBody>
             </Card>
           )}
