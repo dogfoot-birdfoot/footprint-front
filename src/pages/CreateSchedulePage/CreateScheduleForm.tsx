@@ -11,6 +11,11 @@ const CreateScheduleForm = () => {
   const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
   const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
   const [isPostBoxVisible, setIsPostBoxVisible] = useState(false)
+  const [selectedDates, setSelectedDates] = useState<Date[]>([])
+
+  const updateSelectedDates = (dates: Date[]) => {
+    setSelectedDates(dates)
+  }
 
   const DestinationToggleBox = () => {
     setIsDestinationBoxVisible(!isDestinationBoxVisible)
@@ -54,7 +59,7 @@ const CreateScheduleForm = () => {
           {isCalendarBoxVisible && (
             <Card mt="10px">
               <CardBody display="flex" justifyContent="center">
-                <Calendar />
+                <Calendar updateSelectedDates={updateSelectedDates} />
               </CardBody>
             </Card>
           )}
@@ -66,7 +71,7 @@ const CreateScheduleForm = () => {
           {isScheduleBoxVisible && (
             <Card mt="10px">
               <CardBody>
-                <AddSchedule />
+                <AddSchedule dates={selectedDates} />
               </CardBody>
             </Card>
           )}
