@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
-import { ArrowButton, SlideImage, SliderContainer } from "./ImageSlider.style"
+import { ArrowButton, ImageNumber, SlideImage, SliderContainer } from "./ImageSlider.style"
+import { Box } from "@chakra-ui/react"
 
 const images = [
   "https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -11,7 +12,7 @@ const images = [
   // 더 많은 이미지 URL 추가 가능
 ]
 
-export const ImageSlider = () => {
+export const ImageSlider: React.FC<ImageSliderProps> = ({ size }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const goToPrevious = () => {
@@ -27,7 +28,8 @@ export const ImageSlider = () => {
   }
 
   return (
-    <SliderContainer>
+    <SliderContainer size={size}>
+      <ImageNumber>{currentIndex + 1}</ImageNumber>
       <SlideImage src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
       <ArrowButton className="left" onClick={goToPrevious}>
         <IoIosArrowBack />

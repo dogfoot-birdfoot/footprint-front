@@ -1,0 +1,3 @@
+interface ImageSliderProps {
+  size: string
+}

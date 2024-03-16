@@ -7,7 +7,7 @@ import { DaySchedule } from "../MySchedulePage/DetailSchedule.style"
 import Buttons from "@/components/Buttons/Buttons"
 import { CardInfo, UserInfo } from "@/components/HorizontalCard/HorizontalCard"
 import { FaRegThumbsUp } from "react-icons/fa"
-import { ImageSlider } from "./ImageSlider"
+import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 
 const shareScheduleWithKakao = () => {
   // 여기에 카카오톡 공유 로직을 구현합니다.
@@ -23,7 +23,7 @@ const ReviewDetailPage = () => {
     <Box ml="80px" mb="40px">
       <Box display="flex">
         <Box display="flex" width="1000px" justifyContent="space-between" ml="-20px">
-          <CardInfo />
+          <CardInfo ml_size="50px" />
           <Box ml="20px" mt="30px">
             <Box display="flex">
               <Box mr="2" ml="2">
@@ -58,7 +58,7 @@ const ReviewDetailPage = () => {
       <DaySchedule>
         {destinations.map((destination, index) => (
           <Box key={index}>
-            <DaySummary selectedDay={`Day ${index + 1}`} destinations={destination} />
+            <DaySummary selectedDay={`Day ${index + 1}`} destinations={destination} size="sm" />
           </Box>
         ))}
       </DaySchedule>
@@ -77,7 +77,7 @@ export default ReviewDetailPage
 export const DayReviews = () => {
   return (
     <Box mt="10" display="flex">
-      <ImageSlider />
+      <ImageSlider size="lg" />
       <Box width="500px" ml="45px">
         <Text color="gray.500" fontSize="12px" mt="15px">
           2024.03.05

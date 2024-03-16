@@ -25,6 +25,7 @@ import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"
 import SearchBar from "./SearchBar"
+import DropDownButton from "../DropDownButton/DropDownButton"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -41,7 +42,7 @@ const NavBar: React.FC = () => {
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
   const handleMenuToggle = () => setIsOpen(!isOpen)
   const handleBellToggle = () => setBellIsOpen(!isOpen)
-
+  const myScheduleContents = ["일정생성", "내 여행일정 조회", "내 여행 리뷰쓰기"]
   return (
     <>
       <NavBarStyle>
@@ -62,27 +63,14 @@ const NavBar: React.FC = () => {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">리뷰작성</BreadcrumbLink>
+              <BreadcrumbLink as={Link} to="/addreview">
+                리뷰작성
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem style={{ marginRight: "20px" }}>
               <BreadcrumbLink>
-                <Menu isLazy isOpen={isOpen} onClose={() => setIsOpen(false)}>
-                  <MenuButton onClick={handleMenuToggle}>
-                    <MenuTitle isOpen={isOpen}>
-                      내 여행일정
-                      {isOpen ? <FiChevronUp /> : <FiChevronDown />}
-                    </MenuTitle>
-                  </MenuButton>
-                  <MenuList minWidth="200px">
-                    {/* MenuItems are not rendered unless Menu is open : is Lazy 때문에 */}
-                    <StyledMenuItem as={Link} to="/create_schedule">
-                      일정생성
-                    </StyledMenuItem>
-                    <StyledMenuItem href="#">내 여행일정 조회</StyledMenuItem>
-                    <StyledMenuItem href="#">내 여행 리뷰쓰기</StyledMenuItem>
-                  </MenuList>
-                </Menu>
+                <DropDownButton title="내 여행일정" contents={myScheduleContents} />
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

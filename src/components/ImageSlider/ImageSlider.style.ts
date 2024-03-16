@@ -1,9 +1,15 @@
 import styled from "styled-components"
 
-export const SliderContainer = styled.div`
+interface SliderContainerProps {
+  size: string
+}
+
+export const SliderContainer = styled.div<SliderContainerProps>`
   position: relative;
-  width: 500px;
-  height: 400px;
+  width: ${props => (props.size === "lg" ? "500px" : "300px")};
+  height: ${props => (props.size === "lg" ? "400px" : "300px")};
+  border="1px solid lightgray"
+  borderRadius="10px"
   overflow: hidden;
 `
 
@@ -11,6 +17,19 @@ export const SlideImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`
+
+export const ImageNumber = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5%;
+  right: 5%;
 `
 
 export const ArrowButton = styled.button`
