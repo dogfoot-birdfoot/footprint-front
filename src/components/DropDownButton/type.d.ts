@@ -1,4 +1,4 @@
 export interface DropDownButtonProps {
   title: string
-  contents: string[]
+  contents: { title: string; path: string }[]
 }

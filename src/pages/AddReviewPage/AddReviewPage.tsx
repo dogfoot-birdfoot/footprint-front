@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 import { AddReview, ButtonBox, ContentBox, ReviewPage } from "./AddReviewPage.style"
 import React, { useState } from "react"
 import AddPictures from "./AddPictures"

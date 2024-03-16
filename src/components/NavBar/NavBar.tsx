@@ -4,29 +4,22 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Input,
   Menu,
   MenuButton,
   MenuList,
   Wrap,
   WrapItem
 } from "@chakra-ui/react"
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { AiOutlineBell } from "react-icons/ai"
-import {
-  Logo,
-  MenuTitle,
-  NavBarItems,
-  NavBarStyle,
-  StyledButton,
-  StyledMenuItem
-} from "@/components/NavBar/NavBar.style"
+import { Logo, NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"
 import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
 
+// NavBar 컴포넌트를 정의합니다.
+// React.FC<NavBarProps>를 사용하여 NavBar 컴포넌트의 props 타입을 지정합니다.
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [bellIsOpen, setBellIsOpen] = useState(false)
@@ -42,7 +35,11 @@ const NavBar: React.FC = () => {
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
   const handleMenuToggle = () => setIsOpen(!isOpen)
   const handleBellToggle = () => setBellIsOpen(!isOpen)
-  const myScheduleContents = ["일정생성", "내 여행일정 조회", "내 여행 리뷰쓰기"]
+  const myScheduleContents = [
+    { title: "일정생성", path: "/create_schedule" },
+    { title: "내 여행일정 조회", path: "/schedule_share_detail" },
+    { title: "내 여행 리뷰쓰기", path: "/addreview" }
+  ]
   return (
     <>
       <NavBarStyle>
