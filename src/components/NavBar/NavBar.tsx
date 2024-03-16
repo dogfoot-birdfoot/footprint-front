@@ -33,7 +33,6 @@ const NavBar: React.FC = () => {
   }
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
-  const handleMenuToggle = () => setIsOpen(!isOpen)
   const handleBellToggle = () => setBellIsOpen(!isOpen)
   const myScheduleContents = [
     { title: "일정생성", path: "/create_schedule" },

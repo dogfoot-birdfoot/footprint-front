@@ -1,9 +1,11 @@
-import { Box, Button, Card, CardHeader, Heading, Text } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { Box, Button, Card, CardBody, CardHeader, Heading, Text } from "@chakra-ui/react"
+import React from "react"
 import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
 import { FiChevronDown } from "react-icons/fi"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
+import { useRecoilValue } from "recoil"
+import { selectedPlacesState } from "./selectedPlaceState"
 
 export interface AddScheduleProps {
   dates: Date[] // 날짜 배열
@@ -18,6 +20,8 @@ const formatDate = (date: Date) => {
 }
 
 const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShowSearchBox }) => {
+  const selectedPlaces = useRecoilValue(selectedPlacesState)
+
   // "장소 추가" 버튼 클릭 핸들러
   const handleAddPlaceClick = () => {
     setShowSearchBox(!showSearchBox) // SearchBox의 표시 여부를 토글합니다.
@@ -38,6 +42,18 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShow
                 <FiChevronDown />
               </Button>
             </CardHeader>
+            <CardBody>
+              {/* 선택된 장소들을 순회하며 렌더링 */}
+              {selectedPlaces.length > 0 ? (
+                selectedPlaces.map((place, index) => (
+                  <Box key={index} p={2} borderWidth="1px" borderRadius="lg" mb={2}>
+                    <Text>{place}</Text>
+                  </Box>
+                ))
+              ) : (
+                <Text>선택된 장소가 없습니다.</Text>
+              )}
+            </CardBody>
           </Card>
           <Box display="flex" justifyContent="space-between" mt="10px">
             <Button
