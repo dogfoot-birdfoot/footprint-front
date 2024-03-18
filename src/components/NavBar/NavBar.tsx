@@ -4,23 +4,14 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Input,
   Menu,
   MenuButton,
   MenuList,
   Wrap,
   WrapItem
 } from "@chakra-ui/react"
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { AiOutlineBell } from "react-icons/ai"
-import {
-  Logo,
-  MenuTitle,
-  NavBarItems,
-  NavBarStyle,
-  StyledButton,
-  StyledMenuItem
-} from "@/components/NavBar/NavBar.style"
+import { Logo, NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"
@@ -40,7 +31,6 @@ const NavBar: React.FC = () => {
   }
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
-  const handleMenuToggle = () => setIsOpen(!isOpen)
   const handleBellToggle = () => setBellIsOpen(!isOpen)
   const myScheduleContents = ["일정생성", "내 여행일정 조회", "내 여행 리뷰쓰기"]
   return (

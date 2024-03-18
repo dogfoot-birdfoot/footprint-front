@@ -1,8 +1,8 @@
-import SideBar from "@/components/Sidebar/SideBar"
 import { CiStar } from "react-icons/ci"
 import { MyPageWrapper } from "@/styles/styles"
 import { Favorite, FavoriteList, FavoriteTitle, ListBox, ViewAllButton } from "@/pages/MyFavoritePage/MyFavorite.style"
 import CardItem from "@/components/Card/CardItem"
+import SideBar from "@/components/Sidebar/SideBar"
 
 const MyFavorite = () => {
   return (

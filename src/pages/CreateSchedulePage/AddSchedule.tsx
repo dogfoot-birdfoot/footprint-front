@@ -1,9 +1,11 @@
-import { Box, Button, Card, CardHeader, Heading, Text } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { Box, Button, Card, CardBody, CardHeader, Heading, Text } from "@chakra-ui/react"
+import React, { useEffect, useState } from "react"
 import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
 import { FiChevronDown } from "react-icons/fi"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
+import { useRecoilValue } from "recoil"
+import { selectedPlacesState } from "./selectedPlaceState"
 
 export interface AddScheduleProps {
   dates: Date[] // 날짜 배열
@@ -18,10 +20,25 @@ const formatDate = (date: Date) => {
 }
 
 const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShowSearchBox }) => {
-  // "장소 추가" 버튼 클릭 핸들러
-  const handleAddPlaceClick = () => {
-    setShowSearchBox(!showSearchBox) // SearchBox의 표시 여부를 토글합니다.
+  const selectedPlaces = useRecoilValue(selectedPlacesState)
+  const [placesByDate, setPlacesByDate] = useState<Record<number, string[]>>({})
+  const [activeDateIndex, setActiveDateIndex] = useState<number | null>(null)
+
+  // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
+  const handleAddPlaceClick = (dateIndex: number) => {
+    setActiveDateIndex(dateIndex) // 현재 활성화된 날짜 인덱스 설정
+    setShowSearchBox(!showSearchBox) // SearchBox 표시 토글
   }
+
+  // SearchBox가 닫히고, 현재 활성화된 날짜가 있을 때 해당 날짜에 대한 장소들 업데이트
+  useEffect(() => {
+    if (!showSearchBox && activeDateIndex !== null) {
+      setPlacesByDate(prev => ({
+        ...prev,
+        [activeDateIndex]: selectedPlaces
+      }))
+    }
+  }, [showSearchBox, activeDateIndex, selectedPlaces])
 
   return (
     <>
@@ -38,6 +55,9 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShow
                 <FiChevronDown />
               </Button>
             </CardHeader>
+            <CardBody>
+              {placesByDate[index]?.map((place, placeIndex) => <Text key={placeIndex}>{place}</Text>)}
+            </CardBody>
           </Card>
           <Box display="flex" justifyContent="space-between" mt="10px">
             <Button
@@ -47,7 +67,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShow
               height="30px"
               display="flex"
               justifyContent="center"
-              onClick={handleAddPlaceClick}
+              onClick={() => handleAddPlaceClick(index)}
             >
               장소추가
             </Button>

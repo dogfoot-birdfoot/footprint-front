@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import CreateScheduleForm from "@/pages/CreateSchedulePage/CreateScheduleForm"
-import { Box, Card } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 import Buttons from "@/components/Buttons/Buttons"
 import SearchBox from "./SearchBox"
 
-const CreateSchedulePage = () => {
+const CreateSchedulePage: React.FC = () => {
   const [showSearchBox, setShowSearchBox] = useState(false)
   const [selectedDates, setSelectedDates] = useState<Date[]>([]) // selectedDates 상태 끌어올리기
 

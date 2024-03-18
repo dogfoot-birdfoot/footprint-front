@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom"
 import { Flex } from "@chakra-ui/react"
 import { CgProfile } from "react-icons/cg"
 import { CiStar } from "react-icons/ci"
