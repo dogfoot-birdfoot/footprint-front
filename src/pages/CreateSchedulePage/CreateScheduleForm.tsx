@@ -5,20 +5,16 @@ import AddDestination from "./AddDestination"
 import Calendar from "./Calendar"
 import AddSchedule from "./AddSchedule"
 import AddPost from "./AddPost"
-
-export interface CreateScheduleFormProps {
-  selectedDates: Date[]
-  setSelectedDates: React.Dispatch<React.SetStateAction<Date[]>>
-  showSearchBox: boolean // 부모 컴포넌트로부터 전달받을 새로운 prop
-  setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>> // 부모 컴포넌트로부터 전달받을 새로운 prop
-}
+import { CreateScheduleFormProps } from "./type"
 
 const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
-  selectedDates,
-  setSelectedDates,
+  selectedPlaces,
+  setSelectedPlaces,
   showSearchBox,
   setShowSearchBox
 }) => {
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]) // selectedDates 상태 끌어올리기
+
   const [isDestinationBoxVisible, setIsDestinationBoxVisible] = useState(false)
   const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
   const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
@@ -82,7 +78,13 @@ const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
           {isScheduleBoxVisible && (
             <Card mt="10px">
               <CardBody>
-                <AddSchedule dates={selectedDates} showSearchBox={showSearchBox} setShowSearchBox={setShowSearchBox} />
+                <AddSchedule
+                  dates={selectedDates}
+                  selectedPlaces={selectedPlaces}
+                  setSelectedPlaces={setSelectedPlaces}
+                  showSearchBox={showSearchBox}
+                  setShowSearchBox={setShowSearchBox}
+                />
               </CardBody>
             </Card>
           )}

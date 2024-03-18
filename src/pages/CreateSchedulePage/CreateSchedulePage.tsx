@@ -5,22 +5,22 @@ import Buttons from "@/components/Buttons/Buttons"
 import SearchBox from "./SearchBox"
 
 const CreateSchedulePage: React.FC = () => {
+  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([])
   const [showSearchBox, setShowSearchBox] = useState(false)
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]) // selectedDates 상태 끌어올리기
 
   return (
     <>
       <Box mb="50px">
         <Box display="flex" justifyContent="space-between">
           <CreateScheduleForm
-            selectedDates={selectedDates}
-            setSelectedDates={setSelectedDates}
+            selectedPlaces={selectedPlaces}
+            setSelectedPlaces={setSelectedPlaces}
             showSearchBox={showSearchBox}
             setShowSearchBox={setShowSearchBox}
           />
           {showSearchBox && (
             <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-              <SearchBox />
+              <SearchBox setSelectedPlaces={setSelectedPlaces} />
             </Box>
           )}
           <Box mt="30px">

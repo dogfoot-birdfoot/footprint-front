@@ -5,10 +5,11 @@ import { FiChevronDown } from "react-icons/fi"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
 import { useRecoilValue } from "recoil"
-import { selectedPlacesState } from "./selectedPlaceState"
 
 export interface AddScheduleProps {
   dates: Date[] // 날짜 배열
+  selectedPlaces: string[]
+  setSelectedPlaces: React.Dispatch<React.SetStateAction<string[]>>
   showSearchBox: boolean // SearchBox 표시 여부
   setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>> // SearchBox 표시 여부를 설정하는 함수
 }
@@ -19,8 +20,13 @@ const formatDate = (date: Date) => {
   return format(date, "M월 d일 (EEE)", { locale: ko })
 }
 
-const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShowSearchBox }) => {
-  const selectedPlaces = useRecoilValue(selectedPlacesState)
+const AddSchedule: React.FC<AddScheduleProps> = ({
+  dates,
+  selectedPlaces,
+  setSelectedPlaces,
+  showSearchBox,
+  setShowSearchBox
+}) => {
   const [placesByDate, setPlacesByDate] = useState<Record<number, string[]>>({})
   const [activeDateIndex, setActiveDateIndex] = useState<number | null>(null)
 
@@ -32,12 +38,14 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ dates, showSearchBox, setShow
 
   // SearchBox가 닫히고, 현재 활성화된 날짜가 있을 때 해당 날짜에 대한 장소들 업데이트
   useEffect(() => {
-    if (!showSearchBox && activeDateIndex !== null) {
+    console.log(selectedPlaces)
+    if (activeDateIndex !== null) {
       setPlacesByDate(prev => ({
         ...prev,
         [activeDateIndex]: selectedPlaces
       }))
     }
+    // setSelectedPlaces([]) // 값 초기화
   }, [showSearchBox, activeDateIndex, selectedPlaces])
 
   return (
