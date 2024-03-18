@@ -4,15 +4,7 @@ import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
 import { FiChevronDown } from "react-icons/fi"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
-import { useRecoilValue } from "recoil"
-
-export interface AddScheduleProps {
-  dates: Date[] // 날짜 배열
-  selectedPlaces: string[]
-  setSelectedPlaces: React.Dispatch<React.SetStateAction<string[]>>
-  showSearchBox: boolean // SearchBox 표시 여부
-  setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>> // SearchBox 표시 여부를 설정하는 함수
-}
+import { AddScheduleProps } from "./type"
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
@@ -22,31 +14,35 @@ const formatDate = (date: Date) => {
 
 const AddSchedule: React.FC<AddScheduleProps> = ({
   dates,
+  setSelectedResults,
   selectedPlaces,
-  setSelectedPlaces,
+  placesByDate,
+  setPlacesByDate,
   showSearchBox,
   setShowSearchBox
 }) => {
-  const [placesByDate, setPlacesByDate] = useState<Record<number, string[]>>({})
-  const [activeDateIndex, setActiveDateIndex] = useState<number | null>(null)
-
   // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
   const handleAddPlaceClick = (dateIndex: number) => {
-    setActiveDateIndex(dateIndex) // 현재 활성화된 날짜 인덱스 설정
-    setShowSearchBox(!showSearchBox) // SearchBox 표시 토글
+    if (showSearchBox === -1 || (showSearchBox !== -1 && dateIndex !== showSearchBox)) {
+      // SearchBox 비활성화 시 or 다른 일정 검색창 활성화
+      setShowSearchBox(dateIndex)
+      setSelectedResults(placesByDate[dateIndex] ? placesByDate[dateIndex] : [])
+    } else if (dateIndex == showSearchBox) {
+      // 같은 일정의 장소추가 버튼을 누르면 닫음(값 초기화)
+      setShowSearchBox(-1)
+      setSelectedResults([])
+    }
   }
 
   // SearchBox가 닫히고, 현재 활성화된 날짜가 있을 때 해당 날짜에 대한 장소들 업데이트
   useEffect(() => {
-    console.log(selectedPlaces)
-    if (activeDateIndex !== null) {
+    if (showSearchBox !== -1) {
       setPlacesByDate(prev => ({
         ...prev,
-        [activeDateIndex]: selectedPlaces
+        [showSearchBox]: selectedPlaces
       }))
     }
-    // setSelectedPlaces([]) // 값 초기화
-  }, [showSearchBox, activeDateIndex, selectedPlaces])
+  }, [selectedPlaces])
 
   return (
     <>

@@ -1,10 +1,15 @@
-export interface CreateScheduleFormProps {
-  selectedPlaces: string[]
-  setSelectedPlaces: React.Dispatch<React.SetStateAction<string[]>>
-  showSearchBox: boolean // 부모 컴포넌트로부터 전달받을 새로운 prop
-  setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>> // 부모 컴포넌트로부터 전달받을 새로운 prop
-}
-
 export interface SearchBoxProps {
   setSelectedPlaces: React.Dispatch<React.SetStateAction<string[]>>
+  selectedResults: string[]
+  setSelectedResults: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+export interface AddScheduleProps {
+  dates: Date[] // 날짜 배열
+  setSelectedResults: React.Dispatch<React.SetStateAction<string[]>>
+  selectedPlaces: string[]
+  placesByDate: Record<number, string[]>
+  setPlacesByDate: React.Dispatch<React.SetStateAction<Record<number, string[]>>>
+  showSearchBox: number // SearchBox 표시 여부
+  setShowSearchBox: React.Dispatch<React.SetStateAction<number>> // SearchBox 표시 여부를 설정하는 함수
 }

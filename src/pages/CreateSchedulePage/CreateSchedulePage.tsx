@@ -1,28 +1,14 @@
-import React, { useState } from "react"
+import React from "react"
 import CreateScheduleForm from "@/pages/CreateSchedulePage/CreateScheduleForm"
 import { Box } from "@chakra-ui/react"
 import Buttons from "@/components/Buttons/Buttons"
-import SearchBox from "./SearchBox"
 
 const CreateSchedulePage: React.FC = () => {
-  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([])
-  const [showSearchBox, setShowSearchBox] = useState(false)
-
   return (
     <>
       <Box mb="50px">
         <Box display="flex" justifyContent="space-between">
-          <CreateScheduleForm
-            selectedPlaces={selectedPlaces}
-            setSelectedPlaces={setSelectedPlaces}
-            showSearchBox={showSearchBox}
-            setShowSearchBox={setShowSearchBox}
-          />
-          {showSearchBox && (
-            <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-              <SearchBox setSelectedPlaces={setSelectedPlaces} />
-            </Box>
-          )}
+          <CreateScheduleForm />
           <Box mt="30px">
             <Buttons size="sm" text="임시저장" />
           </Box>

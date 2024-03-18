@@ -5,24 +5,25 @@ import AddDestination from "./AddDestination"
 import Calendar from "./Calendar"
 import AddSchedule from "./AddSchedule"
 import AddPost from "./AddPost"
-import { CreateScheduleFormProps } from "./type"
+import SearchBox from "./SearchBox"
 
-const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
-  selectedPlaces,
-  setSelectedPlaces,
-  showSearchBox,
-  setShowSearchBox
-}) => {
+const CreateScheduleForm: React.FC = ({}) => {
+  // List
   const [selectedDates, setSelectedDates] = useState<Date[]>([]) // selectedDates 상태 끌어올리기
-
-  const [isDestinationBoxVisible, setIsDestinationBoxVisible] = useState(false)
-  const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
-  const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
-  const [isPostBoxVisible, setIsPostBoxVisible] = useState(false)
+  const [placesByDate, setPlacesByDate] = useState<Record<number, string[]>>({}) // 일정별로 선택한 장소
+  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]) // 선택이 확정된 장소
+  const [selectedResults, setSelectedResults] = useState<string[]>([]) // 검색창에 체크된 장소
 
   const updateSelectedDates = (dates: Date[]) => {
     setSelectedDates(dates)
   }
+
+  // Boolean
+  const [showSearchBox, setShowSearchBox] = useState<number>(-1) // 비활성화 : -1, 활성화 : >0
+  const [isDestinationBoxVisible, setIsDestinationBoxVisible] = useState(false)
+  const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
+  const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
+  const [isPostBoxVisible, setIsPostBoxVisible] = useState(false)
 
   const DestinationToggleBox = () => {
     setIsDestinationBoxVisible(!isDestinationBoxVisible)
@@ -36,6 +37,7 @@ const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
   const PostToggleBox = () => {
     setIsPostBoxVisible(!isPostBoxVisible)
   }
+
   return (
     <>
       <>
@@ -80,8 +82,10 @@ const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
               <CardBody>
                 <AddSchedule
                   dates={selectedDates}
+                  setSelectedResults={setSelectedResults}
                   selectedPlaces={selectedPlaces}
-                  setSelectedPlaces={setSelectedPlaces}
+                  placesByDate={placesByDate}
+                  setPlacesByDate={setPlacesByDate}
                   showSearchBox={showSearchBox}
                   setShowSearchBox={setShowSearchBox}
                 />
@@ -102,6 +106,17 @@ const CreateScheduleForm: React.FC<CreateScheduleFormProps> = ({
             </Card>
           )}
         </Box>
+
+        {/* SearchBox 표기 부분 */}
+        {showSearchBox >= 0 && (
+          <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
+            <SearchBox
+              setSelectedPlaces={setSelectedPlaces}
+              selectedResults={selectedResults}
+              setSelectedResults={setSelectedResults}
+            />
+          </Box>
+        )}
       </>
     </>
   )
