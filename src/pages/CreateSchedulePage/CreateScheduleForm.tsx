@@ -6,6 +6,7 @@ import Calendar from "./Calendar"
 import AddSchedule from "./AddSchedule"
 import AddPost from "./AddPost"
 import SearchBox from "./SearchBox"
+import RouteMap from "./RouteMap"
 
 const CreateScheduleForm: React.FC = ({}) => {
   // List
@@ -117,6 +118,9 @@ const CreateScheduleForm: React.FC = ({}) => {
             />
           </Box>
         )}
+
+        {/* Map 표기 부분 */}
+        {showSearchBox < 0 && <RouteMap />}
       </>
     </>
   )
