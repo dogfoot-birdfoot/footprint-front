@@ -33,6 +33,9 @@ function RouteMap() {
     ]
 
     const linePositions = []
+    // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+    // 인포윈도우를 생성합니다
 
     for (let i = 0; i < positions.length; i++) {
       // 표기할 선 위치
@@ -42,18 +45,25 @@ function RouteMap() {
       const marker = new kakao.maps.Marker({
         map: map,
         title: positions[i].title,
-        text: "Hello",
         position: positions[i].latlng
+      })
+
+      // InfoWindow 표시
+      const infowindow = new kakao.maps.InfoWindow({
+        map: map,
+        position: positions[i].latlng,
+        content: `<div style="width:100px; text-align:center;">` + positions[i].title + `</div>`
       })
     }
 
+    // 경로 표기
     const polyline = new kakao.maps.Polyline({
       map: map,
-      path: linePositions, // 선을 구성하는 좌표배열 입니다
-      strokeWeight: 4, // 선의 두께 입니다
-      strokeColor: "#10bbd5", // 선의 색깔입니다
-      strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-      strokeStyle: "solid" // 선의 스타일입니다
+      path: linePositions, // 선을 구성하는 좌표배열
+      strokeWeight: 4,
+      strokeColor: "#10bbd5",
+      strokeOpacity: 0.7,
+      strokeStyle: "solid"
     })
   }, [])
 
