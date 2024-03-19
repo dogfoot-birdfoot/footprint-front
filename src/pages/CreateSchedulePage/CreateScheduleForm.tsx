@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import { Box, Card, CardBody, Heading } from "@chakra-ui/react"
 import { FiChevronDown } from "react-icons/fi"
-import AddDestination from "./AddDestination"
-import Calendar from "./Calendar"
-import AddSchedule from "./AddSchedule"
-import AddPost from "./AddPost"
-import SearchBox from "./SearchBox"
-import RouteMap from "./RouteMap"
+import AddDestination from "@/pages/CreateSchedulePage/AddDestination"
+import Calendar from "@/pages/CreateSchedulePage/Calendar"
+import AddSchedule from "@/pages/CreateSchedulePage/AddSchedule"
+import AddPost from "@/pages/CreateSchedulePage/AddPost"
+import SearchBox from "@/pages/CreateSchedulePage/SearchBox"
+import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
+import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
 
 const CreateScheduleForm: React.FC = ({}) => {
   // List
@@ -128,7 +129,7 @@ const CreateScheduleForm: React.FC = ({}) => {
 
         {activeIndex >= 0 && showSearchBox === false && showLoadSchedule === true && (
           <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-            LoadSchedule
+            <LoadSchedule setSelectedPlaces={setSelectedPlaces} />
           </Box>
         )}
 
