@@ -11,17 +11,13 @@ import {
   Input,
   Text
 } from "@chakra-ui/react"
-import React, { useEffect, useState } from "react"
+import React, { forwardRef, useEffect, useState } from "react"
 import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
-import { AddScheduleProps } from "./type"
+import { AddScheduleProps, Amounts } from "./type"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-
-export interface Amounts {
-  [key: string]: string
-}
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
@@ -36,8 +32,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   placesByDate,
   setPlacesByDate,
   showSearchBox,
-  setShowSearchBox,
-  numberOfForms
+  setShowSearchBox
 }) => {
   // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
   const handleAddPlaceClick = (dateIndex: number) => {
@@ -85,83 +80,85 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     }))
   }
 
-  const [formTimes, setFormTimes] = useState<Record<number, Date>>({}) // 상태의 타입을 명시적으로 정의
+  const [formTimes, setFormTimes] = useState<Record<string, Date>>({}) // 상태의 타입을 string 기반의 키로 변경
 
-  const handleTimeChange = (index: number, date: Date) => {
-    // 매개변수의 타입을 명시적으로 정의
+  const handleTimeChange = (dateKey: string, date: Date) => {
     setFormTimes(prevTimes => ({
       ...prevTimes,
-      [index]: date
+      [dateKey]: date
     }))
   }
+  // 커스텀 DatePicker 입력 컴포넌트
+  const CustomInput = forwardRef<HTMLButtonElement, { value?: string; onClick?: () => void }>(
+    ({ value, onClick }, ref) => (
+      <Button onClick={onClick} ref={ref} size="sm">
+        {value || "시간 선택"}
+      </Button>
+    )
+  )
 
-  const forms = Array.from({ length: numberOfForms }, (_, index) => (
-    <Box key={index} display="flex">
-      <Text>도착시간</Text>
-      <Box ml="10px">
-        <DatePicker
-          selected={formTimes[index]}
-          onChange={(date: Date) => handleTimeChange(index, date)} // onChange 이벤트 타입 명시
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={15}
-          timeCaption="시간"
-          dateFormat="h:mm aa"
-        />
-      </Box>
-    </Box>
-  ))
+  CustomInput.displayName = "CustomInput"
 
   return (
     <>
-      {dates.map((date, index) => (
-        <Box mt="10px" key={index} ml="-10px">
+      {dates.map((date, dateIndex) => (
+        <Box key={dateIndex} mt="10px" ml="-10px">
           <Card fontSize="15px" fontWeight="bold" ml="1">
             <CardHeader display="flex" justifyContent="space-between">
               <Box display="flex">
-                <IndexStyle>Day {index + 1}</IndexStyle>
-                <Heading size="sm">{formatDate(date)}</Heading>
+                <IndexStyle>Day {dateIndex + 1}</IndexStyle>
+                <Heading size="sm" ml="2">
+                  {formatDate(date)}
+                </Heading>
               </Box>
             </CardHeader>
-            <CardBody mt="-30px">
-              {placesByDate[index]?.map((place, placeIndex) => (
-                <Card key={placeIndex} mt="20px">
-                  <Box display="flex" justifyContent="space-between" mt="20px" ml="10px" mb="10px">
-                    <Box display="flex">
-                      <Text>
+            <CardBody mt="4">
+              {placesByDate[dateIndex]?.map((place, placeIndex) => (
+                <Card key={`${dateIndex}-${placeIndex}`} mt="4">
+                  <CardBody>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Text display="flex">
                         <IndexStyle>{placeIndex + 1}</IndexStyle>
+                        <Text>{place}</Text>
                       </Text>
-                      <Text>{place}</Text>
+                      <Box>
+                        도착시간 :
+                        <DatePicker
+                          selected={formTimes[`${dateIndex}-${placeIndex}`]}
+                          onChange={(date: Date) => handleTimeChange(`${dateIndex}-${placeIndex}`, date)}
+                          showTimeSelect
+                          showTimeSelectOnly
+                          timeIntervals={30}
+                          dateFormat="h:mm aa"
+                          customInput={<CustomInput />}
+                        />
+                      </Box>
                     </Box>
-
-                    <Box>{forms}</Box>
-                  </Box>
-                  <Box ml="15px">
-                    <Editable
-                      width="380px"
-                      height="100px"
-                      defaultValue="메모입력"
-                      border="1px solid lightgray"
-                      borderRadius="10px"
-                      selectAllOnFocus={false}
-                    >
-                      <EditablePreview {...editableProps} />
-                      <EditableTextarea {...editableProps} resize="none" maxLength={300} />
-                    </Editable>
-                  </Box>
-                  <Box maxW="400px" ml="10px" mt="20px" mb="20px">
-                    <Text color="textColor" fontSize="15px" display="flex" alignItems="center">
-                      예상경비
+                    <Box mt="4">
+                      <Editable
+                        width="380px"
+                        height="100px"
+                        defaultValue="메모입력"
+                        border="1px solid lightgray"
+                        borderRadius="10px"
+                        selectAllOnFocus={false}
+                      >
+                        <EditablePreview {...editableProps} />
+                        <EditableTextarea {...editableProps} resize="none" maxLength={300} />
+                      </Editable>
+                    </Box>
+                    <Box mt="4" display="flex" alignItems="center">
+                      <Text>예상경비:</Text>
                       <Input
                         placeholder="예상경비를 입력하세요."
-                        maxW="300px"
-                        ml="5px"
-                        value={amounts[`${index}-${placeIndex}`] || ""}
-                        onChange={e => handleChange(e, index, placeIndex)}
+                        ml="2"
+                        width="290px"
+                        value={amounts[`${dateIndex}-${placeIndex}`] || ""}
+                        onChange={e => handleChange(e, dateIndex, placeIndex)}
                       />
-                      <Text ml="10px">원</Text>
-                    </Text>
-                  </Box>
+                      <Text ml="2">원</Text>
+                    </Box>
+                  </CardBody>
                 </Card>
               ))}
             </CardBody>
@@ -174,7 +171,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
               height="30px"
               display="flex"
               justifyContent="center"
-              onClick={() => handleAddPlaceClick(index)}
+              onClick={() => handleAddPlaceClick(dateIndex)}
             >
               장소추가
             </Button>

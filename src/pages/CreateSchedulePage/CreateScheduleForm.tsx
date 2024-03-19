@@ -39,8 +39,6 @@ const CreateScheduleForm: React.FC = ({}) => {
     setIsPostBoxVisible(!isPostBoxVisible)
   }
 
-  const numberOfForms = 1
-
   return (
     <>
       <>
@@ -90,7 +88,7 @@ const CreateScheduleForm: React.FC = ({}) => {
                 setPlacesByDate={setPlacesByDate}
                 showSearchBox={showSearchBox}
                 setShowSearchBox={setShowSearchBox}
-                numberOfForms={numberOfForms}
+                numberOfForms={1}
               />
             </Box>
           )}
