@@ -5,7 +5,7 @@ import { Card, CardBody, CardHeader } from "@chakra-ui/card"
 import { Box, Text } from "@chakra-ui/layout"
 import { Editable, EditablePreview, EditableTextarea } from "@chakra-ui/editable"
 import { IndexStyle, ScheduleDetailStyle } from "./ScheduleDetailPage.style"
-import Map from "@/components/Map/Map"
+import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 
 const destinations = ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"]
 
@@ -14,8 +14,10 @@ const ScheduleDetailPage = () => {
     <Box ml="100px" mb="30px">
       <HorizontalCard />
       <DayTab destinations={destinations} />
-      <Box display="flex" mt="-3" ml="600px">
-        <Map />
+      <Box display="flex" mt="-2" ml="600px">
+        <Box mt="-10">
+          <RouteMap />
+        </Box>
       </Box>
       <ScheduleDetailStyle>
         {destinations.map((destination, index) => (
