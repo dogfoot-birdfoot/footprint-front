@@ -15,8 +15,7 @@ import {
   Button
 } from "@chakra-ui/react"
 import { IconStyle } from "@/components/NavBar/SearchBar.style"
-import { useSetRecoilState } from "recoil"
-import { selectedPlacesState } from "./selectedPlaceState"
+import { SearchBoxProps } from "./type"
 
 // 예시로 사용할 모의 한국 지역 및 여행지 데이터
 const mockLocations = [
@@ -39,12 +38,10 @@ const mockLocations = [
   "동대문 디자인 플라자"
 ]
 
-const SearchBox: React.FC = () => {
+const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResults, setSelectedResults }) => {
   // 리코일 사용해서 상태를 관리해줌 (너무 여기저기 컴포넌트를 거쳐야해서 리코일이 간편함)
-  const setSelectedPlaces = useSetRecoilState(selectedPlacesState)
   const [query, setQuery] = useState("")
-  const [results, setResults] = useState<string[]>([])
-  const [selectedResults, setSelectedResults] = useState<string[]>([])
+  const [results, setResults] = useState<string[]>(mockLocations)
 
   const handleAddPlaces = () => {
     // 선택된 장소들을 리코일 상태에 업데이트
@@ -111,7 +108,7 @@ const SearchBox: React.FC = () => {
           height="40px"
           onClick={handleAddPlaces}
         >
-          장소확정
+          선택 완료
         </Button>
       </Box>
     </Card>
