@@ -10,6 +10,10 @@ export interface AddScheduleProps {
   selectedPlaces: string[]
   placesByDate: Record<number, string[]>
   setPlacesByDate: React.Dispatch<React.SetStateAction<Record<number, string[]>>>
-  showSearchBox: number // SearchBox 표시 여부
-  setShowSearchBox: React.Dispatch<React.SetStateAction<number>> // SearchBox 표시 여부를 설정하는 함수
+  showSearchBox: boolean // SearchBox 표시 여부
+  setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>> // SearchBox 표시 여부를 설정하는 함수
+  showLoadSchedule: boolean
+  setShowLoadSchedule: React.Dispatch<React.SetStateAction<boolean>>
+  activeIndex: number
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>
 }
