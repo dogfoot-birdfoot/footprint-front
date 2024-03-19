@@ -7,6 +7,7 @@ import {
   Editable,
   EditablePreview,
   EditableTextarea,
+  Flex,
   Heading,
   Input,
   Text
@@ -112,17 +113,17 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                 </Heading>
               </Box>
             </CardHeader>
-            <CardBody mt="4">
+            <CardBody mt="-30px">
               {placesByDate[dateIndex]?.map((place, placeIndex) => (
                 <Card key={`${dateIndex}-${placeIndex}`} mt="4">
                   <CardBody>
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Flex justifyContent="space-between" alignItems="center">
                       <Text display="flex">
                         <IndexStyle>{placeIndex + 1}</IndexStyle>
                         <Text>{place}</Text>
                       </Text>
-                      <Box>
-                        도착시간 :
+                      <Flex alignItems="center">
+                        <Text mr="2">도착시간:</Text>
                         <DatePicker
                           selected={formTimes[`${dateIndex}-${placeIndex}`]}
                           onChange={(date: Date) => handleTimeChange(`${dateIndex}-${placeIndex}`, date)}
@@ -132,61 +133,49 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                           dateFormat="h:mm aa"
                           customInput={<CustomInput />}
                         />
-                      </Box>
-                    </Box>
+                      </Flex>
+                    </Flex>
                     <Box mt="4">
                       <Editable
-                        width="380px"
-                        height="100px"
+                        {...editableProps}
                         defaultValue="메모입력"
                         border="1px solid lightgray"
                         borderRadius="10px"
-                        selectAllOnFocus={false}
                       >
-                        <EditablePreview {...editableProps} />
-                        <EditableTextarea {...editableProps} resize="none" maxLength={300} />
+                        <EditablePreview />
+                        <EditableTextarea resize="none" maxLength={300} />
                       </Editable>
                     </Box>
-                    <Box mt="4" display="flex" alignItems="center">
+                    <Flex mt="4" alignItems="center">
                       <Text>예상경비:</Text>
                       <Input
-                        placeholder="예상경비를 입력하세요."
                         ml="2"
                         width="290px"
+                        placeholder="예상경비를 입력하세요."
                         value={amounts[`${dateIndex}-${placeIndex}`] || ""}
                         onChange={e => handleChange(e, dateIndex, placeIndex)}
                       />
                       <Text ml="2">원</Text>
-                    </Box>
+                    </Flex>
                   </CardBody>
                 </Card>
               ))}
             </CardBody>
           </Card>
-          <Box display="flex" justifyContent="space-between" mt="10px">
+          <Flex justifyContent="space-between" mt="10px">
             <Button
               _hover={{ bg: "secondary", color: "#fff" }}
               size="sm"
               width="200px"
               height="30px"
-              display="flex"
-              justifyContent="center"
               onClick={() => handleAddPlaceClick(dateIndex)}
             >
               장소추가
             </Button>
-
-            <Button
-              _hover={{ bg: "secondary", color: "#fff" }}
-              size="sm"
-              width="200px"
-              height="30px"
-              display="flex"
-              justifyContent="center"
-            >
+            <Button _hover={{ bg: "secondary", color: "#fff" }} size="sm" width="200px" height="30px">
               일정 불러오기
             </Button>
-          </Box>
+          </Flex>
         </Box>
       ))}
     </>
