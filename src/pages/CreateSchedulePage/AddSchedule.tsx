@@ -1,4 +1,17 @@
-import { Box, Button, Card, CardBody, CardHeader, Heading, Text } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  EditableTextarea,
+  Heading,
+  Input,
+  Text
+} from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
 import { FiChevronDown } from "react-icons/fi"
@@ -33,6 +46,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
       setSelectedResults([])
     }
   }
+  const [amount, setAmount] = useState("")
 
   // SearchBox가 닫히고, 현재 활성화된 날짜가 있을 때 해당 날짜에 대한 장소들 업데이트
   useEffect(() => {
@@ -43,6 +57,23 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
       }))
     }
   }, [selectedPlaces])
+
+  const editableProps = {
+    width: "380px",
+    height: "100px",
+    fontSize: "13px",
+    whiteSpace: "pre-wrap",
+    padding: "5px 5px 5px 5px"
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
+    // 숫자만 추출 (쉼표, 비숫자 제거)
+    const numericValue = value.replace(/[^0-9]/g, "")
+    // 숫자를 한국식 금액 형식으로 변환
+    const formattedValue = new Intl.NumberFormat("ko-KR").format(Number(numericValue))
+    setAmount(formattedValue)
+  }
 
   return (
     <>
@@ -60,7 +91,42 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
               </Button>
             </CardHeader>
             <CardBody>
-              {placesByDate[index]?.map((place, placeIndex) => <Text key={placeIndex}>{place}</Text>)}
+              {placesByDate[index]?.map((place, placeIndex) => (
+                <Card key={placeIndex}>
+                  <Text mt="7px">
+                    <Box display="flex">
+                      <IndexStyle>{placeIndex + 1}</IndexStyle>
+                      {place}
+                    </Box>
+                  </Text>
+                  <Box ml="15px">
+                    <Editable
+                      width="380px"
+                      height="100px"
+                      defaultValue="메모입력"
+                      border="1px solid lightgray"
+                      borderRadius="10px"
+                      selectAllOnFocus={false}
+                    >
+                      <EditablePreview {...editableProps} />
+                      <EditableTextarea {...editableProps} resize="none" maxLength={300} />
+                    </Editable>
+                  </Box>
+                  <Box maxW="400px" ml="10px" mt="20px" mb="20px">
+                    <Text color="textColor" fontSize="15px" display="flex" alignItems="center">
+                      예상경비
+                      <Input
+                        placeholder="예상경비를 입력하세요."
+                        maxW="300px"
+                        ml="5px"
+                        value={amount}
+                        onChange={handleChange}
+                      />
+                      <Text ml="10px">원</Text>
+                    </Text>
+                  </Box>
+                </Card>
+              ))}
             </CardBody>
           </Card>
           <Box display="flex" justifyContent="space-between" mt="10px">
