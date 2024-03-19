@@ -10,12 +10,8 @@ export const DestinationItem = styled.span`
   align-items: center;
   font-size: 14px;
 
-  & + & {
-    margin-left: 8px;
-  }
-
   svg {
-    margin: 0 5px;
+    margin: 0 6px 0 6px;
   }
 `
 

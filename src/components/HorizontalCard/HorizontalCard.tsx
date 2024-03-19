@@ -6,7 +6,7 @@ import KakaoButton from "../KakaoButton/KakaoButton"
 import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import { Avatar } from "@chakra-ui/avatar"
 import Buttons from "@/components/Buttons/Buttons"
-import { HorizontalCardContentProps } from "@components/HorizontalCard/type"
+import { HorizontalCardContentProps } from "@/components/HorizontalCard/type"
 import { Badge } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
 import { CardInfoProps } from "./type"
@@ -55,7 +55,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ si
   )
 }
 
-export const CardInfo: React.FC<CardInfoProps> = ({ ml_size }) => {
+export const CardInfo: React.FC<CardInfoProps> = ({ title, ml_size }) => {
   return (
     <>
       <Box width="260px" ml={ml_size} mt="10px">
@@ -77,7 +77,7 @@ export const CardInfo: React.FC<CardInfoProps> = ({ ml_size }) => {
             maxWidth: "18ch" // 18글자를 넘어가면 잘라내고 "..." 표시
           }}
         >
-          OO이랑 떠나는 부산 여행
+          {title}
         </Heading>
       </Box>
     </>

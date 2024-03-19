@@ -18,7 +18,7 @@ const DaySummary: React.FC<DaySummaryProps> = ({ selectedDay, destinations, size
           ? { width: "550px", mt: "10px", borderRadius: "30px", maxWidth: "550px", maxHeight: "70px" }
           : { width: "430px", mt: "10px", borderRadius: "30px", maxWidth: "430px", maxHeight: "70px" })}
       >
-        <CardBody display="flex" justifyContent="center">
+        <CardBody display="flex" justifyContent="start" ml="20px">
           <DayHeader>{selectedDay}.</DayHeader>
           <DayDestination>
             {destinations.map((destination, index) =>

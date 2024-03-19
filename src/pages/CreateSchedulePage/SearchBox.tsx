@@ -39,12 +39,11 @@ const mockLocations = [
 ]
 
 const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResults, setSelectedResults }) => {
-  // 리코일 사용해서 상태를 관리해줌 (너무 여기저기 컴포넌트를 거쳐야해서 리코일이 간편함)
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<string[]>(mockLocations)
 
   const handleAddPlaces = () => {
-    // 선택된 장소들을 리코일 상태에 업데이트
+    // 선택된 장소들을 업데이트
     setSelectedPlaces(selectedResults)
   }
 

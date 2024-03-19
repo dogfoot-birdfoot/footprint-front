@@ -3,5 +3,6 @@ export interface HorizontalCardContentProps {
 }
 
 export interface CardInfoProps {
+  title?: stirng
   ml_size: string
 }

@@ -33,27 +33,50 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   placesByDate,
   setPlacesByDate,
   showSearchBox,
-  setShowSearchBox
+  setShowSearchBox,
+  showLoadSchedule,
+  setShowLoadSchedule,
+  activeIndex,
+  setActiveIndex
 }) => {
   // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
   const handleAddPlaceClick = (dateIndex: number) => {
-    if (showSearchBox === -1 || (showSearchBox !== -1 && dateIndex !== showSearchBox)) {
-      // SearchBox 비활성화 시 or 다른 일정 검색창 활성화
-      setShowSearchBox(dateIndex)
+    // SearchBox 비활성화, LoadSchedule 활성화 시 or 다른 일정 검색창 활성화
+    if (showLoadSchedule || activeIndex === -1 || (showSearchBox === true && dateIndex !== activeIndex)) {
+      setShowLoadSchedule(false)
+      setShowSearchBox(true)
+      setActiveIndex(dateIndex)
       setSelectedResults(placesByDate[dateIndex] ? placesByDate[dateIndex] : [])
-    } else if (dateIndex == showSearchBox) {
-      // 같은 일정의 장소추가 버튼을 누르면 닫음(값 초기화)
-      setShowSearchBox(-1)
+    }
+    // 같은 일정의 장소추가 버튼을 누르면 닫음(값 초기화)
+    else if (dateIndex === activeIndex) {
+      setShowSearchBox(false)
+      setActiveIndex(-1)
       setSelectedResults([])
     }
   }
 
-  // SearchBox가 닫히고, 현재 활성화된 날짜가 있을 때 해당 날짜에 대한 장소들 업데이트
+  const handleLoadScheduleClick = (dateIndex: number) => {
+    if (showSearchBox || activeIndex === -1 || (showLoadSchedule === true && dateIndex !== activeIndex)) {
+      // SearchBox 활성화, LoadSchedule 비활성화 시 or 다른 일정 불러오기 창 활성화
+      setShowLoadSchedule(false)
+      setShowLoadSchedule(true)
+      setShowSearchBox(false)
+      setActiveIndex(dateIndex)
+    } else if (dateIndex === activeIndex) {
+      // 같은 일정의 일정 불러오기 버튼을 누르면 닫음(값 초기화)
+      setShowLoadSchedule(false)
+      setActiveIndex(-1)
+    }
+    setShowSearchBox(false)
+  }
+
+  // SearchBox에서 선택완료 버튼을 누를 시, 활성화된 날짜에 대한 장소들 업데이트
   useEffect(() => {
-    if (showSearchBox !== -1) {
+    if (activeIndex !== -1) {
       setPlacesByDate(prev => ({
         ...prev,
-        [showSearchBox]: selectedPlaces
+        [activeIndex]: selectedPlaces
       }))
     }
   }, [selectedPlaces])
@@ -172,7 +195,15 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
             >
               장소추가
             </Button>
-            <Button _hover={{ bg: "secondary", color: "#fff" }} size="sm" width="200px" height="30px">
+            <Button
+              _hover={{ bg: "secondary", color: "#fff" }}
+              size="sm"
+              width="200px"
+              height="30px"
+              display="flex"
+              justifyContent="center"
+              onClick={() => handleLoadScheduleClick(index)}
+            >
               일정 불러오기
             </Button>
           </Flex>

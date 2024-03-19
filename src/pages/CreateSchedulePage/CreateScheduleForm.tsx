@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import { Box, Card, CardBody, Heading } from "@chakra-ui/react"
 import { FiChevronDown } from "react-icons/fi"
-import AddDestination from "./AddDestination"
-import Calendar from "./Calendar"
-import AddSchedule from "./AddSchedule"
-import AddPost from "./AddPost"
-import SearchBox from "./SearchBox"
-import RouteMap from "./RouteMap"
+import AddDestination from "@/pages/CreateSchedulePage/AddDestination"
+import Calendar from "@/pages/CreateSchedulePage/Calendar"
+import AddSchedule from "@/pages/CreateSchedulePage/AddSchedule"
+import AddPost from "@/pages/CreateSchedulePage/AddPost"
+import SearchBox from "@/pages/CreateSchedulePage/SearchBox"
+import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
+import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
 
 const CreateScheduleForm: React.FC = ({}) => {
   // List
@@ -19,8 +20,11 @@ const CreateScheduleForm: React.FC = ({}) => {
     setSelectedDates(dates)
   }
 
+  const [activeIndex, setActiveIndex] = useState<number>(-1)
+
   // Boolean
-  const [showSearchBox, setShowSearchBox] = useState<number>(-1) // 비활성화 : -1, 활성화 : >0
+  const [showSearchBox, setShowSearchBox] = useState(false)
+  const [showLoadSchedule, setShowLoadSchedule] = useState(false)
   const [isDestinationBoxVisible, setIsDestinationBoxVisible] = useState(false)
   const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
   const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
@@ -88,6 +92,10 @@ const CreateScheduleForm: React.FC = ({}) => {
                 setPlacesByDate={setPlacesByDate}
                 showSearchBox={showSearchBox}
                 setShowSearchBox={setShowSearchBox}
+                showLoadSchedule={showLoadSchedule}
+                setShowLoadSchedule={setShowLoadSchedule}
+                activeIndex={activeIndex}
+                setActiveIndex={setActiveIndex}
                 numberOfForms={1}
               />
             </Box>
@@ -108,7 +116,7 @@ const CreateScheduleForm: React.FC = ({}) => {
         </Box>
 
         {/* SearchBox 표기 부분 */}
-        {showSearchBox >= 0 && (
+        {activeIndex >= 0 && showSearchBox === true && showLoadSchedule === false && (
           <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
             <SearchBox
               setSelectedPlaces={setSelectedPlaces}
@@ -118,8 +126,14 @@ const CreateScheduleForm: React.FC = ({}) => {
           </Box>
         )}
 
+        {activeIndex >= 0 && showSearchBox === false && showLoadSchedule === true && (
+          <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
+            <LoadSchedule activeIndex={activeIndex} setSelectedPlaces={setSelectedPlaces} />
+          </Box>
+        )}
+
         {/* Map 표기 부분 */}
-        {showSearchBox < 0 && <RouteMap />}
+        {activeIndex < 0 && showSearchBox === false && showLoadSchedule === false && <RouteMap />}
       </>
     </>
   )
