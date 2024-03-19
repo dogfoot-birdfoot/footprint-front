@@ -5,7 +5,6 @@ import {
   CardBody,
   CardHeader,
   Editable,
-  EditableInput,
   EditablePreview,
   EditableTextarea,
   Heading,
@@ -14,10 +13,15 @@ import {
 } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
-import { FiChevronDown } from "react-icons/fi"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
 import { AddScheduleProps } from "./type"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+
+export interface Amounts {
+  [key: string]: string
+}
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
@@ -32,7 +36,8 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   placesByDate,
   setPlacesByDate,
   showSearchBox,
-  setShowSearchBox
+  setShowSearchBox,
+  numberOfForms
 }) => {
   // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
   const handleAddPlaceClick = (dateIndex: number) => {
@@ -46,7 +51,6 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
       setSelectedResults([])
     }
   }
-  const [amount, setAmount] = useState("")
 
   // SearchBox가 닫히고, 현재 활성화된 날짜가 있을 때 해당 날짜에 대한 장소들 업데이트
   useEffect(() => {
@@ -65,15 +69,48 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     whiteSpace: "pre-wrap",
     padding: "5px 5px 5px 5px"
   }
+  const [amounts, setAmounts] = useState<Amounts>({})
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, dateIndex: number, placeIndex: number) => {
+    const { value } = e.target
     // 숫자만 추출 (쉼표, 비숫자 제거)
     const numericValue = value.replace(/[^0-9]/g, "")
     // 숫자를 한국식 금액 형식으로 변환
     const formattedValue = new Intl.NumberFormat("ko-KR").format(Number(numericValue))
-    setAmount(formattedValue)
+
+    // amounts 상태 업데이트
+    setAmounts(prevAmounts => ({
+      ...prevAmounts,
+      [`${dateIndex}-${placeIndex}`]: formattedValue
+    }))
   }
+
+  const [formTimes, setFormTimes] = useState<Record<number, Date>>({}) // 상태의 타입을 명시적으로 정의
+
+  const handleTimeChange = (index: number, date: Date) => {
+    // 매개변수의 타입을 명시적으로 정의
+    setFormTimes(prevTimes => ({
+      ...prevTimes,
+      [index]: date
+    }))
+  }
+
+  const forms = Array.from({ length: numberOfForms }, (_, index) => (
+    <Box key={index} display="flex">
+      <Text>도착시간</Text>
+      <Box ml="10px">
+        <DatePicker
+          selected={formTimes[index]}
+          onChange={(date: Date) => handleTimeChange(index, date)} // onChange 이벤트 타입 명시
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="시간"
+          dateFormat="h:mm aa"
+        />
+      </Box>
+    </Box>
+  ))
 
   return (
     <>
@@ -85,20 +122,20 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                 <IndexStyle>Day {index + 1}</IndexStyle>
                 <Heading size="sm">{formatDate(date)}</Heading>
               </Box>
-              <Button size="xs" width="100px" display="flex" justifyContent="space-between">
-                <Text ml="4">도착시간</Text>
-                <FiChevronDown />
-              </Button>
             </CardHeader>
-            <CardBody>
+            <CardBody mt="-30px">
               {placesByDate[index]?.map((place, placeIndex) => (
-                <Card key={placeIndex}>
-                  <Text mt="7px">
+                <Card key={placeIndex} mt="20px">
+                  <Box display="flex" justifyContent="space-between" mt="20px" ml="10px" mb="10px">
                     <Box display="flex">
-                      <IndexStyle>{placeIndex + 1}</IndexStyle>
-                      {place}
+                      <Text>
+                        <IndexStyle>{placeIndex + 1}</IndexStyle>
+                      </Text>
+                      <Text>{place}</Text>
                     </Box>
-                  </Text>
+
+                    <Box>{forms}</Box>
+                  </Box>
                   <Box ml="15px">
                     <Editable
                       width="380px"
@@ -119,8 +156,8 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                         placeholder="예상경비를 입력하세요."
                         maxW="300px"
                         ml="5px"
-                        value={amount}
-                        onChange={handleChange}
+                        value={amounts[`${index}-${placeIndex}`] || ""}
+                        onChange={e => handleChange(e, index, placeIndex)}
                       />
                       <Text ml="10px">원</Text>
                     </Text>

@@ -12,4 +12,5 @@ export interface AddScheduleProps {
   setPlacesByDate: React.Dispatch<React.SetStateAction<Record<number, string[]>>>
   showSearchBox: number // SearchBox 표시 여부
   setShowSearchBox: React.Dispatch<React.SetStateAction<number>> // SearchBox 표시 여부를 설정하는 함수
+  numberOfForms: number // numberOfForms를 prop으로 받음
 }

@@ -39,6 +39,8 @@ const CreateScheduleForm: React.FC = ({}) => {
     setIsPostBoxVisible(!isPostBoxVisible)
   }
 
+  const numberOfForms = 1
+
   return (
     <>
       <>
@@ -79,19 +81,18 @@ const CreateScheduleForm: React.FC = ({}) => {
             </CardBody>
           </Card>
           {isScheduleBoxVisible && (
-            <Card mt="10px">
-              <CardBody>
-                <AddSchedule
-                  dates={selectedDates}
-                  setSelectedResults={setSelectedResults}
-                  selectedPlaces={selectedPlaces}
-                  placesByDate={placesByDate}
-                  setPlacesByDate={setPlacesByDate}
-                  showSearchBox={showSearchBox}
-                  setShowSearchBox={setShowSearchBox}
-                />
-              </CardBody>
-            </Card>
+            <Box mt="10px">
+              <AddSchedule
+                dates={selectedDates}
+                setSelectedResults={setSelectedResults}
+                selectedPlaces={selectedPlaces}
+                placesByDate={placesByDate}
+                setPlacesByDate={setPlacesByDate}
+                showSearchBox={showSearchBox}
+                setShowSearchBox={setShowSearchBox}
+                numberOfForms={numberOfForms}
+              />
+            </Box>
           )}
 
           <Card mt="10px" bg="primary" borderRadius="20px" color="white">
