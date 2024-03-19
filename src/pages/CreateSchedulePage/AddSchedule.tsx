@@ -45,6 +45,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   const handleLoadScheduleClick = (dateIndex: number) => {
     if (showSearchBox || activeIndex === -1 || (showLoadSchedule === true && dateIndex !== activeIndex)) {
       // SearchBox 활성화, LoadSchedule 비활성화 시 or 다른 일정 불러오기 창 활성화
+      setShowLoadSchedule(false)
       setShowLoadSchedule(true)
       setShowSearchBox(false)
       setActiveIndex(dateIndex)

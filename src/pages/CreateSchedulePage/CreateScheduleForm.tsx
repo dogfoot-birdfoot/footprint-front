@@ -129,7 +129,7 @@ const CreateScheduleForm: React.FC = ({}) => {
 
         {activeIndex >= 0 && showSearchBox === false && showLoadSchedule === true && (
           <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-            <LoadSchedule setSelectedPlaces={setSelectedPlaces} />
+            <LoadSchedule activeIndex={activeIndex} setSelectedPlaces={setSelectedPlaces} />
           </Box>
         )}
 
