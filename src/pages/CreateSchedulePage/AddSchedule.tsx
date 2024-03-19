@@ -202,7 +202,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
               height="30px"
               display="flex"
               justifyContent="center"
-              onClick={() => handleLoadScheduleClick(index)}
+              onClick={() => handleLoadScheduleClick(dateIndex)}
             >
               일정 불러오기
             </Button>
