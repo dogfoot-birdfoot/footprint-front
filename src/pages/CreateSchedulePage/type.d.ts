@@ -16,9 +16,14 @@ export interface AddScheduleProps {
   setShowLoadSchedule: React.Dispatch<React.SetStateAction<boolean>>
   activeIndex: number // 현재 활성화된 날짜의 index
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
+  numberOfForms: number // numberOfForms를 prop으로 받음
 }
 
 export interface LoadScheduleProps {
   activeIndex: number
   setSelectedPlaces: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+export interface Amounts {
+  [key: string]: string
 }
