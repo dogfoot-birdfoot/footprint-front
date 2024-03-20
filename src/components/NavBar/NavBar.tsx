@@ -4,6 +4,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  IconButton,
   Menu,
   MenuButton,
   MenuList,
@@ -17,17 +18,28 @@ import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"
 import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
+import { useRecoilState } from "recoil"
+import { userState } from "@/hooks/loginAtom"
+import { getAuth, signOut } from "firebase/auth"
+import { MdLogout } from "react-icons/md"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [bellIsOpen, setBellIsOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [user, setUser] = useRecoilState(userState)
   const navigate = useNavigate()
+  const auth = getAuth()
 
-  //로그인상태관리 (진짜로 로그인되면 아바타가 바뀌도록 수정해야함)
-  const handleLogin = () => {
-    setIsLoggedIn(true)
-    navigate("/login")
+  // 로그아웃 처리 함수
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setUser(null) // Recoil 상태 업데이트하여 로그아웃 상태 반영
+        navigate("/login")
+      })
+      .catch(error => {
+        console.error("Logout error:", error)
+      })
   }
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
@@ -81,12 +93,22 @@ const NavBar: React.FC = () => {
           </div>
           <Wrap>
             <WrapItem>
-              {isLoggedIn ? (
-                <NavLink to="/profile">
-                  <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-                </NavLink>
+              {user ? (
+                <>
+                  <Link to="/profile">
+                    <Avatar name={user.name} src={user.avatar} />
+                  </Link>
+                  <IconButton
+                    aria-label="로그아웃"
+                    icon={<MdLogout />}
+                    size="md"
+                    variant="ghost" // 배경을 없애기 위해 ghost variant 사용
+                    onClick={handleLogout}
+                    ml={4}
+                  />
+                </>
               ) : (
-                <StyledButton onClick={handleLogin}>Login</StyledButton>
+                <StyledButton onClick={() => navigate("/login")}>Login</StyledButton>
               )}
             </WrapItem>
           </Wrap>
