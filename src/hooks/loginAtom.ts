@@ -1,8 +1,11 @@
-// loginAtom.ts
 import { atom } from "recoil"
-import { User } from "firebase/auth"
+
+interface User {
+  name: string
+  avatar: string
+}
 
 export const userState = atom<User | null>({
   key: "userState",
-  default: null
+  default: null // 로그인하지 않은 상태
 })
