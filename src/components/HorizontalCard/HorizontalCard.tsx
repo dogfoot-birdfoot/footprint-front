@@ -6,10 +6,11 @@ import KakaoButton from "../KakaoButton/KakaoButton"
 import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import { Avatar } from "@chakra-ui/avatar"
 import Buttons from "@/components/Buttons/Buttons"
-import { HorizontalCardContentProps } from "@/components/HorizontalCard/type"
-import { Badge } from "@chakra-ui/react"
+import { Badge, IconButton } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
-import { CardInfoProps } from "./type"
+import { CardInfoProps, HorizontalCardContentProps } from "./type"
+import { TiStarFullOutline } from "react-icons/ti"
+import { FaRegThumbsUp } from "react-icons/fa"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -22,7 +23,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ si
 
   return (
     <>
-      <Box display="flex" mt="20px" mb="20px" alignItems="center">
+      <Box display="flex" mt="20px" mb="20px" alignItems="center" ml="30px">
         <Image
           src="https://plus.unsplash.com/premium_photo-1661963130289-aa70dd516940?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="광안대교사진"
@@ -47,6 +48,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ si
               <TagStyle>휴식</TagStyle>
               <TagStyle>바다여행</TagStyle>
             </TagBox>
+
             <UserInfo />
           </Box>
         </Box>
@@ -55,7 +57,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardContentProps> = ({ si
   )
 }
 
-export const CardInfo: React.FC<CardInfoProps> = ({ title, ml_size }) => {
+export const CardInfo: React.FC<CardInfoProps> = ({ ml_size }) => {
   return (
     <>
       <Box width="260px" ml={ml_size} mt="10px">
@@ -77,7 +79,7 @@ export const CardInfo: React.FC<CardInfoProps> = ({ title, ml_size }) => {
             maxWidth: "18ch" // 18글자를 넘어가면 잘라내고 "..." 표시
           }}
         >
-          {title}
+          OO이랑 떠나는 부산 여행
         </Heading>
       </Box>
     </>
@@ -102,15 +104,28 @@ export const UserInfo = () => {
 
 export const ScheduleButtons = () => {
   return (
-    <Box mt="6" display="flex">
-      <Box mr="2">
-        <Buttons text="수정" size="xs" />
+    <Box>
+      <Box mt="6" display="flex">
+        <Box mr="2">
+          <Buttons text="수정" size="xs" />
+        </Box>
+        <Box mr="2">
+          <Buttons text="삭제" size="xs" />
+        </Box>
+        <Box mr="4">
+          <Buttons text="리뷰작성" size="xs" />
+        </Box>
       </Box>
-      <Box mr="2">
-        <Buttons text="삭제" size="xs" />
-      </Box>
-      <Box mr="4">
-        <Buttons text="리뷰작성" size="xs" />
+      <Box mt="190px" ml="45px">
+        <IconButton
+          mr="10px"
+          aria-label="good"
+          icon={<TiStarFullOutline />}
+          bg="#ffe351"
+          color="white"
+          borderRadius="20px"
+        />
+        <IconButton aria-label="favorite" icon={<FaRegThumbsUp />} bg="primary" color="white" borderRadius="20px" />
       </Box>
     </Box>
   )
