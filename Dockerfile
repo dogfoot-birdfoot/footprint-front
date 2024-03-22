@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:18.15.0
 
 WORKDIR /app
 COPY package.json .
@@ -6,4 +6,4 @@ RUN npm i
 COPY . .
 EXPOSE 3000
 
-CMD ["craco", "start"]
+CMD ["npm", "start"]
