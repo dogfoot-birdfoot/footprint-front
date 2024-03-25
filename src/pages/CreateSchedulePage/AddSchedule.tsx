@@ -143,7 +143,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Flex justifyContent="space-between" alignItems="center">
                       <Text display="flex">
                         <IndexStyle>{placeIndex + 1}</IndexStyle>
-                        <Text>{place}</Text>
+                        <Text>{place["place_name"]}</Text>
                       </Text>
                       <Flex alignItems="center">
                         <Text mr="2">도착시간:</Text>

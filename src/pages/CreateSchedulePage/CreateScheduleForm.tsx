@@ -8,13 +8,14 @@ import AddPost from "@/pages/CreateSchedulePage/AddPost"
 import SearchBox from "@/pages/CreateSchedulePage/SearchBox"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
+import { resultObject } from "./type"
 
 const CreateScheduleForm: React.FC = ({}) => {
   // List
   const [selectedDates, setSelectedDates] = useState<Date[]>([]) // selectedDates 상태 끌어올리기
-  const [placesByDate, setPlacesByDate] = useState<Record<number, string[]>>({}) // 일정별로 선택한 장소
-  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]) // 선택이 확정된 장소
-  const [selectedResults, setSelectedResults] = useState<string[]>([]) // 검색창에 체크된 장소
+  const [placesByDate, setPlacesByDate] = useState<Record<number, resultObject[]>>({}) // 일정별로 선택한 장소
+  const [selectedPlaces, setSelectedPlaces] = useState<resultObject[]>([]) // 선택이 확정된 장소
+  const [selectedResults, setSelectedResults] = useState<resultObject[]>([]) // 검색창에 체크된 장소
 
   const updateSelectedDates = (dates: Date[]) => {
     setSelectedDates(dates)

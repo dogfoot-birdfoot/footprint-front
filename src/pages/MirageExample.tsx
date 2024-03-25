@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react"
 import { makeServer } from "mirage"
 
 if (process.env.NODE_ENV === "development") {
-  makeServer({ environment: "development" })
+  // makeServer({ environment: "development" })
 }
 
 // 'nickname'과 'email' 필드를 User 인터페이스에 추가

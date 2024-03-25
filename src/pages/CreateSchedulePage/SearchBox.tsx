@@ -15,7 +15,7 @@ import {
   Button
 } from "@chakra-ui/react"
 import { IconStyle } from "@/components/NavBar/SearchBar.style"
-import { SearchBoxProps } from "./type"
+import { SearchBoxProps, resultObject } from "./type"
 
 // 예시로 사용할 모의 한국 지역 및 여행지 데이터
 const mockLocations = [
@@ -39,11 +39,47 @@ const mockLocations = [
 ]
 
 const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResults, setSelectedResults }) => {
+  // results : 검색어 결과 목록, selectedResults : 선택된 장소(검색창 상)
   const [query, setQuery] = useState("")
-  const [results, setResults] = useState<string[]>(mockLocations)
+  const [results, setResults] = useState<resultObject[]>()
+  const { kakao } = window
+
+  const ps = new kakao.maps.services.Places() // 키워드 장소 검색 객체
+
+  function searchPlaces(keyword: string) {
+    if (!keyword.replace(/^\s+|\s+$/g, "")) {
+      // 검색 내용이 없다면 초기화
+      setResults([])
+      return false
+    }
+
+    // 내용이 있으면 장소 검색 객체를 통해 키워드로 장소검색을 요청합니다
+    ps.keywordSearch(keyword, placesSearchCB)
+  }
+  function placesSearchCB(data: any, status: any, pagination: any) {
+    if (status === kakao.maps.services.Status.OK) {
+      // 정상적으로 검색이 완료됐으면, 검색에 대한 결과인 results를 업데이트
+
+      console.log(data)
+      const resultData = []
+      for (const index in data) {
+        resultData.push({
+          place_name: data[index]["place_name"],
+          x: data[index]["x"],
+          y: data[index]["y"]
+        })
+      }
+      setResults(resultData)
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+      return
+    } else if (status === kakao.maps.services.Status.ERROR) {
+      return
+    }
+  }
 
   const handleAddPlaces = () => {
-    // 선택된 장소들을 업데이트
+    // 선택된 장소들을 업데이트'
+    console.log(selectedResults)
     setSelectedPlaces(selectedResults)
   }
 
@@ -51,18 +87,25 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
     const value = e.target.value.toLowerCase()
     setQuery(value)
 
-    // 모의 데이터에서 검색어를 기반으로 필터링하여 결과 설정
-    const filteredResults = mockLocations.filter(location => location.toLowerCase().includes(value))
-    setResults(filteredResults)
+    // 키워드 검색
+    searchPlaces(value)
   }
 
-  const handleCheckboxChange = (result: string) => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    if (e.key === "Enter") {
+      console.log("ddd")
+    }
+  }
+
+  const handleCheckboxChange = (result: resultObject) => {
+    console.log(result, selectedResults)
     setSelectedResults(prevSelected =>
       prevSelected.includes(result) ? prevSelected.filter(item => item !== result) : [...prevSelected, result]
     )
   }
 
-  const removeResult = (result: string) => {
+  const removeResult = (result: resultObject) => {
     setSelectedResults(prevSelected => prevSelected.filter(item => item !== result))
   }
 
@@ -73,25 +116,32 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
           <InputLeftElement pointerEvents="none">
             <IconStyle />
           </InputLeftElement>
-          <Input placeholder="장소 검색..." value={query} onChange={handleSearch} variant="flushed" />
+          <Input
+            placeholder="장소 검색..."
+            value={query}
+            onChange={handleSearch}
+            onSubmit={handleSubmit}
+            variant="flushed"
+          />
         </InputGroup>
         <Box width="100%" bg="white" borderRadius="md" maxH="400px" p={4} overflowY="auto">
           <SimpleGrid columns={2} spacing={2} mt="-4" ml="50px">
-            {results.map((result, index) => (
-              <Box display="flex" key={index} mb="5px">
-                <Checkbox
-                  colorScheme="green"
-                  isChecked={selectedResults.includes(result)}
-                  onChange={() => handleCheckboxChange(result)}
-                ></Checkbox>
-                <Box ml="3">{result}</Box>
-              </Box>
-            ))}
+            {results &&
+              results.map((result, index) => (
+                <Box display="flex" key={index} mb="5px">
+                  <Checkbox
+                    colorScheme="green"
+                    isChecked={selectedResults.includes(result)}
+                    onChange={() => handleCheckboxChange(result)}
+                  ></Checkbox>
+                  <Box ml="3">{result["place_name"]}</Box>
+                </Box>
+              ))}
           </SimpleGrid>
           <Wrap spacing={2} ml="40px" mt="20px">
             {selectedResults.map((result, index) => (
               <Tag size="md" key={index} borderRadius="full" variant="outline" colorScheme="blue">
-                <TagLabel>{result}</TagLabel>
+                <TagLabel>{result["place_name"]}</TagLabel>
                 <TagCloseButton onClick={() => removeResult(result)} />
               </Tag>
             ))}
