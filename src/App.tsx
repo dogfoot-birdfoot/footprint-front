@@ -18,7 +18,7 @@ import SearchResultsPage from "./pages/SearchResultPage/SearchResultPage"
 import AddReviewPage from "@/pages/AddReviewPage/AddReviewPage"
 import CreateSchedulePage from "@/pages/CreateSchedulePage/CreateSchedulePage"
 import { RecoilRoot } from "recoil"
-import MirageExample from "./pages/MirageExaple"
+import MirageExample from "./pages/MirageExample"
 
 function App() {
   return (
