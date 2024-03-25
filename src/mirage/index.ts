@@ -2,6 +2,7 @@ import { createServer, Model, Factory, RestSerializer } from "miragejs"
 import { userRoutes } from "./routes/userRoutes"
 import { UserFactory, UserModel } from "./models/user"
 import userSerializer from "./serializer/user"
+import authRoutes from "./routes/authRoutes"
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -29,10 +30,10 @@ export function makeServer({ environment = "development" } = {}) {
     routes() {
       this.namespace = "api"
 
-      // 사용자 정의 라우트
       userRoutes(this)
+      authRoutes.call(this)
 
-      // 다른 라우트들을 여기에 추가
+      this.logging = true
     }
   })
 
