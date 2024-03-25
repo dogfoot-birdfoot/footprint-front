@@ -3,7 +3,6 @@ import { RecoilRoot } from "recoil"
 import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-
 // CSS
 import "./App.css"
 import theme from "@/styles/theme"
@@ -27,7 +26,6 @@ import MyPage from "@/pages/MyPage/MyPage"
 import MyProfile from "@/pages/MyPage/Profile/MyProfile"
 import MySchedule from "@/pages/MyPage/Schedule/MySchedule"
 import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
-
 
 function App() {
   return (
