@@ -3,6 +3,7 @@ import { RecoilRoot } from "recoil"
 import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
+
 // CSS
 import "./App.css"
 import theme from "@/styles/theme"
@@ -19,12 +20,14 @@ import ReviewDetailPage from "@/pages/ReviewDetailPage/ReviewDetailPage"
 import SearchResultsPage from "@/pages/SearchResultPage/SearchResultPage"
 import AddReviewPage from "@/pages/AddReviewPage/AddReviewPage"
 import CreateSchedulePage from "@/pages/CreateSchedulePage/CreateSchedulePage"
+import MirageExample from "@/pages/MirageExample"
 
 // 마이페이지
 import MyPage from "@/pages/MyPage/MyPage"
 import MyProfile from "@/pages/MyPage/Profile/MyProfile"
 import MySchedule from "@/pages/MyPage/Schedule/MySchedule"
 import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
+
 
 function App() {
   return (
@@ -43,6 +46,7 @@ function App() {
               <Route path="search" element={<SearchResultsPage />} />
               <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
               <Route path="create_schedule" element={<CreateSchedulePage />} />
+              <Route path="mirage_example" element={<MirageExample />} />
               <Route path="mypage" element={<MyPage />}>
                 <Route path="profile" element={<MyProfile />} />
                 <Route path="schedule" element={<MySchedule />} />

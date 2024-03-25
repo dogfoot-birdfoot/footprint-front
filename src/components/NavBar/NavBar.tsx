@@ -114,6 +114,7 @@ const NavBar: React.FC = () => {
               ) : (
                 <StyledButton onClick={() => navigate("/login")}>Login</StyledButton>
               )}
+              <Link to="/mirage_example">mirage js 예시</Link>
             </WrapItem>
           </Wrap>
         </NavBarItems>
