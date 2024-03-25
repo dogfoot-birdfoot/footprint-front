@@ -3,11 +3,12 @@ import DaySummary from "@/components/DaySummary/DaySummary"
 import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import KakaoButton from "@/components/KakaoButton/KakaoButton"
 import { Box, Divider, Heading, IconButton, Text } from "@chakra-ui/react"
-import { DaySchedule } from "../MySchedulePage/DetailSchedule.style"
+
 import Buttons from "@/components/Buttons/Buttons"
 import { CardInfo, UserInfo } from "@/components/HorizontalCard/HorizontalCard"
 import { FaRegThumbsUp } from "react-icons/fa"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
+import { DaySchedule } from "@/pages/MyPage/Schedule/DetailSchedule.style"
 
 const shareScheduleWithKakao = () => {
   // 여기에 카카오톡 공유 로직을 구현합니다.

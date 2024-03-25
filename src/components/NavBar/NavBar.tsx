@@ -44,12 +44,16 @@ const NavBar: React.FC = () => {
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
   const handleBellToggle = () => setBellIsOpen(!isOpen)
-  const myScheduleContents = ["일정생성", "내 여행일정 조회", "내 여행 리뷰쓰기"]
+  const myScheduleContents = [
+    ["일정생성", "create_schedule"],
+    ["내 여행일정 조회", "mypage/schedule"],
+    ["내 여행 리뷰쓰기", "addreview"]
+  ]
   return (
     <>
       <NavBarStyle>
         <Logo href="/">
-          <img src="footprintlogo.png" width="150px" />
+          <img src={`${process.env.PUBLIC_URL}/footprintlogo.png`} width="150px" />
         </Logo>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
@@ -95,7 +99,7 @@ const NavBar: React.FC = () => {
             <WrapItem>
               {user ? (
                 <>
-                  <Link to="/profile">
+                  <Link to="/mypage/profile">
                     <Avatar name={user.name} src={user.avatar} />
                   </Link>
                   <IconButton

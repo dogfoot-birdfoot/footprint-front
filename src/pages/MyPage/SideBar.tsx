@@ -10,7 +10,7 @@ import {
   MyPageLogo,
   SideBarMenus,
   SubMenuNumber
-} from "@/components/Sidebar/SideBar.style"
+} from "@/pages/MyPage/SideBar.style"
 
 const SideBar = () => {
   return (
@@ -18,20 +18,20 @@ const SideBar = () => {
       <SideBarMenus>
         <Flex width="100%" flexDir="column" alignItems="center">
           <MyPageLogo>My Page</MyPageLogo>
-          <StyledNav to="/profile">
+          <StyledNav to="/mypage/profile">
             <SideBarMenu>
               <CgProfile />
               <SideBarText>내 프로필</SideBarText>
             </SideBarMenu>
           </StyledNav>
-          <StyledNav to="/schedule">
+          <StyledNav to="/mypage/schedule">
             <SideBarMenu>
               <GrFormSchedule />
               <SideBarText>내 여행일정</SideBarText>
               <SubMenuNumber>3</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
-          <StyledNav to="/favorite">
+          <StyledNav to="/mypage/favorite">
             <SideBarMenu>
               <CiStar />
               <SideBarText>내 즐겨찾기</SideBarText>
