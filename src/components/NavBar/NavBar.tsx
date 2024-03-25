@@ -20,7 +20,6 @@ import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
 import { useRecoilState } from "recoil"
 import { userState } from "@/hooks/loginAtom"
-import { getAuth, signOut } from "firebase/auth"
 import { MdLogout } from "react-icons/md"
 
 const NavBar: React.FC = () => {
@@ -28,18 +27,12 @@ const NavBar: React.FC = () => {
   const [bellIsOpen, setBellIsOpen] = useState(false)
   const [user, setUser] = useRecoilState(userState)
   const navigate = useNavigate()
-  const auth = getAuth()
 
-  // 로그아웃 처리 함수
   const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        setUser(null) // Recoil 상태 업데이트하여 로그아웃 상태 반영
-        navigate("/login")
-      })
-      .catch(error => {
-        console.error("Logout error:", error)
-      })
+    // 사용자 상태를 null로 설정하여 로그아웃 상태를 반영
+    setUser(null)
+    // 로그인 페이지로 리다이렉트
+    navigate("/login")
   }
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수

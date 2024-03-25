@@ -1,8 +1,6 @@
 import React, { FC } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { getAuth, createUserWithEmailAndPassword, AuthError } from "firebase/auth"
 import { LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/LoginPage.style"
-import app from "firebase"
 import { useNavigate } from "react-router-dom"
 
 export interface RegisterFormProps {
@@ -29,18 +27,30 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
   })
 
   const navigate = useNavigate()
-  const auth = getAuth(app)
 
-  const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        console.log("Registered with:", userCredential.user)
-        reset() // 폼 초기화
-        navigate("/login")
+  const onSubmit: SubmitHandler<FormValues> = ({ email, password, nickname }) => {
+    fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, nickname })
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else if (response.status === 409) {
+          throw new Error("이메일이 이미 사용 중입니다.")
+        } else {
+          throw new Error("회원가입에 실패했습니다.")
+        }
       })
-      .catch((error: AuthError) => {
-        setError("email", { type: "custom", message: error.message }) // '이미 사용 중인 이메일입니다.' 대신 실제 Firebase 오류 메시지를 사용
-        console.error("Registration error:", error)
+      .then(user => {
+        console.log("Registered with:", user)
+        reset() // 폼 초기화
+        navigate("/login") // 로그인 페이지로 리다이렉트
+      })
+      .catch(error => {
+        console.error("Registration error:", error.message)
+        // 회원가입 실패 처리 (예: 에러 메시지 표시)
       })
   }
 

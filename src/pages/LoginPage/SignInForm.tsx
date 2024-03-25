@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import KakaoButton from "@/components/KakaoButton/KakaoButton"
 import { useSetRecoilState } from "recoil"
 import { userState } from "@/hooks/loginAtom"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
 
 export interface SignInFormProps {
@@ -17,20 +16,29 @@ export interface FormValues {
   password: string
 }
 
-const SignInForm: FC<SignInFormProps> = ({ title, getDataForm }) => {
+const SignInForm: FC<SignInFormProps> = ({ title }) => {
   const { register, handleSubmit, reset } = useForm<FormValues>({ mode: "onChange" })
   const setUser = useSetRecoilState(userState)
-  const auth = getAuth()
   const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        const userData = {
-          name: userCredential.user.displayName || "익명 사용자", // displayName이 없으면 "익명 사용자"를 기본값으로 사용
-          avatar: userCredential.user.photoURL || "기본 아바타 URL" // photoURL이 없으면 기본 아바타 URL을 사용
+    // Mirage 서버에 로그인 요청을 보냅니다.
+    fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Login failed")
         }
-        setUser(userData) // Recoil 상태 업데이트
+        return response.json()
+      })
+      .then(userData => {
+        setUser({
+          name: userData.user.name || "user",
+          avatar: userData.user.avatar || "기본 아바타 URL"
+        })
         reset()
         navigate("/")
       })
@@ -40,16 +48,11 @@ const SignInForm: FC<SignInFormProps> = ({ title, getDataForm }) => {
       })
   }
 
-  const userEmail = {
-    required: "필수 필드입니다."
-  }
-
+  // 폼 필드 유효성 검사 규칙
+  const userEmail = { required: "필수 필드입니다." }
   const userPassword = {
     required: "필수 필드입니다.",
-    minLength: {
-      value: 6,
-      message: "최소 6자입니다."
-    }
+    minLength: { value: 6, message: "최소 6자입니다." }
   }
 
   const handleKakaoLogin = () => {
