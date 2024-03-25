@@ -14,7 +14,7 @@ const DetailSchedule = () => {
       <HorizontalCardContent size="sm" />
       <DaySchedule>
         {destinations.map((destination, index) => (
-          <Box key={index}>
+          <Box key={index} marginRight="10px">
             <DaySummary selectedDay={`Day ${index + 1}`} destinations={destination} size="sm" />
           </Box>
         ))}

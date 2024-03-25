@@ -116,7 +116,7 @@ export const ScheduleButtons = () => {
           <Buttons text="리뷰작성" size="xs" />
         </Box>
       </Box>
-      <Box mt="190px" ml="45px">
+      <Box display="flex" justifyContent="flex-end" mt="10px" mb="10px" mr="15px">
         <IconButton
           mr="10px"
           aria-label="good"

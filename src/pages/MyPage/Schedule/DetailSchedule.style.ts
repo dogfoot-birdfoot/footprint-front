@@ -10,6 +10,7 @@ export const ScheduleDetail = styled.div`
   align-items: center;
   width: 100%;
   border: 1px solid lightgray;
+
   margin-top: 1rem;
   border-radius: 5px;
 `

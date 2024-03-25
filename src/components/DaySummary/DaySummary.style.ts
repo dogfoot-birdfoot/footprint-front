@@ -18,7 +18,7 @@ export const DestinationItem = styled.span`
 export const DestinationSmallItem = styled.span`
   display: inline-flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 10px;
 
   svg {
     margin: 0 3px;

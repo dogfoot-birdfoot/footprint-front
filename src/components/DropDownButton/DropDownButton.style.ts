@@ -22,5 +22,6 @@ export const StyledMenuItem = styled.a`
   &:hover {
     background-color: var(--chakra-colors-primary);
     color: white;
+    text-decorate: none;
   }
 `
