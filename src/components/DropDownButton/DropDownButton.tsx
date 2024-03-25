@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Box, BreadcrumbLink, Menu, MenuButton, MenuList } from "@chakra-ui/react"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
-import { StyledMenuItem } from "@/components/DropDownButton/DropDownButton.style"
-import { MenuTitle } from "../NavBar/NavBar.style"
+import { MenuTitle, StyledMenuItem } from "@/components/DropDownButton/DropDownButton.style"
+
 import { DropDownButtonProps } from "./type"
 import { Link } from "react-router-dom"
 
@@ -16,7 +16,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
   return (
     <Menu isLazy isOpen={isOpened} onClose={() => setIsOpened(false)}>
       <MenuButton onClick={toggleIsOpened}>
-        <MenuTitle isOpen={isOpened}>
+        <MenuTitle $isopened={isOpened}>
           {title}
           {isOpened ? <FiChevronUp /> : <FiChevronDown />}
         </MenuTitle>
