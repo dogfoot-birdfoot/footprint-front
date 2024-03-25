@@ -1,7 +1,7 @@
 import React from "react"
 import NavBar from "@/components/NavBar/NavBar"
-import { Divider } from "@chakra-ui/react"
 import Footer from "@/components/Footer/Footer"
+import { Divider } from "@chakra-ui/react"
 
 import { Content, LayoutWrapper } from "@/components/Layout/Layout.style"
 
@@ -12,10 +12,10 @@ const Layout = () => {
     <LayoutWrapper>
       <Content>
         <NavBar />
-        <Divider style={{ marginTop: "20px", marginBottom: "20px" }} />
+        <Divider style={{ marginTop: "10px", marginBottom: "20px" }} />
         <Outlet />
-        <Footer />
       </Content>
+      <Footer />
     </LayoutWrapper>
   )
 }
