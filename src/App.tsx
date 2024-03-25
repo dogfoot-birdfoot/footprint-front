@@ -18,6 +18,7 @@ import SearchResultsPage from "./pages/SearchResultPage/SearchResultPage"
 import AddReviewPage from "@/pages/AddReviewPage/AddReviewPage"
 import CreateSchedulePage from "@/pages/CreateSchedulePage/CreateSchedulePage"
 import { RecoilRoot } from "recoil"
+import MirageExample from "./pages/MirageExaple"
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
               <Route path="search" element={<SearchResultsPage />} />
               <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
               <Route path="create_schedule" element={<CreateSchedulePage />} />
+              <Route path="mirage_example" element={<MirageExample />} />
             </Route>
           </Routes>
         </BrowserRouter>
