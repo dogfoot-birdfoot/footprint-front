@@ -3,6 +3,7 @@ import { userRoutes } from "./routes/userRoutes"
 import { UserFactory, UserModel } from "./models/user"
 import userSerializer from "./serializer/user"
 import authRoutes from "./routes/authRoutes"
+import regionRoutes from "./routes/regionRoutes"
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -13,8 +14,8 @@ export function makeServer({ environment = "development" } = {}) {
     environment,
 
     models: {
-      user: UserModel.user
-      // 다른 모델들을 여기에 추가
+      user: UserModel.user,
+      region: Model
     },
 
     factories: {
@@ -32,6 +33,7 @@ export function makeServer({ environment = "development" } = {}) {
 
       userRoutes(this)
       authRoutes.call(this)
+      regionRoutes.call(this)
 
       this.logging = true
     }

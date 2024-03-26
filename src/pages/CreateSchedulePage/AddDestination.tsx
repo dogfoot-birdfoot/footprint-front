@@ -25,11 +25,24 @@ const AddDestination: React.FC = () => {
     "제주"
   ]
 
-  const handleRegionClick = (region: string) => {
-    if (selectedRegions.includes(region)) {
-      setSelectedRegions(selectedRegions.filter(r => r !== region))
-    } else {
-      setSelectedRegions([...selectedRegions, region])
+  const handleRegionClick = async (region: string) => {
+    const newSelectedRegions = selectedRegions.includes(region)
+      ? selectedRegions.filter(r => r !== region)
+      : [...selectedRegions, region]
+
+    setSelectedRegions(newSelectedRegions)
+
+    // 서버에 선택 상태 업데이트를 비동기적으로 전송
+    try {
+      await fetch("/api/regions/selection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ regionName: region, isSelected: newSelectedRegions.includes(region) })
+      })
+    } catch (error) {
+      console.error("Error updating region selection:", error)
     }
   }
 
