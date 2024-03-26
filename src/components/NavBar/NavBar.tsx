@@ -4,7 +4,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  IconButton,
   Menu,
   MenuButton,
   MenuList,
@@ -18,25 +17,23 @@ import { Link, NavLink } from "react-router-dom"
 import {} from "react-router-dom"
 import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
-import { useRecoilState } from "recoil"
-import { userState } from "@/hooks/loginAtom"
-import { MdLogout } from "react-icons/md"
+import axios from "axios"
 
 const NavBar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false)
   const [bellIsOpen, setBellIsOpen] = useState(false)
-  const [user, setUser] = useRecoilState(userState)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    // 사용자 상태를 null로 설정하여 로그아웃 상태를 반영
-    setUser(null)
-    // 로그인 페이지로 리다이렉트
+  //로그인상태관리 (진짜로 로그인되면 아바타가 바뀌도록 수정해야함)
+  async function handleLogin() {
+    const response = await axios.get("https://8c06cf14-ea25-4277-9986-7ac417192ce0.mock.pstmn.io/detail-schedule")
+    console.log(response)
+    setIsLoggedIn(true)
     navigate("/login")
   }
 
   // 내여행일정 메뉴 열림/닫힘 상태를 토글하는 함수
-  const handleBellToggle = () => setBellIsOpen(!isOpen)
+  const handleBellToggle = () => setBellIsOpen(!bellIsOpen)
   const myScheduleContents = [
     ["일정생성", "create_schedule"],
     ["내 여행일정 조회", "mypage/schedule"],
@@ -46,7 +43,7 @@ const NavBar: React.FC = () => {
     <>
       <NavBarStyle>
         <Logo href="/">
-          <img src={`${process.env.PUBLIC_URL}/footprintlogo.png`} width="150px" />
+          <img src="footprintlogo.png" width="150px" />
         </Logo>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
@@ -90,24 +87,13 @@ const NavBar: React.FC = () => {
           </div>
           <Wrap>
             <WrapItem>
-              {user ? (
-                <>
-                  <Link to="/mypage/profile">
-                    <Avatar name={user.name} src={user.avatar} />
-                  </Link>
-                  <IconButton
-                    aria-label="로그아웃"
-                    icon={<MdLogout />}
-                    size="md"
-                    variant="ghost" // 배경을 없애기 위해 ghost variant 사용
-                    onClick={handleLogout}
-                    ml={4}
-                  />
-                </>
+              {isLoggedIn ? (
+                <NavLink to="/profile">
+                  <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                </NavLink>
               ) : (
-                <StyledButton onClick={() => navigate("/login")}>Login</StyledButton>
+                <StyledButton onClick={handleLogin}>Login</StyledButton>
               )}
-              <Link to="/mirage_example">mirage js 예시</Link>
             </WrapItem>
           </Wrap>
         </NavBarItems>

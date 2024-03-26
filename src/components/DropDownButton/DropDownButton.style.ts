@@ -2,13 +2,13 @@ import styled from "styled-components"
 
 // isOpen 속성의 타입을 명시적으로 지정
 interface MenuTitleProps {
-  isOpen: boolean
+  $isopened: boolean
 }
 
 export const MenuTitle = styled.div<MenuTitleProps>`
   display: flex;
   align-items: center;
-  color: ${props => (props.isOpen ? "var(--chakra-colors-primary)" : "black")};
+  color: ${props => (props.$isopened ? "var(--chakra-colors-primary)" : "black")};
 `
 
 export const StyledMenuItem = styled.a`
