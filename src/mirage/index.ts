@@ -1,9 +1,11 @@
-import { createServer, Model, Factory, RestSerializer } from "miragejs"
+import { createServer, Model, RestSerializer } from "miragejs"
 import { userRoutes } from "./routes/userRoutes"
 import { UserFactory, UserModel } from "./models/user"
 import userSerializer from "./serializer/user"
 import authRoutes from "./routes/authRoutes"
 import regionRoutes from "./routes/regionRoutes"
+import dateSelection from "./models/dateSelection"
+import dateSelectionRoutes from "./routes/dateSelectionRoutes"
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
@@ -15,7 +17,8 @@ export function makeServer({ environment = "development" } = {}) {
 
     models: {
       user: UserModel.user,
-      region: Model
+      region: Model,
+      dateSelection: dateSelection
     },
 
     factories: {
@@ -34,6 +37,7 @@ export function makeServer({ environment = "development" } = {}) {
       userRoutes(this)
       authRoutes.call(this)
       regionRoutes.call(this)
+      dateSelectionRoutes.call(this)
 
       this.logging = true
     }

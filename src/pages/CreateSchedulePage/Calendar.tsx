@@ -100,22 +100,57 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
     return dates
   }
 
-  // 날짜 범위 선택 시 호출되는 이벤트 핸들러
-  const handleRangeSelect: SelectRangeEventHandler = (range: DateRange | undefined) => {
+  // // 날짜 범위 선택 시 호출되는 이벤트 핸들러
+  // const handleRangeSelect: SelectRangeEventHandler = (range: DateRange | undefined) => {
+  //   setSelectedRange(range)
+  //   if (range?.from) {
+  //     setFromValue(format(range.from, "y-MM-dd"))
+  //   } else {
+  //     setFromValue("")
+  //   }
+  //   if (range?.to) {
+  //     setToValue(format(range.to, "y-MM-dd"))
+  //   } else {
+  //     setToValue("")
+  //   }
+  //   if (range?.from && range.to) {
+  //     const allDates = getDatesInRange(range.from, range.to) // 선택된 날짜 범위 내의 모든 날짜 계산
+  //     updateSelectedDates(allDates) // 부모 컴포넌트에 날짜 배열 업데이트
+  //   }
+  // }
+
+  const handleRangeSelect: SelectRangeEventHandler = async (range: DateRange | undefined) => {
     setSelectedRange(range)
-    if (range?.from) {
-      setFromValue(format(range.from, "y-MM-dd"))
-    } else {
-      setFromValue("")
-    }
-    if (range?.to) {
-      setToValue(format(range.to, "y-MM-dd"))
-    } else {
-      setToValue("")
-    }
     if (range?.from && range.to) {
+      setFromValue(format(range.from, "y-MM-dd"))
+      setToValue(format(range.to, "y-MM-dd"))
+
       const allDates = getDatesInRange(range.from, range.to) // 선택된 날짜 범위 내의 모든 날짜 계산
       updateSelectedDates(allDates) // 부모 컴포넌트에 날짜 배열 업데이트
+
+      try {
+        const response = await fetch("/api/dates/selection", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            startDate: format(range.from, "yyyy-MM-dd"),
+            endDate: format(range.to, "yyyy-MM-dd")
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+
+        console.log("Date selection updated successfully")
+      } catch (error) {
+        console.error("Error updating date selection:", error)
+      }
+    } else {
+      setFromValue("")
+      setToValue("")
     }
   }
 
