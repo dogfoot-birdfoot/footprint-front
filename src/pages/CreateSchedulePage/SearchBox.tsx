@@ -39,7 +39,7 @@ const mockLocations = [
 ]
 
 const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResults, setSelectedResults }) => {
-  // results : 검색어 결과 목록, selectedResults : 선택된 장소(검색창 상)
+  // results : 검색어 결과 목록, selectedResults : 선택된 장소(검색창 하단)
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<resultObject[]>()
   const { kakao } = window
@@ -47,26 +47,24 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
   const ps = new kakao.maps.services.Places() // 키워드 장소 검색 객체
 
   function searchPlaces(keyword: string) {
+    // 검색 내용이 없다면 초기화
     if (!keyword.replace(/^\s+|\s+$/g, "")) {
-      // 검색 내용이 없다면 초기화
       setResults([])
       return false
     }
 
-    // 내용이 있으면 장소 검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB)
   }
   function placesSearchCB(data: any, status: any, pagination: any) {
     if (status === kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면, 검색에 대한 결과인 results를 업데이트
 
-      console.log(data)
       const resultData = []
       for (const index in data) {
         resultData.push({
           place_name: data[index]["place_name"],
-          x: data[index]["x"],
-          y: data[index]["y"]
+          x: data[index]["x"].toString(),
+          y: data[index]["y"].toString()
         })
       }
       setResults(resultData)
@@ -78,8 +76,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
   }
 
   const handleAddPlaces = () => {
-    // 선택된 장소들을 업데이트'
-    console.log(selectedResults)
+    // 선택된 장소들을 해당 날짜에 업데이트
     setSelectedPlaces(selectedResults)
   }
 
@@ -91,17 +88,28 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
     searchPlaces(value)
   }
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    if (e.key === "Enter") {
-      console.log("ddd")
+  function includesResult(results: resultObject[], r2: resultObject) {
+    // Object 비교를 위한 함수
+    for (const r1 of results) {
+      if (r1["place_name"] === r2["place_name"] && r1["x"] === r2["x"] && r1["y"] === r2["y"]) {
+        return true
+      }
     }
+    return false
+  }
+
+  function isObjectEqual(r1: resultObject, r2: resultObject) {
+    if (r1["place_name"] === r2["place_name"] && r1["x"] === r2["x"] && r1["y"] === r2["y"]) {
+      return true
+    }
+    return false
   }
 
   const handleCheckboxChange = (result: resultObject) => {
-    console.log(result, selectedResults)
     setSelectedResults(prevSelected =>
-      prevSelected.includes(result) ? prevSelected.filter(item => item !== result) : [...prevSelected, result]
+      includesResult(prevSelected, result)
+        ? prevSelected.filter(item => isObjectEqual(item, result) === false)
+        : [...prevSelected, result]
     )
   }
 
@@ -116,13 +124,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
           <InputLeftElement pointerEvents="none">
             <IconStyle />
           </InputLeftElement>
-          <Input
-            placeholder="장소 검색..."
-            value={query}
-            onChange={handleSearch}
-            onSubmit={handleSubmit}
-            variant="flushed"
-          />
+          <Input placeholder="장소 검색..." value={query} onChange={handleSearch} variant="flushed" />
         </InputGroup>
         <Box width="100%" bg="white" borderRadius="md" maxH="400px" p={4} overflowY="auto">
           <SimpleGrid columns={2} spacing={2} mt="-4" ml="50px">
@@ -131,7 +133,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
                 <Box display="flex" key={index} mb="5px">
                   <Checkbox
                     colorScheme="green"
-                    isChecked={selectedResults.includes(result)}
+                    isChecked={includesResult(selectedResults, result)}
                     onChange={() => handleCheckboxChange(result)}
                   ></Checkbox>
                   <Box ml="3">{result["place_name"]}</Box>

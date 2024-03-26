@@ -169,12 +169,13 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                         <EditableTextarea resize="none" maxLength={300} />
                       </Editable>
                     </Box>
-                    <Flex mt="4" alignItems="center">
+                    <Flex mt="4" alignItems="center" justifyContent="right">
                       <Text>예상경비:</Text>
                       <Input
                         ml="2"
-                        width="290px"
+                        width="230px"
                         placeholder="예상경비를 입력하세요."
+                        textAlign="right"
                         value={amounts[`${dateIndex}-${placeIndex}`] || ""}
                         onChange={e => handleChange(e, dateIndex, placeIndex)}
                       />
