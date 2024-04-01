@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
     <>
       <NavBarStyle>
         <Logo href="/">
-          <img src="footprintlogo.png" width="150px" />
+          <img src={`${process.env.PUBLIC_URL}/footprintlogo.png`} width="150px" />
         </Logo>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
