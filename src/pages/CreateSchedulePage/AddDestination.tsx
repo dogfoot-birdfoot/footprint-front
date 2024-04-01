@@ -40,7 +40,7 @@ const AddDestination: React.FC = () => {
           <RegionBox
             key={region}
             onClick={() => handleRegionClick(region)}
-            isSelected={selectedRegions.includes(region)} // isSelected prop을 통해 배경색 변경
+            selected={selectedRegions.includes(region)} // isSelected prop을 통해 배경색 변경
           >
             {region}
           </RegionBox>
