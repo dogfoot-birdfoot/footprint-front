@@ -88,7 +88,7 @@ const NavBar: React.FC = () => {
           <Wrap>
             <WrapItem>
               {isLoggedIn ? (
-                <NavLink to="/profile">
+                <NavLink to="/mypage/profile">
                   <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
                 </NavLink>
               ) : (

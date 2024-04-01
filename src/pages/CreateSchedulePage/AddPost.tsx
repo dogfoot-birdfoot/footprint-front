@@ -2,6 +2,10 @@ import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import React, { useState } from "react"
 import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button } from "@chakra-ui/react"
 
+// Recoil
+import { useRecoilState } from "recoil"
+import { copyAllowedState, visibleState } from "@/pages/CreateSchedulePage/atom"
+
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
   "가족여행",
@@ -26,6 +30,10 @@ interface SelectedTags {
 const AddPost: React.FC = () => {
   // 태그의 선택 상태를 저장하는 상태 변수
   const [selectedTags, setSelectedTags] = useState<SelectedTags>({})
+
+  // 게시글 공개 여부, 복사 여부를 설정하는 변수
+  const [postVisible, setPostVisible] = useRecoilState(visibleState)
+  const [copyAllowed, setCopyAllowed] = useRecoilState(copyAllowedState)
 
   // 태그 클릭 핸들러 함수
   const toggleTagSelection = (tag: string) => {
@@ -55,7 +63,12 @@ const AddPost: React.FC = () => {
             </Text>
           </Box>
           <Box mt="10px">
-            <OnOffSwitch ontext={"공개"} offtext={"비공개"}></OnOffSwitch>
+            <OnOffSwitch
+              onText={"공개"}
+              offText={"비공개"}
+              booleanState={postVisible}
+              setBooleanState={setPostVisible}
+            ></OnOffSwitch>
           </Box>
         </Box>
         <Box display="flex" justifyContent="space-between">
@@ -68,7 +81,12 @@ const AddPost: React.FC = () => {
             </Text>
           </Box>
           <Box mt="10px">
-            <OnOffSwitch ontext={"가능"} offtext={"불가능"}></OnOffSwitch>
+            <OnOffSwitch
+              onText={"가능"}
+              offText={"불가능"}
+              booleanState={copyAllowed}
+              setBooleanState={setCopyAllowed}
+            ></OnOffSwitch>
           </Box>
         </Box>
         <Heading size="sm" color="textColor" mt="10px">
