@@ -2,8 +2,8 @@ import { atom } from "recoil"
 import { placeObject, scheduleObject } from "./type"
 
 // 선택한 일정을 세부 일정에 표기하기 위한 Date 배열
-export const detailDates = atom<Date[]>({
-  key: "detailDates",
+export const allDates = atom<Date[]>({
+  key: "allDates",
   default: []
 })
 

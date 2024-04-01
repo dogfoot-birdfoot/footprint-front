@@ -8,8 +8,7 @@ import {
   AccordionPanel,
   Box,
   Card,
-  CardBody,
-  Heading
+  CardBody
 } from "@chakra-ui/react"
 import AddDestination from "@/pages/CreateSchedulePage/AddDestination"
 import Calendar from "@/pages/CreateSchedulePage/Calendar"
@@ -21,13 +20,12 @@ import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
 import { placeObject } from "./type"
 
 const CreateScheduleForm: React.FC = ({}) => {
-  // List
+  // 일정별 장소 저장을 위한 상태
   const [placesByDate, setPlacesByDate] = useState<Record<number, placeObject[]>>({}) // 일정별로 선택한 장소
   const [selectedPlaces, setSelectedPlaces] = useState<placeObject[]>([]) // 선택이 확정된 장소
 
+  // 어떤 일정에 해당하는 searchBox, loadSchedule인지 표기
   const [activeIndex, setActiveIndex] = useState<number>(-1)
-
-  // Boolean
   const [showSearchBox, setShowSearchBox] = useState(false)
   const [showLoadSchedule, setShowLoadSchedule] = useState(false)
 
@@ -124,7 +122,7 @@ const CreateScheduleForm: React.FC = ({}) => {
           </Box>
         )}
 
-        {/* Map 표기 부분 */}
+        {/* Map 표기 부분(임시) */}
         {activeIndex < 0 && showSearchBox === false && showLoadSchedule === false && <RouteMap />}
       </>
     </>
