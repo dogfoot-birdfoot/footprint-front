@@ -1,3 +1,19 @@
+export interface scheduleObject {
+  day: number
+  places: placeObject[]
+}
+
+export interface placeObject {
+  kakaoPlaceId: string
+  placeName: string
+  latitude: number
+  longitude: number
+  address: string
+  memo: string
+  cost: number
+  visitTime: string
+}
+
 export interface resultObject {
   place_name: string
   x: string
