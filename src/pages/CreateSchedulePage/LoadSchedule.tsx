@@ -14,37 +14,121 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
     {
       title: "OO이랑 떠나는 부산 여행",
       tags: ["커플여행", "관광", "휴식", "바다여행"],
+      destinations: [
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"]
+      ],
       detailSchedule: [
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["태종대2", "한라산", "감천 문화마을", "부평 깡통시장"],
-        ["태종대3", "해동용궁사3", "감천 문화마을", "부평 깡통시장"]
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ]
       ]
     },
     {
       title: "가족 여행",
       tags: ["관광", "휴식", "바다여행"],
+      destinations: [
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"]
+      ],
       detailSchedule: [
-        ["여수 EXPO", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["여수 EXPO", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["여수 EXPO", "해동용궁사", "감천 문화마을", "부평 깡통시장"]
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ]
       ]
     },
     {
       title: "바다 여행",
       tags: ["커플여행", "관광", "휴식", "바다여행"],
+      destinations: [
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"]
+      ],
       detailSchedule: [
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"]
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ]
       ]
     },
     {
       title: "여행",
       tags: ["커플여행", "관광", "휴식", "바다여행"],
+      destinations: [
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"],
+        ["태종대", "태종대 2", "태종대 3", "태종대 4"]
+      ],
       detailSchedule: [
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"],
-        ["태종대", "해동용궁사", "감천 문화마을", "부평 깡통시장"]
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ],
+        [
+          { place_name: "태종대", x: "1", y: "1" },
+          { place_name: "태종대 2", x: "1", y: "1" },
+          { place_name: "태종대 3", x: "1", y: "1" },
+          { place_name: "태종대 4", x: "1", y: "1" }
+        ]
       ]
     }
   ]
@@ -153,7 +237,7 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
             </TagBox>
           </CardHeader>
           <CardBody display="flex" flexWrap="wrap">
-            {cardList[selectedIndex]["detailSchedule"].map((item, index) => (
+            {cardList[selectedIndex]["destinations"].map((item, index) => (
               <Box display="flex" key={index}>
                 <DaySummary selectedDay={`Day ${index + 1}`} destinations={item} size="lg" />
                 <Checkbox

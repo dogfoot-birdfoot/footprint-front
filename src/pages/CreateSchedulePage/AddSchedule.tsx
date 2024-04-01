@@ -82,11 +82,11 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   }, [selectedPlaces])
 
   const editableProps = {
-    width: "380px",
-    height: "100px",
+    width: "370px",
+    marginTop: "10px",
     fontSize: "13px",
-    whiteSpace: "pre-wrap",
-    padding: "5px 5px 5px 5px"
+    whiteSpace: "pre-line",
+    padding: "10px 10px 10px 10px"
   }
   const [amounts, setAmounts] = useState<Amounts>({})
 
@@ -139,14 +139,16 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
             <CardBody mt="-30px">
               {placesByDate[dateIndex]?.map((place, placeIndex) => (
                 <Card key={`${dateIndex}-${placeIndex}`} mt="4">
-                  <CardBody>
+                  <CardBody padding="10px 10px 10px 10px">
                     <Flex justifyContent="space-between" alignItems="center">
                       <Text display="flex">
                         <IndexStyle>{placeIndex + 1}</IndexStyle>
                         <Text>{place["place_name"]}</Text>
                       </Text>
                       <Flex alignItems="center">
-                        <Text mr="2">도착시간:</Text>
+                        <Text fontSize="12px" mr="2">
+                          도착시간 :
+                        </Text>
                         <DatePicker
                           selected={formTimes[`${dateIndex}-${placeIndex}`]}
                           onChange={(date: Date) => handleTimeChange(`${dateIndex}-${placeIndex}`, date)}
@@ -161,19 +163,20 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Box mt="4">
                       <Editable
                         {...editableProps}
-                        defaultValue="메모입력"
+                        textOverflow="ellipsis"
+                        defaultValue="메모 입력"
                         border="1px solid lightgray"
                         borderRadius="10px"
                       >
-                        <EditablePreview />
-                        <EditableTextarea resize="none" maxLength={300} />
+                        <EditablePreview height="100%" overflow="hidden" />
+                        <EditableTextarea height="100%" rows={3} resize="none" maxLength={100} />
                       </Editable>
                     </Box>
                     <Flex mt="4" alignItems="center" justifyContent="right">
                       <Text>예상경비:</Text>
                       <Input
                         ml="2"
-                        width="230px"
+                        width="180px"
                         placeholder="예상경비를 입력하세요."
                         textAlign="right"
                         value={amounts[`${dateIndex}-${placeIndex}`] || ""}

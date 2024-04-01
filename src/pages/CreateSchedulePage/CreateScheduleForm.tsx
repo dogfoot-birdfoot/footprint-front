@@ -1,6 +1,15 @@
 import React, { useState } from "react"
-import { Box, Card, CardBody, Heading } from "@chakra-ui/react"
-import { FiChevronDown } from "react-icons/fi"
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Card,
+  CardBody,
+  Heading
+} from "@chakra-ui/react"
 import AddDestination from "@/pages/CreateSchedulePage/AddDestination"
 import Calendar from "@/pages/CreateSchedulePage/Calendar"
 import AddSchedule from "@/pages/CreateSchedulePage/AddSchedule"
@@ -9,6 +18,7 @@ import SearchBox from "@/pages/CreateSchedulePage/SearchBox"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
 import { resultObject } from "./type"
+import axios from "axios"
 
 const CreateScheduleForm: React.FC = ({}) => {
   // List
@@ -26,95 +36,98 @@ const CreateScheduleForm: React.FC = ({}) => {
   // Boolean
   const [showSearchBox, setShowSearchBox] = useState(false)
   const [showLoadSchedule, setShowLoadSchedule] = useState(false)
-  const [isDestinationBoxVisible, setIsDestinationBoxVisible] = useState(false)
-  const [isCalendarBoxVisible, setIsCalendarBoxVisible] = useState(false)
-  const [isScheduleBoxVisible, setIsScheduleBoxVisible] = useState(false)
-  const [isPostBoxVisible, setIsPostBoxVisible] = useState(false)
-
-  const DestinationToggleBox = () => {
-    setIsDestinationBoxVisible(!isDestinationBoxVisible)
-  }
-  const CalendarToggleBox = () => {
-    setIsCalendarBoxVisible(!isCalendarBoxVisible)
-  }
-  const ScheduleToggleBox = () => {
-    setIsScheduleBoxVisible(!isScheduleBoxVisible)
-  }
-  const PostToggleBox = () => {
-    setIsPostBoxVisible(!isPostBoxVisible)
-  }
 
   return (
     <>
       <>
-        <Box width="450px" mb="30px">
-          <Heading size="md" ml="10px" mt="40px">
-            새 여행일정 생성하기
-          </Heading>
+        <Accordion allowMultiple defaultIndex={[0]} width="500px">
+          <AccordionItem>
+            <AccordionButton bg="primary" borderRadius="20px" height="60px" color="white">
+              <Box
+                as="span"
+                flex="1"
+                textAlign="left"
+                onClick={() =>
+                  axios
+                    .get("https://k903c4c87638da.user-app.krampoline.com/api/reviews/1")
+                    .then(response => console.log(response))
+                    .catch(response => console.log(response))
+                }
+              >
+                Step 1. 지역선택
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Card mt="10px">
+                <CardBody>
+                  <AddDestination />
+                </CardBody>
+              </Card>
+            </AccordionPanel>
+          </AccordionItem>
 
-          <Card mt="30px" bg="primary" borderRadius="20px" color="white">
-            <CardBody display="flex" justifyContent="space-between" onClick={DestinationToggleBox}>
-              <Heading size="xs">Step 1. 지역선택</Heading>
-              <FiChevronDown />
-            </CardBody>
-          </Card>
-          {isDestinationBoxVisible && (
-            <Card mt="10px">
-              <CardBody>
-                <AddDestination />
-              </CardBody>
-            </Card>
-          )}
+          <AccordionItem mt="20px">
+            <AccordionButton bg="primary" borderRadius="20px" height="60px" color="white">
+              <Box as="span" flex="1" textAlign="left">
+                Step 2. 날짜선택
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Card mt="10px">
+                <CardBody>
+                  <Calendar updateSelectedDates={updateSelectedDates} />
+                </CardBody>
+              </Card>
+            </AccordionPanel>
+          </AccordionItem>
 
-          <Card mt="10px" bg="primary" borderRadius="20px" color="white">
-            <CardBody display="flex" justifyContent="space-between" onClick={CalendarToggleBox}>
-              <Heading size="xs">Step 2. 날짜선택</Heading> <FiChevronDown />
-            </CardBody>
-          </Card>
-          {isCalendarBoxVisible && (
-            <Card mt="10px">
-              <CardBody display="flex" justifyContent="center">
-                <Calendar updateSelectedDates={updateSelectedDates} />
-              </CardBody>
-            </Card>
-          )}
-          <Card mt="10px" bg="primary" borderRadius="20px" color="white">
-            <CardBody display="flex" justifyContent="space-between" onClick={ScheduleToggleBox}>
-              <Heading size="xs">Step 3. 세부일정</Heading> <FiChevronDown />
-            </CardBody>
-          </Card>
-          {isScheduleBoxVisible && (
-            <Box mt="10px">
-              <AddSchedule
-                dates={selectedDates}
-                setSelectedResults={setSelectedResults}
-                selectedPlaces={selectedPlaces}
-                placesByDate={placesByDate}
-                setPlacesByDate={setPlacesByDate}
-                showSearchBox={showSearchBox}
-                setShowSearchBox={setShowSearchBox}
-                showLoadSchedule={showLoadSchedule}
-                setShowLoadSchedule={setShowLoadSchedule}
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-                numberOfForms={1}
-              />
-            </Box>
-          )}
+          <AccordionItem mt="20px">
+            <AccordionButton bg="primary" borderRadius="20px" height="60px" color="white">
+              <Box as="span" flex="1" textAlign="left">
+                Step 3. 세부일정
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Card mt="10px">
+                <CardBody>
+                  <AddSchedule
+                    dates={selectedDates}
+                    setSelectedResults={setSelectedResults}
+                    selectedPlaces={selectedPlaces}
+                    placesByDate={placesByDate}
+                    setPlacesByDate={setPlacesByDate}
+                    showSearchBox={showSearchBox}
+                    setShowSearchBox={setShowSearchBox}
+                    showLoadSchedule={showLoadSchedule}
+                    setShowLoadSchedule={setShowLoadSchedule}
+                    activeIndex={activeIndex}
+                    setActiveIndex={setActiveIndex}
+                    numberOfForms={1}
+                  />
+                </CardBody>
+              </Card>
+            </AccordionPanel>
+          </AccordionItem>
 
-          <Card mt="10px" bg="primary" borderRadius="20px" color="white">
-            <CardBody display="flex" justifyContent="space-between" onClick={PostToggleBox}>
-              <Heading size="xs">Step 4. 게시하기</Heading> <FiChevronDown />
-            </CardBody>
-          </Card>
-          {isPostBoxVisible && (
-            <Card mt="10px">
-              <CardBody>
-                <AddPost />
-              </CardBody>
-            </Card>
-          )}
-        </Box>
+          <AccordionItem mt="20px" pt="10px" pb="10px">
+            <AccordionButton bg="primary" borderRadius="20px" height="60px" color="white">
+              <Box as="span" flex="1" textAlign="left">
+                Step 4. 게시하기
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <Card mt="10px">
+                <CardBody>
+                  <AddPost />
+                </CardBody>
+              </Card>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
 
         {/* SearchBox 표기 부분 */}
         {activeIndex >= 0 && showSearchBox === true && showLoadSchedule === false && (
