@@ -6,13 +6,13 @@ export const titleState = atom<string>({
   default: ""
 })
 
-export const startDateState = atom<string>({
-  key: "startDateState",
+export const fromDateState = atom<string>({
+  key: "fromDateState",
   default: ""
 })
 
-export const endDateState = atom<string>({
-  key: "endDateState",
+export const toDateState = atom<string>({
+  key: "toDateState",
   default: ""
 })
 
