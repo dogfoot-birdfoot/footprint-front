@@ -20,6 +20,10 @@ import { AddScheduleProps, Amounts } from "./type"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
+// Recoil
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { currentKeywords, allDates } from "./atom"
+
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
   // "3월 19일 (화)"와 같은 형식으로 날짜를 포맷
@@ -27,8 +31,6 @@ const formatDate = (date: Date) => {
 }
 
 const AddSchedule: React.FC<AddScheduleProps> = ({
-  dates,
-  setSelectedResults,
   selectedPlaces,
   placesByDate,
   setPlacesByDate,
@@ -39,6 +41,21 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   activeIndex,
   setActiveIndex
 }) => {
+  // State
+  const [amounts, setAmounts] = useState<Amounts>({})
+  const [formTimes, setFormTimes] = useState<Record<string, Date>>({}) // 상태의 타입을 string 기반의 키로 변경
+  const setSelectedKeywords = useSetRecoilState(currentKeywords)
+  const selectedDates = useRecoilValue(allDates)
+
+  // CSS
+  const editableProps = {
+    width: "370px",
+    marginTop: "10px",
+    fontSize: "13px",
+    whiteSpace: "pre-line",
+    padding: "10px 10px 10px 10px"
+  }
+
   // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
   const handleAddPlaceClick = (dateIndex: number) => {
     // SearchBox 비활성화, LoadSchedule 활성화 시 or 다른 일정 검색창 활성화
@@ -46,13 +63,13 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
       setShowLoadSchedule(false)
       setShowSearchBox(true)
       setActiveIndex(dateIndex)
-      setSelectedResults(placesByDate[dateIndex] ? placesByDate[dateIndex] : [])
+      setSelectedKeywords(placesByDate[dateIndex] ? placesByDate[dateIndex] : [])
     }
     // 같은 일정의 장소추가 버튼을 누르면 닫음(값 초기화)
-    else if (dateIndex === activeIndex) {
+    else if (showSearchBox && dateIndex === activeIndex) {
       setShowSearchBox(false)
       setActiveIndex(-1)
-      setSelectedResults([])
+      setSelectedKeywords([])
     }
   }
 
@@ -81,15 +98,6 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     }
   }, [selectedPlaces])
 
-  const editableProps = {
-    width: "370px",
-    marginTop: "10px",
-    fontSize: "13px",
-    whiteSpace: "pre-line",
-    padding: "10px 10px 10px 10px"
-  }
-  const [amounts, setAmounts] = useState<Amounts>({})
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, dateIndex: number, placeIndex: number) => {
     const { value } = e.target
     // 숫자만 추출 (쉼표, 비숫자 제거)
@@ -103,8 +111,6 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
       [`${dateIndex}-${placeIndex}`]: formattedValue
     }))
   }
-
-  const [formTimes, setFormTimes] = useState<Record<string, Date>>({}) // 상태의 타입을 string 기반의 키로 변경
 
   const handleTimeChange = (dateKey: string, date: Date) => {
     setFormTimes(prevTimes => ({
@@ -125,7 +131,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
 
   return (
     <>
-      {dates.map((date, dateIndex) => (
+      {selectedDates.map((date, dateIndex) => (
         <Box key={dateIndex} mt="10px" ml="-10px">
           <Card fontSize="15px" fontWeight="bold" ml="1">
             <CardHeader display="flex" justifyContent="space-between">
@@ -143,7 +149,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Flex justifyContent="space-between" alignItems="center">
                       <Text display="flex">
                         <IndexStyle>{placeIndex + 1}</IndexStyle>
-                        <Text>{place["place_name"]}</Text>
+                        <Text>{place["placeName"]}</Text>
                       </Text>
                       <Flex alignItems="center">
                         <Text fontSize="12px" mr="2">

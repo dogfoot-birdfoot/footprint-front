@@ -9,9 +9,9 @@ export interface placeObject {
   latitude: number
   longitude: number
   address: string
-  memo: string
-  cost: number
-  visitTime: string
+  memo: string | undefined
+  cost: number | undefined
+  visitTime: string | undefined
 }
 
 export interface resultObject {
@@ -21,17 +21,13 @@ export interface resultObject {
 }
 
 export interface SearchBoxProps {
-  setSelectedPlaces: React.Dispatch<React.SetStateAction<resultObject[]>>
-  selectedResults: resultObject[]
-  setSelectedResults: React.Dispatch<React.SetStateAction<resultObject[]>>
+  setSelectedPlaces: React.Dispatch<React.SetStateAction<placeObject[]>>
 }
 
 export interface AddScheduleProps {
-  dates: Date[] // 날짜 배열
-  setSelectedResults: React.Dispatch<React.SetStateAction<resultObject[]>> // 체크박스로 업데이트 되는 배열
-  selectedPlaces: resultObject[] // 각 일자에 확정된 장소
-  placesByDate: Record<number, resultObject[]> // 일자별 장소
-  setPlacesByDate: React.Dispatch<React.SetStateAction<Record<number, resultObject[]>>>
+  selectedPlaces: placeObject[] // 각 일자에 확정된 장소
+  placesByDate: Record<number, placeObject[]> // 일자별 장소
+  setPlacesByDate: React.Dispatch<React.SetStateAction<Record<number, placeObject[]>>>
   showSearchBox: boolean // SearchBox 표시 여부
   setShowSearchBox: React.Dispatch<React.SetStateAction<boolean>>
   showLoadSchedule: boolean // 일정 불러오기 클릭 여부 확인
@@ -43,7 +39,7 @@ export interface AddScheduleProps {
 
 export interface LoadScheduleProps {
   activeIndex: number
-  setSelectedPlaces: React.Dispatch<React.SetStateAction<resultObject[]>>
+  setSelectedPlaces: React.Dispatch<React.SetStateAction<placeObject[]>>
 }
 
 export interface Amounts {

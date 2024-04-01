@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+
 import {
   Accordion,
   AccordionButton,
@@ -17,19 +18,12 @@ import AddPost from "@/pages/CreateSchedulePage/AddPost"
 import SearchBox from "@/pages/CreateSchedulePage/SearchBox"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
-import { resultObject } from "./type"
-import axios from "axios"
+import { placeObject } from "./type"
 
 const CreateScheduleForm: React.FC = ({}) => {
   // List
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]) // selectedDates 상태 끌어올리기
-  const [placesByDate, setPlacesByDate] = useState<Record<number, resultObject[]>>({}) // 일정별로 선택한 장소
-  const [selectedPlaces, setSelectedPlaces] = useState<resultObject[]>([]) // 선택이 확정된 장소
-  const [selectedResults, setSelectedResults] = useState<resultObject[]>([]) // 검색창에 체크된 장소
-
-  const updateSelectedDates = (dates: Date[]) => {
-    setSelectedDates(dates)
-  }
+  const [placesByDate, setPlacesByDate] = useState<Record<number, placeObject[]>>({}) // 일정별로 선택한 장소
+  const [selectedPlaces, setSelectedPlaces] = useState<placeObject[]>([]) // 선택이 확정된 장소
 
   const [activeIndex, setActiveIndex] = useState<number>(-1)
 
@@ -67,7 +61,7 @@ const CreateScheduleForm: React.FC = ({}) => {
             <AccordionPanel>
               <Card mt="10px">
                 <CardBody>
-                  <Calendar updateSelectedDates={updateSelectedDates} />
+                  <Calendar />
                 </CardBody>
               </Card>
             </AccordionPanel>
@@ -84,8 +78,6 @@ const CreateScheduleForm: React.FC = ({}) => {
               <Card mt="10px">
                 <CardBody>
                   <AddSchedule
-                    dates={selectedDates}
-                    setSelectedResults={setSelectedResults}
                     selectedPlaces={selectedPlaces}
                     placesByDate={placesByDate}
                     setPlacesByDate={setPlacesByDate}
@@ -122,11 +114,7 @@ const CreateScheduleForm: React.FC = ({}) => {
         {/* SearchBox 표기 부분 */}
         {activeIndex >= 0 && showSearchBox === true && showLoadSchedule === false && (
           <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-            <SearchBox
-              setSelectedPlaces={setSelectedPlaces}
-              selectedResults={selectedResults}
-              setSelectedResults={setSelectedResults}
-            />
+            <SearchBox setSelectedPlaces={setSelectedPlaces} />
           </Box>
         )}
 

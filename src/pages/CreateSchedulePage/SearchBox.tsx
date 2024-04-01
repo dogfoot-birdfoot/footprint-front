@@ -15,7 +15,11 @@ import {
   Button
 } from "@chakra-ui/react"
 import { IconStyle } from "@/components/NavBar/SearchBar.style"
-import { SearchBoxProps, resultObject } from "./type"
+import { SearchBoxProps, placeObject, resultObject } from "./type"
+
+// Recoil
+import { useRecoilState } from "recoil"
+import { currentKeywords } from "./atom"
 
 // 예시로 사용할 모의 한국 지역 및 여행지 데이터
 const mockLocations = [
@@ -38,18 +42,20 @@ const mockLocations = [
   "동대문 디자인 플라자"
 ]
 
-const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResults, setSelectedResults }) => {
-  // results : 검색어 결과 목록, selectedResults : 선택된 장소(검색창 하단)
+const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces }) => {
+  // query : 검색어, queryResults : 검색어에 해당 되는 결과, selectedKeywords : 선택된 키워드
   const [query, setQuery] = useState("")
-  const [results, setResults] = useState<resultObject[]>()
-  const { kakao } = window
+  const [queryResults, setQueryResults] = useState<placeObject[]>()
+  const [selectedKeywords, setSelectedKeywords] = useRecoilState(currentKeywords)
 
+  // Kakao Map API
+  const { kakao } = window
   const ps = new kakao.maps.services.Places() // 키워드 장소 검색 객체
 
   function searchPlaces(keyword: string) {
     // 검색 내용이 없다면 초기화
     if (!keyword.replace(/^\s+|\s+$/g, "")) {
-      setResults([])
+      setQueryResults([])
       return false
     }
 
@@ -60,14 +66,20 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
       // 정상적으로 검색이 완료됐으면, 검색에 대한 결과인 results를 업데이트
 
       const resultData = []
+      console.log(data)
       for (const index in data) {
         resultData.push({
-          place_name: data[index]["place_name"],
-          x: data[index]["x"].toString(),
-          y: data[index]["y"].toString()
+          kakaoPlaceId: data[index]["id"],
+          placeName: data[index]["place_name"],
+          longitude: data[index]["x"].toString(),
+          latitude: data[index]["y"].toString(),
+          address: data[index]["address_name"],
+          memo: undefined,
+          cost: undefined,
+          visitTime: undefined
         })
       }
-      setResults(resultData)
+      setQueryResults(resultData)
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
       return
     } else if (status === kakao.maps.services.Status.ERROR) {
@@ -77,7 +89,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
 
   const handleAddPlaces = () => {
     // 선택된 장소들을 해당 날짜에 업데이트
-    setSelectedPlaces(selectedResults)
+    setSelectedPlaces(selectedKeywords)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,33 +100,42 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
     searchPlaces(value)
   }
 
-  function includesResult(results: resultObject[], r2: resultObject) {
-    // Object 비교를 위한 함수
+  // Object 배열에 포함되는지 확인하는 함수
+  function includesResult(results: placeObject[], r2: placeObject) {
     for (const r1 of results) {
-      if (r1["place_name"] === r2["place_name"] && r1["x"] === r2["x"] && r1["y"] === r2["y"]) {
+      if (
+        r1["placeName"] === r2["placeName"] &&
+        r1["latitude"] === r2["latitude"] &&
+        r1["longitude"] === r2["longitude"]
+      ) {
         return true
       }
     }
     return false
   }
 
-  function isObjectEqual(r1: resultObject, r2: resultObject) {
-    if (r1["place_name"] === r2["place_name"] && r1["x"] === r2["x"] && r1["y"] === r2["y"]) {
+  // Object가 같은지 비교하는 함수
+  function isObjectEqual(r1: placeObject, r2: placeObject) {
+    if (
+      r1["placeName"] === r2["placeName"] &&
+      r1["latitude"] === r2["latitude"] &&
+      r1["longitude"] === r2["longitude"]
+    ) {
       return true
     }
     return false
   }
 
-  const handleCheckboxChange = (result: resultObject) => {
-    setSelectedResults(prevSelected =>
+  const handleCheckboxChange = (result: placeObject) => {
+    setSelectedKeywords(prevSelected =>
       includesResult(prevSelected, result)
         ? prevSelected.filter(item => isObjectEqual(item, result) === false)
         : [...prevSelected, result]
     )
   }
 
-  const removeResult = (result: resultObject) => {
-    setSelectedResults(prevSelected => prevSelected.filter(item => item !== result))
+  const removeResult = (result: placeObject) => {
+    setSelectedKeywords(prevSelected => prevSelected.filter(item => item !== result))
   }
 
   return (
@@ -128,22 +149,22 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces, selectedResult
         </InputGroup>
         <Box width="100%" bg="white" borderRadius="md" maxH="400px" p={4} overflowY="auto">
           <SimpleGrid columns={2} spacing={2} mt="-4" ml="50px">
-            {results &&
-              results.map((result, index) => (
+            {queryResults &&
+              queryResults.map((result, index) => (
                 <Box display="flex" key={index} mb="5px">
                   <Checkbox
                     colorScheme="green"
-                    isChecked={includesResult(selectedResults, result)}
+                    isChecked={includesResult(selectedKeywords, result)}
                     onChange={() => handleCheckboxChange(result)}
                   ></Checkbox>
-                  <Box ml="3">{result["place_name"]}</Box>
+                  <Box ml="3">{result["placeName"]}</Box>
                 </Box>
               ))}
           </SimpleGrid>
           <Wrap spacing={2} ml="40px" mt="20px">
-            {selectedResults.map((result, index) => (
+            {selectedKeywords.map((result, index) => (
               <Tag size="md" key={index} borderRadius="full" variant="outline" colorScheme="blue">
-                <TagLabel>{result["place_name"]}</TagLabel>
+                <TagLabel>{result["placeName"]}</TagLabel>
                 <TagCloseButton onClick={() => removeResult(result)} />
               </Tag>
             ))}
