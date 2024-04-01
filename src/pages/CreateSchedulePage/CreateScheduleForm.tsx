@@ -43,17 +43,7 @@ const CreateScheduleForm: React.FC = ({}) => {
         <Accordion allowMultiple defaultIndex={[0]} width="500px">
           <AccordionItem>
             <AccordionButton bg="primary" borderRadius="20px" height="60px" color="white">
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                onClick={() =>
-                  axios
-                    .get("https://k903c4c87638da.user-app.krampoline.com/api/reviews/1")
-                    .then(response => console.log(response))
-                    .catch(response => console.log(response))
-                }
-              >
+              <Box as="span" flex="1" textAlign="left">
                 Step 1. 지역선택
               </Box>
               <AccordionIcon />
