@@ -15,11 +15,11 @@ import {
   Button
 } from "@chakra-ui/react"
 import { IconStyle } from "@/components/NavBar/SearchBar.style"
-import { SearchBoxProps, placeObject, resultObject } from "./type"
+import { SearchBoxProps, placeObject } from "./type"
 
 // Recoil
-import { useRecoilState } from "recoil"
-import { currentKeywords } from "./atom"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { currentKeywords, placesByDateState } from "./atom"
 
 // 예시로 사용할 모의 한국 지역 및 여행지 데이터
 const mockLocations = [
@@ -42,11 +42,12 @@ const mockLocations = [
   "동대문 디자인 플라자"
 ]
 
-const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces }) => {
+const SearchBox: React.FC<SearchBoxProps> = ({ activeIndex }) => {
   // query : 검색어, queryResults : 검색어에 해당 되는 결과, selectedKeywords : 선택된 키워드
   const [query, setQuery] = useState("")
   const [queryResults, setQueryResults] = useState<placeObject[]>()
   const [selectedKeywords, setSelectedKeywords] = useRecoilState(currentKeywords)
+  const setPlacesByDate = useSetRecoilState(placesByDateState)
 
   // Kakao Map API
   const { kakao } = window
@@ -89,7 +90,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setSelectedPlaces }) => {
 
   const handleAddPlaces = () => {
     // 선택된 장소들을 해당 날짜에 업데이트
-    setSelectedPlaces(selectedKeywords)
+    if (activeIndex !== -1) {
+      setPlacesByDate(prev => ({ ...prev, [activeIndex]: selectedKeywords }))
+    }
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,6 +10,9 @@ import {
   Card,
   CardBody
 } from "@chakra-ui/react"
+
+// 하위 Component
+
 import AddDestination from "@/pages/CreateSchedulePage/AddDestination"
 import Calendar from "@/pages/CreateSchedulePage/Calendar"
 import AddSchedule from "@/pages/CreateSchedulePage/AddSchedule"
@@ -17,14 +20,9 @@ import AddPost from "@/pages/CreateSchedulePage/AddPost"
 import SearchBox from "@/pages/CreateSchedulePage/SearchBox"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import LoadSchedule from "@/pages/CreateSchedulePage/LoadSchedule"
-import { placeObject } from "./type"
 
 const CreateScheduleForm: React.FC = ({}) => {
-  // 일정별 장소 저장을 위한 상태
-  const [placesByDate, setPlacesByDate] = useState<Record<number, placeObject[]>>({}) // 일정별로 선택한 장소
-  const [selectedPlaces, setSelectedPlaces] = useState<placeObject[]>([]) // 선택이 확정된 장소
-
-  // 어떤 일정에 해당하는 searchBox, loadSchedule인지 표기
+  // 어떤 일정에 해당하는 SearchBox, LoadSchedule인지 표기
   const [activeIndex, setActiveIndex] = useState<number>(-1)
   const [showSearchBox, setShowSearchBox] = useState(false)
   const [showLoadSchedule, setShowLoadSchedule] = useState(false)
@@ -76,9 +74,6 @@ const CreateScheduleForm: React.FC = ({}) => {
               <Card mt="10px">
                 <CardBody>
                   <AddSchedule
-                    selectedPlaces={selectedPlaces}
-                    placesByDate={placesByDate}
-                    setPlacesByDate={setPlacesByDate}
                     showSearchBox={showSearchBox}
                     setShowSearchBox={setShowSearchBox}
                     showLoadSchedule={showLoadSchedule}
@@ -109,16 +104,16 @@ const CreateScheduleForm: React.FC = ({}) => {
           </AccordionItem>
         </Accordion>
 
-        {/* SearchBox 표기 부분 */}
+        {/* Index에 맞는 SearchBox, LoadSchedule 표기 */}
         {activeIndex >= 0 && showSearchBox === true && showLoadSchedule === false && (
           <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-            <SearchBox setSelectedPlaces={setSelectedPlaces} />
+            <SearchBox activeIndex={activeIndex} />
           </Box>
         )}
 
         {activeIndex >= 0 && showSearchBox === false && showLoadSchedule === true && (
           <Box width="550px" height="450px" mt="100px" ml="50px" position="sticky" top="100px">
-            <LoadSchedule activeIndex={activeIndex} setSelectedPlaces={setSelectedPlaces} />
+            <LoadSchedule activeIndex={activeIndex} />
           </Box>
         )}
 

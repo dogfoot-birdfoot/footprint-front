@@ -21,8 +21,8 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 // Recoil
-import { useRecoilValue, useSetRecoilState } from "recoil"
-import { currentKeywords, allDates } from "./atom"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import { currentKeywords, allDates, placesByDateState } from "./atom"
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
@@ -31,9 +31,6 @@ const formatDate = (date: Date) => {
 }
 
 const AddSchedule: React.FC<AddScheduleProps> = ({
-  selectedPlaces,
-  placesByDate,
-  setPlacesByDate,
   showSearchBox,
   setShowSearchBox,
   showLoadSchedule,
@@ -41,11 +38,14 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   activeIndex,
   setActiveIndex
 }) => {
-  // State
+  // Component State
   const [amounts, setAmounts] = useState<Amounts>({})
   const [formTimes, setFormTimes] = useState<Record<string, Date>>({}) // 상태의 타입을 string 기반의 키로 변경
+
+  // Recoil State
   const setSelectedKeywords = useSetRecoilState(currentKeywords)
   const selectedDates = useRecoilValue(allDates)
+  const [placesByDate, setPlacesByDate] = useRecoilState(placesByDateState)
 
   // CSS
   const editableProps = {
@@ -87,16 +87,6 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     }
     setShowSearchBox(false)
   }
-
-  // SearchBox에서 선택완료 버튼을 누를 시, 활성화된 날짜에 대한 장소들 업데이트
-  useEffect(() => {
-    if (activeIndex !== -1) {
-      setPlacesByDate(prev => ({
-        ...prev,
-        [activeIndex]: selectedPlaces
-      }))
-    }
-  }, [selectedPlaces])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, dateIndex: number, placeIndex: number) => {
     const { value } = e.target

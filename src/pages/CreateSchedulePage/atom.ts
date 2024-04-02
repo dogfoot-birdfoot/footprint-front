@@ -1,6 +1,12 @@
 import { atom } from "recoil"
 import { placeObject, scheduleObject } from "./type"
 
+// 일정별 방문 장소에 대한 정보
+export const placesByDateState = atom<Record<number, placeObject[]>>({
+  key: "placesByDateState",
+  default: {}
+})
+
 // 선택한 일정을 세부 일정에 표기하기 위한 Date 배열
 export const allDates = atom<Date[]>({
   key: "allDates",
