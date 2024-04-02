@@ -1,4 +1,6 @@
 export interface OnOffSwitchProps {
-  ontext: string
-  offtext: string
+  onText: string
+  offText: string
+  booleanState: boolean
+  setBooleanState: React.Dispatch<React.SetStateAction<boolean>>
 }

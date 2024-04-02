@@ -3,12 +3,40 @@ import { CardInfo } from "@/components/HorizontalCard/HorizontalCard"
 import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import { Avatar, Box, Button, Card, CardBody, CardHeader, Checkbox, Text } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
-import { LoadScheduleProps } from "./type"
+import { LoadScheduleProps, placeObject } from "./type"
 
-const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPlaces }) => {
+// Recoil
+import { useSetRecoilState } from "recoil"
+import { placesByDateState } from "./atom"
+
+const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex }) => {
   const [showLikeSchedule, setShowLikeSchedule] = useState<boolean>(true)
+
+  // 선택한 하위 일정의 index 변수
   const [selectedIndex, setSelectedIndex] = useState<number>(-1)
+
+  // 하위 일정에서 어느 스케줄을 선택할지에 대한 index 변수
   const [checkedSchedule, setCheckedSchedule] = useState<number>(-1)
+
+  const setPlacesByDate = useSetRecoilState(placesByDateState)
+
+  // 임시 Object
+  const sampleObject: placeObject = {
+    kakaoPlaceId: "",
+    placeName: "태종대 1",
+    latitude: 1,
+    longitude: 1,
+    address: "",
+    memo: "",
+    cost: 0,
+    visitTime: ""
+  }
+
+  const detailScheduleArray: placeObject[][] = [
+    [sampleObject, sampleObject, sampleObject, sampleObject],
+    [sampleObject, sampleObject, sampleObject, sampleObject],
+    [sampleObject, sampleObject, sampleObject, sampleObject]
+  ]
 
   const cardList = [
     {
@@ -20,26 +48,7 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
         ["태종대", "태종대 2", "태종대 3", "태종대 4"],
         ["태종대", "태종대 2", "태종대 3", "태종대 4"]
       ],
-      detailSchedule: [
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ]
-      ]
+      detailSchedule: detailScheduleArray
     },
     {
       title: "가족 여행",
@@ -50,26 +59,7 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
         ["태종대", "태종대 2", "태종대 3", "태종대 4"],
         ["태종대", "태종대 2", "태종대 3", "태종대 4"]
       ],
-      detailSchedule: [
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ]
-      ]
+      detailSchedule: detailScheduleArray
     },
     {
       title: "바다 여행",
@@ -80,26 +70,7 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
         ["태종대", "태종대 2", "태종대 3", "태종대 4"],
         ["태종대", "태종대 2", "태종대 3", "태종대 4"]
       ],
-      detailSchedule: [
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ]
-      ]
+      detailSchedule: detailScheduleArray
     },
     {
       title: "여행",
@@ -110,33 +81,13 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
         ["태종대", "태종대 2", "태종대 3", "태종대 4"],
         ["태종대", "태종대 2", "태종대 3", "태종대 4"]
       ],
-      detailSchedule: [
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ],
-        [
-          { place_name: "태종대", x: "1", y: "1" },
-          { place_name: "태종대 2", x: "1", y: "1" },
-          { place_name: "태종대 3", x: "1", y: "1" },
-          { place_name: "태종대 4", x: "1", y: "1" }
-        ]
-      ]
+      detailSchedule: detailScheduleArray
     }
   ]
 
-  function detailScheduleClickHandler(idx: number) {
+  function detailScheduleClickHandler(index: number) {
     setShowLikeSchedule(false)
-    setSelectedIndex(idx)
-    // cardList[idx]["detailSchedule"].map(day => setSelectedSchedule(prev => [...prev, day]))
+    setSelectedIndex(index)
   }
 
   function returnButtonClickHandler() {
@@ -146,21 +97,20 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
   }
 
   function checkClickEvent(index: number) {
-    if (checkedSchedule === -1) {
-      setCheckedSchedule(index)
-    } else if (checkedSchedule !== -1 && checkedSchedule === index) {
+    if (checkedSchedule !== -1 && checkedSchedule === index) {
       setCheckedSchedule(-1)
-    } else if (checkedSchedule !== -1 && checkedSchedule !== index) {
+    } else {
       setCheckedSchedule(index)
     }
   }
 
   function setPlaces() {
-    if (checkedSchedule !== -1) {
-      setSelectedPlaces(cardList[selectedIndex]["detailSchedule"][checkedSchedule])
+    if (checkedSchedule !== -1 && activeIndex !== -1) {
+      setPlacesByDate(prev => ({ ...prev, [activeIndex]: cardList[selectedIndex]["detailSchedule"][checkedSchedule] }))
     }
   }
 
+  // 다른 일정에서 불러오기를 누르면 초기화
   useEffect(() => {
     setShowLikeSchedule(true)
     setSelectedIndex(-1)
@@ -218,8 +168,8 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
                   height="40px"
                   borderRadius="20px"
                   color="white"
-                  backgroundColor="gray"
-                  onClick={() => returnButtonClickHandler()}
+                  backgroundColor="lightgray"
+                  onClick={returnButtonClickHandler}
                 >
                   {"<"}
                 </Button>
@@ -256,7 +206,7 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex, setSelectedPla
               color="#fff"
               size="sm"
               height="40px"
-              onClick={() => setPlaces()}
+              onClick={setPlaces}
             >
               선택 완료
             </Button>

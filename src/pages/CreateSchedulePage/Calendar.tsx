@@ -4,6 +4,10 @@ import { format, parse, isValid, isAfter, isBefore } from "date-fns"
 import React, { ChangeEvent, useState } from "react"
 import { DateFormatter, DateRange, DayPicker, SelectRangeEventHandler } from "react-day-picker"
 
+// Recoil
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { allDates, fromDateState, toDateState } from "@/pages/CreateSchedulePage//atom"
+
 // 계절에 따른 이모지를 매핑하는 객체
 const seasonEmoji: Record<string, string> = {
   winter: "⛄️",
@@ -53,10 +57,11 @@ const css = `
 `
 
 // Calendar 컴포넌트 정의
-const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ updateSelectedDates }) => {
+const Calendar: React.FC = () => {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>() // 사용자가 선택한 날짜 범위 상태
-  const [fromValue, setFromValue] = useState<string>("") // 시작 날짜 입력 필드의 값
-  const [toValue, setToValue] = useState<string>("") // 종료 날짜 입력 필드의 값
+  const [fromValue, setFromValue] = useRecoilState(fromDateState) // 시작 날짜 입력 필드의 값
+  const [toValue, setToValue] = useRecoilState(toDateState) // 종료 날짜 입력 필드의 값
+  const setSelectedDates = useSetRecoilState(allDates) // selectedDates
 
   // 시작 날짜 입력 필드 변경 시 호출되는 함수
   const handleFromChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,10 +70,10 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
     if (!isValid(date)) {
       return setSelectedRange({ from: undefined, to: selectedRange?.to })
     }
-    if (selectedRange?.to && isAfter(date, selectedRange.to)) {
-      setSelectedRange({ from: selectedRange.to, to: date })
+    if (selectedRange?.to && isBefore(date, selectedRange.to)) {
+      setSelectedRange({ from: date, to: selectedRange.to })
     } else {
-      setSelectedRange({ from: date, to: selectedRange?.to })
+      setSelectedRange({ from: date, to: undefined })
     }
   }
 
@@ -80,10 +85,10 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
     if (!isValid(date)) {
       return setSelectedRange({ from: selectedRange?.from, to: undefined })
     }
-    if (selectedRange?.from && isBefore(date, selectedRange.from)) {
-      setSelectedRange({ from: date, to: selectedRange.from })
+    if (selectedRange?.from && isAfter(date, selectedRange.from)) {
+      setSelectedRange({ from: selectedRange.from, to: date })
     } else {
-      setSelectedRange({ from: selectedRange?.from, to: date })
+      setSelectedRange({ from: undefined, to: date })
     }
   }
 
@@ -115,7 +120,7 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
     }
     if (range?.from && range.to) {
       const allDates = getDatesInRange(range.from, range.to) // 선택된 날짜 범위 내의 모든 날짜 계산
-      updateSelectedDates(allDates) // 부모 컴포넌트에 날짜 배열 업데이트
+      setSelectedDates(allDates) // 부모 컴포넌트에 날짜 배열 업데이트
     }
   }
 

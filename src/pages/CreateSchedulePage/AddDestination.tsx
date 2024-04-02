@@ -2,8 +2,12 @@ import React, { useState } from "react"
 import { Box } from "@chakra-ui/react"
 import { RegionBox } from "@/pages/CreateSchedulePage/AddDestination.style"
 
+// Recoil
+import { useRecoilState } from "recoil"
+import { regionState } from "@/pages/CreateSchedulePage/atom"
+
 const AddDestination: React.FC = () => {
-  const [selectedRegions, setSelectedRegions] = useState<string[]>([])
+  const [selectedRegions, setSelectedRegions] = useRecoilState(regionState)
 
   const koreanRegions = [
     "서울",

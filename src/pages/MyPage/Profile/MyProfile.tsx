@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   ChangePasswordButton,
   ContentBody,
@@ -15,10 +16,11 @@ import {
 } from "@/pages/MyPage/Profile/MyProfile.style"
 import { Avatar } from "@chakra-ui/react"
 import { MdEdit } from "react-icons/md"
-
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 
 const MyProfile = () => {
+  const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
+
   return (
     <Profile>
       {/* Profile Header */}
@@ -32,7 +34,7 @@ const MyProfile = () => {
           <ReviewNumber>리뷰 24</ReviewNumber>
           <UploadImageButton>사진 업로드</UploadImageButton>
         </ProfileInformation>
-        <OnOffSwitch ontext="공개" offtext="비공개" />
+        <OnOffSwitch onText="공개" offText="비공개" booleanState={visibleProfile} setBooleanState={setVisibleProfile} />
       </ProfileHeader>
 
       {/* Profile Body */}

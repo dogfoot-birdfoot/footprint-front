@@ -24,17 +24,43 @@ const AddPost = () => {
     padding: "5px 5px 5px 5px"
   }
 
-  const regionContents = ["서울", "경기", "대구", "부산", "대전", "인천", "광주"]
-  const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
-  const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
+  const [notify, setNotify] = useState<boolean>(false)
+  const [visiblePost, setVisiblePost] = useState<boolean>(false)
+
+  const regionContents = [
+    ["서울", ""],
+    ["경기", ""],
+    ["대구", ""],
+    ["부산", ""],
+    ["대전", ""],
+    ["인천", ""],
+    ["광주", ""]
+  ]
+  const tagContents = [
+    ["휴식", ""],
+    ["관광", ""],
+    ["혼자 여행", ""],
+    ["우정 여행", ""],
+    ["커플 여행", ""],
+    ["가족 여행", ""]
+  ]
+  const scheduleContents = [
+    ["일정 1", ""],
+    ["일정 2", ""],
+    ["일정 3", ""],
+    ["일정 4", ""],
+    ["일정 5", ""],
+    ["일정 6", ""]
+  ]
+
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="300px" margin="0px 10px 0px 0px">
         <ImageSlider size="sm" />
         <Box display="flex" justifyContent="space-between" marginTop="10px">
           <Box>
-            <OnOffSwitch ontext="알림" offtext="" />
-            <OnOffSwitch ontext="공개" offtext="" />
+            <OnOffSwitch onText="알림" offText="" booleanState={notify} setBooleanState={setNotify} />
+            <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
           </Box>
 
           <Box width="110px" display="flex" justifyContent="space-between">

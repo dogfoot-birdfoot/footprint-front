@@ -14,7 +14,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
   }
 
   return (
-    <Menu isLazy isOpen={isOpened} onClose={() => setIsOpened(false)}>
+    <Menu isLazy isOpen={isOpened}>
       <MenuButton onClick={toggleIsOpened}>
         <MenuTitle $isopened={isOpened}>
           {title}
@@ -26,7 +26,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
 
         {contents.map((item, index) => (
           <Box key={index}>
-            <Link to={`/${item[1]}`}>
+            <Link to={`/${item[1]}`} onClick={() => setIsOpened(false)}>
               <StyledMenuItem href="#">{item[0]}</StyledMenuItem>
             </Link>
           </Box>
