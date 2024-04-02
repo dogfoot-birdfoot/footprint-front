@@ -6,10 +6,10 @@ interface SliderContainerProps {
 
 export const SliderContainer = styled.div<SliderContainerProps>`
   position: relative;
-  width: ${props => (props.size === "lg" ? "500px" : "300px")};
-  height: ${props => (props.size === "lg" ? "400px" : "300px")};
-  border="1px solid lightgray"
-  borderRadius="10px"
+  width: ${props => (props.size === "lg" ? "500px" : "320px")};
+  height: ${props => (props.size === "lg" ? "400px" : "320px")};
+  border: 1px solid lightgray;
+  border-radius: 10px;
   overflow: hidden;
 `
 
