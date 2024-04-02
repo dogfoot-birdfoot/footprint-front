@@ -4,6 +4,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Button,
   Menu,
   MenuButton,
   MenuList,
@@ -98,6 +99,9 @@ const NavBar: React.FC = () => {
           </Wrap>
         </NavBarItems>
       </NavBarStyle>
+      <Button as={Link} to="/mirage_example">
+        go to mirage
+      </Button>
     </>
   )
 }

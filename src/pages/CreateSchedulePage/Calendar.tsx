@@ -54,7 +54,7 @@ const css = `
 
 // Calendar 컴포넌트 정의
 const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ updateSelectedDates }) => {
-  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>() // 사용자가 선택한 날짜 범위 상태
+  const [selectedDates, setSelectedDates] = useState<DateRange | undefined>() // 사용자가 선택한 날짜 범위 상태
   const [fromValue, setFromValue] = useState<string>("") // 시작 날짜 입력 필드의 값
   const [toValue, setToValue] = useState<string>("") // 종료 날짜 입력 필드의 값
 
@@ -63,12 +63,12 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
     setFromValue(e.target.value)
     const date = parse(e.target.value, "y-MM-dd", new Date())
     if (!isValid(date)) {
-      return setSelectedRange({ from: undefined, to: selectedRange?.to })
+      return setSelectedDates({ from: undefined, to: selectedDates?.to })
     }
-    if (selectedRange?.to && isAfter(date, selectedRange.to)) {
-      setSelectedRange({ from: selectedRange.to, to: date })
+    if (selectedDates?.to && isAfter(date, selectedDates.to)) {
+      setSelectedDates({ from: selectedDates.to, to: date })
     } else {
-      setSelectedRange({ from: date, to: selectedRange?.to })
+      setSelectedDates({ from: date, to: selectedDates?.to })
     }
   }
 
@@ -78,12 +78,12 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
     const date = parse(e.target.value, "y-MM-dd", new Date())
 
     if (!isValid(date)) {
-      return setSelectedRange({ from: selectedRange?.from, to: undefined })
+      return setSelectedDates({ from: selectedDates?.from, to: undefined })
     }
-    if (selectedRange?.from && isBefore(date, selectedRange.from)) {
-      setSelectedRange({ from: date, to: selectedRange.from })
+    if (selectedDates?.from && isBefore(date, selectedDates.from)) {
+      setSelectedDates({ from: date, to: selectedDates.from })
     } else {
-      setSelectedRange({ from: selectedRange?.from, to: date })
+      setSelectedDates({ from: selectedDates?.from, to: date })
     }
   }
 
@@ -102,7 +102,7 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
 
   // 날짜 범위 선택 시 호출되는 이벤트 핸들러
   const handleRangeSelect: SelectRangeEventHandler = (range: DateRange | undefined) => {
-    setSelectedRange(range)
+    setSelectedDates(range)
     if (range?.from) {
       setFromValue(format(range.from, "y-MM-dd"))
     } else {
@@ -127,7 +127,7 @@ const Calendar: React.FC<{ updateSelectedDates: (dates: Date[]) => void }> = ({ 
         <DayPicker
           formatters={{ formatCaption }}
           mode="range"
-          selected={selectedRange}
+          selected={selectedDates}
           onSelect={handleRangeSelect}
           modifiersClassNames={{
             selected: "my-selected",
