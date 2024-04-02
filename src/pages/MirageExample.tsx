@@ -38,20 +38,27 @@ function MirageExample() {
   const [data, setData] = useState<ScheduleProps[] | null>(null)
 
   useEffect(() => {
-    // Mirage JS를 통해 가상의 API 호출
-    fetch("/api/users")
-      .then(response => response.json())
-      .then(json => setUsers(json.users))
-  }, [])
-  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch("/api/users")
+      if (!response.ok) {
+        throw new Error("Failed to fetch users")
+      }
+      const json = await response.json()
+      setUsers(json.users)
+    }
+
+    const fetchSchedules = async () => {
+      const response = await fetch("/api/schedules")
+      if (!response.ok) {
+        throw new Error("Failed to fetch schedules")
+      }
+      const json = await response.json()
+      setData(json)
+    }
+
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/schedules")
-        if (!response.ok) {
-          throw new Error("Failed to fetch data")
-        }
-        const jsonData = await response.json()
-        setData(jsonData)
+        await Promise.all([fetchUsers(), fetchSchedules()])
       } catch (error) {
         console.error("Error fetching data:", error)
       }
