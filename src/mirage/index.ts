@@ -59,10 +59,32 @@ export function makeServer({ environment = "development" } = {}) {
       server.create("schedule", {
         title: "서울 여행",
         region: "서울",
-        dates: ["2024-03-28", "2024-03-29"],
+        startDate: "2024-03-28",
+        endDate: "2024-03-29",
         places,
-        share: true,
-        copy: false,
+        visible: true,
+        copyAllowed: false,
+        tags: ["가족여행", "관광"],
+        schedules: [
+          {
+            day: 1,
+            places: [
+              {
+                placeName: "경복궁",
+                placeDetails: [{ memo: "오후 2시 방문", cost: 10000 }]
+              }
+            ]
+          },
+          {
+            day: 2,
+            places: [
+              {
+                placeName: "명동",
+                placeDetails: [{ memo: "쇼핑하기", cost: 50000 }]
+              }
+            ]
+          }
+        ],
         totalBudget
       } as any)
 
@@ -83,6 +105,11 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.db.schedules
       })
 
+      // 게시된 여행 일정 조회
+      this.get("/schedules/get", schema => {
+        return schema.db.schedules // 모든 여행 일정 반환
+      })
+
       // 특정 여행 일정 조회
       this.get("/schedules/:id", (schema, request) => {
         const id = request.params.id // URL에서 ID 추출
@@ -90,9 +117,10 @@ export function makeServer({ environment = "development" } = {}) {
       })
 
       // 여행 일정 생성
-      this.post("/schedules", (schema, request) => {
+      this.post("/schedules/create", (schema, request) => {
         const attrs = JSON.parse(request.requestBody)
-        return schema.db.schedules.insert(attrs)
+        const newSchedule = schema.db.schedules.insert(attrs)
+        return newSchedule.attrs
       })
 
       // 회원가입

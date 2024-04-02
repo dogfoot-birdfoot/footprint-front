@@ -8,6 +8,7 @@ export interface scheduleObject {
 }
 
 export interface placeObject {
+  placeDetails: any
   kakaoPlaceId: string
   placeName: string
   latitude: number
@@ -36,4 +37,9 @@ export interface LoadScheduleProps {
 
 export interface SearchBoxProps {
   activeIndex: number
+}
+
+// 선택된 태그를 관리하는 상태의 타입 정의
+export interface SelectedTags {
+  [key: string]: boolean
 }

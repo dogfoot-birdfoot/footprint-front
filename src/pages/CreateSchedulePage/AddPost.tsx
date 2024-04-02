@@ -1,10 +1,21 @@
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
-import React, { useState } from "react"
-import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button } from "@chakra-ui/react"
+import React from "react"
+import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button, VStack, HStack } from "@chakra-ui/react"
 
 // Recoil
-import { useRecoilState } from "recoil"
-import { copyAllowedState, visibleState } from "@/hooks/atom"
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
+import {
+  titleState,
+  fromDateState,
+  toDateState,
+  regionState,
+  visibleState,
+  copyAllowedState,
+  scheduleState,
+  selectedTagsState
+} from "@/hooks/atom"
+import axios from "axios"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
@@ -22,18 +33,61 @@ const tagArray: string[] = [
   "낚시,캠핑"
 ]
 
-// 선택된 태그를 관리하는 상태의 타입 정의
-interface SelectedTags {
-  [key: string]: boolean
-}
-
 const AddPost: React.FC = () => {
+  const navigate = useNavigate()
+  const [title, setTitle] = useRecoilState(titleState)
   // 태그의 선택 상태를 저장하는 상태 변수
-  const [selectedTags, setSelectedTags] = useState<SelectedTags>({})
+  const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState)
 
   // 게시글 공개 여부, 복사 여부를 설정하는 변수
   const [postVisible, setPostVisible] = useRecoilState(visibleState)
   const [copyAllowed, setCopyAllowed] = useRecoilState(copyAllowedState)
+  const fromDate = useRecoilValue(fromDateState)
+  const toDate = useRecoilValue(toDateState)
+  const regions = useRecoilValue(regionState)
+  const visible = useRecoilValue(visibleState)
+  const schedules = useRecoilValue(scheduleState)
+
+  const resetTitle = useResetRecoilState(titleState)
+  const resetFromDate = useResetRecoilState(fromDateState)
+  const resetToDate = useResetRecoilState(toDateState)
+  const resetRegions = useResetRecoilState(regionState)
+  const resetVisible = useResetRecoilState(visibleState)
+  const resetCopyAllowed = useResetRecoilState(copyAllowedState)
+  const resetSchedules = useResetRecoilState(scheduleState)
+
+  const tagBg = useColorModeValue("gray.500", "gray.500")
+  const selectedTagBg = useColorModeValue("primary", "primary")
+
+  const handleSubmit = async () => {
+    const tags = Object.entries(selectedTags)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([tag]) => tag)
+    const data = {
+      title,
+      startDate: fromDate,
+      endDate: toDate,
+      region: regions.join(", "),
+      visible,
+      copyAllowed,
+      schedules,
+      tags
+    }
+
+    try {
+      const response = await axios.post("/api/schedules/create", data)
+      console.log("Schedule created successfully", response.data)
+      resetTitle()
+      resetFromDate()
+      resetToDate()
+      resetRegions()
+      resetVisible()
+      resetCopyAllowed()
+      resetSchedules()
+    } catch (error) {
+      console.error("Failed to create schedule", error)
+    }
+  }
 
   // 태그 클릭 핸들러 함수
   const toggleTagSelection = (tag: string) => {
@@ -43,9 +97,11 @@ const AddPost: React.FC = () => {
     }))
   }
 
-  // Chakra UI에서 사용할 수 있는 색상 훅
-  const tagBg = useColorModeValue("gray.500", "gray.500") // 기본 태그 배경색
-  const selectedTagBg = useColorModeValue("primary", "primary") // 선택된 태그 배경색
+  // 선택된 태그를 배열로 변환
+  const selectedTagList = Object.entries(selectedTags)
+    .filter(([_, isSelected]) => isSelected)
+    .map(([tag]) => tag)
+
   return (
     <>
       <Box>
@@ -113,9 +169,10 @@ const AddPost: React.FC = () => {
           ))}
         </SimpleGrid>
         <Box display="flex" justifyContent="center" mt="20px">
-          <Button color="white" bgColor="primary" _hover={{ bgColor: "secondary" }} w="160px">
+          <Button color="white" bgColor="primary" _hover={{ bgColor: "secondary" }} w="160px" onClick={handleSubmit}>
             게시하기
           </Button>
+          <Button onClick={() => navigate("/check")}>게시된 정보 조회</Button>
         </Box>
       </Box>
     </>
