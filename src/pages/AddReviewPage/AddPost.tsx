@@ -1,4 +1,4 @@
-import { Box, Button, Editable, EditablePreview, EditableTextarea } from "@chakra-ui/react"
+import { Box, Button, Editable, EditablePreview, EditableTextarea, Input } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
@@ -18,10 +18,10 @@ const AddPost = () => {
 
   const editableProps = {
     width: "320px",
-    height: "320px",
+    height: "270px",
     fontSize: "13px",
     whiteSpace: "pre-wrap",
-    padding: "5px 5px 5px 5px"
+    padding: "10px 10px 10px 10px"
   }
 
   const [notify, setNotify] = useState<boolean>(false)
@@ -70,15 +70,17 @@ const AddPost = () => {
         </Box>
       </Box>
       <Box width="320px">
+        <Input paddingLeft="10px" marginBottom="10px" placeholder="제목" fontSize={"sm"} color="black" />
         <Editable
-          width="320px"
-          height="320px"
-          defaultValue="문구를 입력하세요."
+          width="322px"
+          height="272px"
+          placeholder="문구를 입력하세요."
+          _placeholder={{ color: "green" }}
           border="1px solid lightgray"
           borderRadius="10px"
           selectAllOnFocus={false}
         >
-          <EditablePreview {...editableProps} overflow={"hidden"} />
+          <EditablePreview {...editableProps} color="gray" overflow={"hidden"} />
           <EditableTextarea {...editableProps} resize="none" maxLength={300} />
         </Editable>
         <Box display="flex" justifyContent="flex-end" marginTop="10px">
