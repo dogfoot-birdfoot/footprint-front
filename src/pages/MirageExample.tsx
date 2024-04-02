@@ -1,9 +1,28 @@
 import React, { useEffect, useState } from "react"
-import { Avatar, Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react"
-import { makeServer } from "mirage"
+import { Avatar, Badge, Box, Flex, HStack, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react"
+// 여행 계획에 대한 인터페이스를 정의합니다.
+export interface PlaceProps {
+  kakaoPlaceId?: string
+  placeName: string
+  latitude?: number
+  longitude?: number
+  address?: string
+  memo: string
+  cost: number
+  visitTime?: string
+}
 
-if (process.env.NODE_ENV === "development") {
-  // makeServer({ environment: "development" })
+export interface ScheduleProps {
+  id: string
+  title?: string // 선택적 프로퍼티
+  scheduleName?: string // 선택적 프로퍼티
+  region: string
+  dates?: string[] // 선택적 프로퍼티
+  date?: string // 선택적 프로퍼티
+  places: PlaceProps[]
+  share?: boolean // 선택적 프로퍼티
+  isShared?: boolean // 선택적 프로퍼티
+  totalBudget: number
 }
 
 // 'nickname'과 'email' 필드를 User 인터페이스에 추가
@@ -16,12 +35,36 @@ interface User {
 
 function MirageExample() {
   const [users, setUsers] = useState<User[]>([])
+  const [data, setData] = useState<ScheduleProps[] | null>(null)
 
   useEffect(() => {
-    // Mirage JS를 통해 가상의 API 호출
-    fetch("/api/users")
-      .then(response => response.json())
-      .then(json => setUsers(json.users))
+    const fetchUsers = async () => {
+      const response = await fetch("/api/users")
+      if (!response.ok) {
+        throw new Error("Failed to fetch users")
+      }
+      const json = await response.json()
+      setUsers(json.users)
+    }
+
+    const fetchSchedules = async () => {
+      const response = await fetch("/api/schedules")
+      if (!response.ok) {
+        throw new Error("Failed to fetch schedules")
+      }
+      const json = await response.json()
+      setData(json)
+    }
+
+    const fetchData = async () => {
+      try {
+        await Promise.all([fetchUsers(), fetchSchedules()])
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      }
+    }
+
+    fetchData()
   }, [])
 
   return (
@@ -46,6 +89,50 @@ function MirageExample() {
           </Box>
         ))}
       </SimpleGrid>
+      <VStack spacing={4} p={5}>
+        <Text fontSize="2xl" fontWeight="bold">
+          Overview Page
+        </Text>
+
+        <div>
+          <h1>Overview Page</h1>
+          {data ? (
+            <pre>{JSON.stringify(data, null, 2)}</pre> // Display fetched data
+          ) : (
+            <p>Loading...</p> // Show loading message while data is being fetched
+          )}
+        </div>
+        {data ? (
+          data.map(item => (
+            <Box key={item.id} p={5} shadow="md" borderWidth="1px" borderRadius="md" width="full">
+              <VStack align="stretch">
+                <HStack justifyContent="space-between">
+                  <Text fontSize="xl" fontWeight="bold">
+                    {item.title || item.scheduleName}
+                  </Text>
+                  <Badge colorScheme={item.share || item.isShared ? "green" : "red"}>
+                    {item.share || item.isShared ? "Shared" : "Private"}
+                  </Badge>
+                </HStack>
+                <Text>Region: {item.region}</Text>
+                <Text>Dates: {item.dates ? item.dates.join(", ") : item.date}</Text>
+                <Text>Total Budget: {item.totalBudget}</Text>
+                <VStack align="start">
+                  {item.places.map((place, index) => (
+                    <Box key={index} p={2} shadow="sm" borderWidth="1px" borderRadius="md">
+                      <Text fontWeight="bold">{place.placeName}</Text>
+                      <Text fontSize="sm">Memo: {place.memo}</Text>
+                      <Text fontSize="sm">Budget: {place.cost}</Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </VStack>
+            </Box>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </VStack>
     </Box>
   )
 }
