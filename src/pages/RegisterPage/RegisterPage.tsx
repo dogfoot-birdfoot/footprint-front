@@ -22,7 +22,7 @@ const RegisterPage = () => {
       <LoginContainer>
         <LoginCard>
           <LoginTitle>Join us!</LoginTitle>
-          <RegisterForm title="Register" getDataForm={(email, password) => console.log(email, password)} />
+          <RegisterForm title="Register" />
           <LinkContainer>
             <LoginStyledLink to="/login">로그인하기</LoginStyledLink>
           </LinkContainer>

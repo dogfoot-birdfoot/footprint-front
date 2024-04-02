@@ -29,7 +29,8 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
   const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<FormValues> = ({ email, password, nickname }) => {
-    fetch("/api/register", {
+    // confirmPassword는 서버에 보낼 필요가 없으므로 제외하고 요청을 보냅니다.
+    fetch("/api/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, nickname })
@@ -44,7 +45,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
         }
       })
       .then(user => {
-        console.log("Registered with:", user)
+        console.log("Registered successfully:", user)
         reset() // 폼 초기화
         navigate("/login") // 로그인 페이지로 리다이렉트
       })
