@@ -17,8 +17,8 @@ const AddPost = () => {
   }
 
   const editableProps = {
-    width: "300px",
-    height: "300px",
+    width: "320px",
+    height: "320px",
     fontSize: "13px",
     whiteSpace: "pre-wrap",
     padding: "5px 5px 5px 5px"
@@ -55,24 +55,24 @@ const AddPost = () => {
 
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
-      <Box width="300px" margin="0px 10px 0px 0px">
+      <Box width="320px" margin="0px 10px 0px 0px">
         <ImageSlider size="sm" />
-        <Box display="flex" justifyContent="space-between" marginTop="10px">
+        <Box display="flex" justifyContent="space-between" marginTop="10px" alignItems="center">
           <Box>
             <OnOffSwitch onText="알림" offText="" booleanState={notify} setBooleanState={setNotify} />
             <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
           </Box>
 
-          <Box width="110px" display="flex" justifyContent="space-between">
+          <Box width="100px" display="flex" justifyContent="space-between">
             <DropDownButton title="지역" contents={regionContents} />
             <DropDownButton title="태그" contents={tagContents} />
           </Box>
         </Box>
       </Box>
-      <Box width="300px">
+      <Box width="320px">
         <Editable
-          width="300px"
-          height="300px"
+          width="320px"
+          height="320px"
           defaultValue="문구를 입력하세요."
           border="1px solid lightgray"
           borderRadius="10px"
