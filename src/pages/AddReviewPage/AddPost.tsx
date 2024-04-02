@@ -78,7 +78,7 @@ const AddPost = () => {
           borderRadius="10px"
           selectAllOnFocus={false}
         >
-          <EditablePreview {...editableProps} />
+          <EditablePreview {...editableProps} overflow={"hidden"} />
           <EditableTextarea {...editableProps} resize="none" maxLength={300} />
         </Editable>
         <Box display="flex" justifyContent="flex-end" marginTop="10px">
