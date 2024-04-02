@@ -4,7 +4,7 @@ import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button }
 
 // Recoil
 import { useRecoilState } from "recoil"
-import { copyAllowedState, visibleState } from "@/pages/CreateSchedulePage/atom"
+import { copyAllowedState, visibleState } from "@/hooks/atom"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [

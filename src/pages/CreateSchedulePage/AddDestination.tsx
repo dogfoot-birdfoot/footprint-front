@@ -4,7 +4,7 @@ import { RegionBox } from "@/pages/CreateSchedulePage/AddDestination.style"
 
 // Recoil
 import { useRecoilState } from "recoil"
-import { regionState } from "@/pages/CreateSchedulePage/atom"
+import { regionState } from "@/hooks/atom"
 
 const AddDestination: React.FC = () => {
   const [selectedRegions, setSelectedRegions] = useRecoilState(regionState)

@@ -6,7 +6,7 @@ import { DateFormatter, DateRange, DayPicker, SelectRangeEventHandler } from "re
 
 // Recoil
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { allDates, fromDateState, toDateState } from "@/pages/CreateSchedulePage//atom"
+import { allDates, fromDateState, toDateState } from "@/hooks/atom"
 
 // 계절에 따른 이모지를 매핑하는 객체
 const seasonEmoji: Record<string, string> = {

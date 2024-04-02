@@ -22,7 +22,7 @@ import "react-datepicker/dist/react-datepicker.css"
 
 // Recoil
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { currentKeywords, allDates, placesByDateState } from "./atom"
+import { currentKeywords, allDates, placesByDateState } from "../../hooks/atom"
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {

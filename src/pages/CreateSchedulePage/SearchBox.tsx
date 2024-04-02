@@ -19,7 +19,7 @@ import { SearchBoxProps, placeObject } from "./type"
 
 // Recoil
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { currentKeywords, placesByDateState } from "./atom"
+import { currentKeywords, placesByDateState } from "../../hooks/atom"
 
 // 예시로 사용할 모의 한국 지역 및 여행지 데이터
 const mockLocations = [

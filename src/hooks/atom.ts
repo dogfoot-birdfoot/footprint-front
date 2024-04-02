@@ -1,5 +1,16 @@
 import { atom } from "recoil"
-import { placeObject, scheduleObject } from "./type"
+import { placeObject, scheduleObject } from "../pages/CreateSchedulePage/type"
+
+interface User {
+  nickname: string
+  profilePicture?: string // 프로필 사진이 선택적인 경우
+}
+
+//로그인 상태 저장
+export const userState = atom<User | null>({
+  key: "userState",
+  default: null
+})
 
 // 일정별 방문 장소에 대한 정보
 export const placesByDateState = atom<Record<number, placeObject[]>>({

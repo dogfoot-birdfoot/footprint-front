@@ -1,32 +1,34 @@
 import { createServer, Model, Factory, RestSerializer } from "miragejs"
-import { userRoutes } from "./routes/userRoutes"
-import { UserFactory, UserModel } from "./models/user"
-import userSerializer from "./serializer/user"
-import authRoutes from "./routes/authRoutes"
 
 export function makeServer({ environment = "development" } = {}) {
   const server = createServer({
     serializers: {
-      application: RestSerializer, //전역 시리얼라이저 설정 (지금은 없음)
-      user: userSerializer
+      application: RestSerializer //전역 시리얼라이저 설정 (지금은 없음)
     },
     environment,
 
     models: {
-      user: UserModel.user,
-      schedule: Model
+      schedule: Model,
+      user: Model
 
       // 다른 모델들을 여기에 추가
     },
 
     factories: {
-      user: UserFactory.user
-      // 다른 팩토리를 여기에 추가
+      user: Factory.extend({
+        email(i) {
+          return `user${i}@example.com` // 동적 이메일 생성
+        },
+        password: "password123", // 기본 비밀번호
+        nickname(i) {
+          return `User${i}` // 동적 닉네임 생성
+        },
+        profilePicture: "" // 초기 프로필 사진은 비어있음
+      })
     },
 
     seeds(server) {
       // 'user' 팩토리를 사용하여 10명의 사용자를 생성합니다.
-      server.createList("user", 10)
       const places = [
         {
           kakaoPlaceId: "12345",
@@ -64,6 +66,7 @@ export function makeServer({ environment = "development" } = {}) {
         totalBudget
       } as any)
 
+      server.createList("user", 10)
       server.create("user", {
         email: "user@example.com",
         password: "password123",
@@ -75,8 +78,6 @@ export function makeServer({ environment = "development" } = {}) {
     routes() {
       this.namespace = "api"
 
-      userRoutes(this)
-      authRoutes.call(this)
       // 모든 여행 일정 조회
       this.get("/schedules", schema => {
         return schema.db.schedules
@@ -94,6 +95,26 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.db.schedules.insert(attrs)
       })
 
+      // 회원가입
+      this.post("/users/register", (schema, request) => {
+        const attrs = JSON.parse(request.requestBody)
+        const existingUser = schema.db.users.findBy({ email: attrs.email })
+        if (existingUser) {
+          throw new Error("User already exists with that email")
+        }
+        const user = schema.db.users.insert(attrs)
+        return user.attrs
+      })
+
+      // 로그인
+      this.post("/users/login", (schema, request) => {
+        const attrs = JSON.parse(request.requestBody)
+        const user = schema.db.users.findBy({ email: attrs.email })
+        if (!user || user.password !== attrs.password) {
+          throw new Error("Invalid login credentials")
+        }
+        return { user: user.attrs, token: "fake-jwt-token" } // 로그인 성공 시, 사용자 정보와 함께 가짜 토큰 반환
+      })
       this.logging = true
     }
   })
