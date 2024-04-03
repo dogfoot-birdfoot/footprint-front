@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import { Box, BreadcrumbLink, Menu, MenuButton, MenuList, Portal } from "@chakra-ui/react"
+import React from "react"
+import { Box, Menu, MenuButton, MenuList } from "@chakra-ui/react"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
-import { MenuTitle, StyledMenuItem } from "@/components/DropDownButton/DropDownButton.style"
+import { MenuTitle, StyledMenuItem } from "@/components/DropDownButton/DropDown.style"
 
 import { DropDownButtonProps } from "./type"
 import { Link } from "react-router-dom"

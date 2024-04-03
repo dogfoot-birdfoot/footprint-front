@@ -2,20 +2,10 @@ import { Box, Button, Editable, EditablePreview, EditableTextarea, Input } from 
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
-import DropDownButton from "@/components/DropDownButton/DropDownButton"
+import DropDownCheckBox from "@/components/DropDownButton/DropDownCheckBox"
+import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 
 const AddPost = () => {
-  const [openRegionSelector, setOpenRegionSelector] = useState<boolean>(false)
-  const [openTagSelector, setOpenTagSelector] = useState<boolean>(false)
-
-  function handleRegionSelector() {
-    setOpenRegionSelector(!openRegionSelector)
-  }
-
-  function handleTagSelector() {
-    setOpenTagSelector(!openTagSelector)
-  }
-
   const editableProps = {
     width: "320px",
     height: "270px",
@@ -27,31 +17,9 @@ const AddPost = () => {
   const [notify, setNotify] = useState<boolean>(false)
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
 
-  const regionContents = [
-    ["서울", ""],
-    ["경기", ""],
-    ["대구", ""],
-    ["부산", ""],
-    ["대전", ""],
-    ["인천", ""],
-    ["광주", ""]
-  ]
-  const tagContents = [
-    ["휴식", ""],
-    ["관광", ""],
-    ["혼자 여행", ""],
-    ["우정 여행", ""],
-    ["커플 여행", ""],
-    ["가족 여행", ""]
-  ]
-  const scheduleContents = [
-    ["일정 1", ""],
-    ["일정 2", ""],
-    ["일정 3", ""],
-    ["일정 4", ""],
-    ["일정 5", ""],
-    ["일정 6", ""]
-  ]
+  const regionContents = ["서울", "경기", "대구", "부산", "대전", "광주"]
+  const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
+  const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
@@ -64,8 +32,8 @@ const AddPost = () => {
           </Box>
 
           <Box width="100px" display="flex" justifyContent="space-between">
-            <DropDownButton title="지역" contents={regionContents} />
-            <DropDownButton title="태그" contents={tagContents} />
+            <DropDownCheckBox title="지역" contents={regionContents} />
+            <DropDownCheckBox title="태그" contents={tagContents} />
           </Box>
         </Box>
       </Box>
@@ -84,7 +52,7 @@ const AddPost = () => {
           <EditableTextarea {...editableProps} resize="none" maxLength={300} />
         </Editable>
         <Box display="flex" justifyContent="flex-end" marginTop="10px">
-          <DropDownButton title="내 일정과 연결" contents={scheduleContents} />
+          <DropDownRadioBox title="내 일정과 연결" contents={scheduleContents} />
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%">
