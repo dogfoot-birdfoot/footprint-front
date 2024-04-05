@@ -10,7 +10,6 @@ export const MenuTitle = styled.div<MenuTitleProps>`
   align-items: center;
   color: ${props => (props.$isopened ? "var(--chakra-colors-primary)" : "black")};
 `
-
 export const StyledMenuItem = styled.a`
   display: block;
   width: 100%;
