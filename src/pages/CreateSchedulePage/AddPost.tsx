@@ -1,6 +1,6 @@
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import React from "react"
-import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button, VStack, HStack } from "@chakra-ui/react"
+import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button } from "@chakra-ui/react"
 
 // Recoil
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
@@ -12,10 +12,11 @@ import {
   visibleState,
   copyAllowedState,
   scheduleState,
-  selectedTagsState
+  selectedTagsState,
+  placesByDateState
 } from "@/hooks/atom"
 import axios from "axios"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
@@ -36,7 +37,6 @@ const tagArray: string[] = [
 const AddPost: React.FC = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useRecoilState(titleState)
-  // 태그의 선택 상태를 저장하는 상태 변수
   const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState)
 
   // 게시글 공개 여부, 복사 여부를 설정하는 변수
@@ -46,7 +46,8 @@ const AddPost: React.FC = () => {
   const toDate = useRecoilValue(toDateState)
   const regions = useRecoilValue(regionState)
   const visible = useRecoilValue(visibleState)
-  const schedules = useRecoilValue(scheduleState)
+  // const schedules = useRecoilValue(scheduleState)
+  const placesByDate = useRecoilValue(placesByDateState)
 
   const resetTitle = useResetRecoilState(titleState)
   const resetFromDate = useResetRecoilState(fromDateState)
@@ -63,14 +64,33 @@ const AddPost: React.FC = () => {
     const tags = Object.entries(selectedTags)
       .filter(([_, isSelected]) => isSelected)
       .map(([tag]) => tag)
+
+    const formattedSchedules = Object.values(placesByDate || {}).map((places, index) => ({
+      day: index + 1,
+      places: places.map(place => ({
+        placeName: place.placeName,
+        latitude: place.latitude,
+        longitude: place.longitude,
+        address: place.address,
+        placeDetails: [
+          {
+            // placeDetails 배열 추가
+            memo: place.memo || "", // memo를 placeDetails 내에 포함
+            cost: place.cost || 0, // cost를 placeDetails 내에 포함
+            visitTime: place.visitTime || "" // visitTime을 placeDetails 내에 포함, 필요하다면
+          }
+        ]
+      }))
+    }))
+
     const data = {
-      title,
+      title, // 수정된 부분: title 상태를 직접 사용
       startDate: fromDate,
       endDate: toDate,
       region: regions.join(", "),
       visible,
       copyAllowed,
-      schedules,
+      schedules: formattedSchedules,
       tags
     }
 
@@ -97,18 +117,20 @@ const AddPost: React.FC = () => {
     }))
   }
 
-  // 선택된 태그를 배열로 변환
-  const selectedTagList = Object.entries(selectedTags)
-    .filter(([_, isSelected]) => isSelected)
-    .map(([tag]) => tag)
-
   return (
     <>
       <Box>
         <Heading size="sm" color="textColor">
           제목
         </Heading>
-        <Input mt="10px" type="text" placeholder="여행 제목을 입력하세요." />
+        {/* 수정된 부분: title 상태를 직접 설정 */}
+        <Input
+          mt="10px"
+          type="text"
+          placeholder="여행 제목을 입력하세요."
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+        />
         <Box display="flex" justifyContent="space-between" mt="10px">
           <Box mt="10px">
             <Heading size="sm" color="textColor">

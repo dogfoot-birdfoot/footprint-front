@@ -4,7 +4,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Button,
   Menu,
   MenuButton,
   MenuList,
@@ -18,7 +17,6 @@ import { Link, NavLink } from "react-router-dom"
 import { FiLogOut } from "react-icons/fi" // 로그아웃 아이콘 임포트
 import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
-import axios from "axios"
 import { useRecoilState } from "recoil"
 import { userState } from "@/hooks/atom"
 
@@ -116,9 +114,6 @@ const NavBar: React.FC = () => {
           </Wrap>
         </NavBarItems>
       </NavBarStyle>
-      <Button as={Link} to="/mirage_example">
-        go to mirage
-      </Button>
     </>
   )
 }
