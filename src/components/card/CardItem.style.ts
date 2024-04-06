@@ -13,6 +13,6 @@ export const ImageContainer = styled.div`
 // 아바타 위치를 지정하기 위한 스타일
 export const PositionedAvatar = styled.div`
   position: absolute;
-  right: -10px; // 오른쪽 하단 기준으로 오른쪽으로 10px 이동
-  bottom: 80px; // 오른쪽 하단 기준으로 하단으로 10px 이동
+  right: 8px;
+  bottom: 15px;
 `
