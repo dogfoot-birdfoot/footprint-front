@@ -30,16 +30,19 @@ const ScheduleSharePage = () => {
   function addCards() {
     setCardLists(cardLists => [
       ...cardLists,
-      ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
+      Array(4).fill("/schedule_share_detail"),
+      Array(4).fill("/schedule_share_detail")
     ])
   }
 
   useEffect(() => {
     if (target.current) {
+      // cardList에 받아올 값이 더 존재한다면 observe.
       observe(target.current)
     }
 
     if (target.current && cardLists.length === 30) {
+      // 서버에서 cardList에 받아올 값이 더 없다면 unobserve.
       unobserve(target.current)
     }
   }, [cardLists])
