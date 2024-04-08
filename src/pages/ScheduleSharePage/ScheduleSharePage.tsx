@@ -77,12 +77,12 @@ const ScheduleSharePage = () => {
             <CardItem
               title={schedule.title}
               dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-              //서버에 favorite과 like가 없음
-              favoriteCount={schedule.favoriteCount}
+              bookMarkCount={schedule.bookMarkCount}
               likeCount={schedule.likeCount}
               //서버에 author가 없음
               author={schedule.author}
               schedules={schedule.schedules}
+              createdAt={schedule.createdAt}
             />
           </Link>
         ))}

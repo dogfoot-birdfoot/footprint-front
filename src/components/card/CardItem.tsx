@@ -5,7 +5,6 @@ import {
   Box,
   Card,
   CardBody,
-  Circle,
   Flex,
   HStack,
   Heading,
@@ -19,6 +18,7 @@ import { PositionedAvatar } from "@/components/Card/CardItem.style"
 import { useLocation } from "react-router-dom"
 import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"
+import { differenceInCalendarDays, parse } from "date-fns"
 
 interface PlaceDetail {
   memo: string
@@ -33,10 +33,11 @@ interface Place {
 interface CardItemProps {
   title: string
   dates: string
-  favoriteCount: number
+  bookMarkCount: number
   likeCount: number
   author: string
   schedules: { day: number; places: Place[] }[]
+  createdAt: string
 }
 
 interface TimelineItemProps {
@@ -47,18 +48,17 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
   return (
     <Box w="full" backgroundColor="#f5f7fa" borderRadius="10px">
       <HStack spacing={3} justify="start" w="full">
-        {/* justify="start"로 왼쪽 정렬 설정 */}
         <Tag size="sm" variant="solid" backgroundColor="primary" borderRadius="full" mr={2}>
           <Flex align="center">
             <Text mr={1}>Day</Text>
             <Text mr={2}>{day}</Text>
           </Flex>
         </Tag>
-        <HStack spacing={1} w="full">
+        <HStack spacing={1} w="220px">
           {places.slice(0, 3).map((place, index) => (
             <React.Fragment key={index}>
               <MdPlace size="15px" color="#10bbd5" />
-              <Text fontWeight="semibold" fontSize="sm" isTruncated maxWidth="100px">
+              <Text fontWeight="semibold" fontSize="xs" isTruncated maxWidth="100px">
                 {place.placeName}
               </Text>
               {/* 마지막 여행지가 아니거나 여행지가 3개 이하일 경우 가로점 아이콘을 추가하지 않음 */}
@@ -71,9 +71,30 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
   )
 }
 
-const CardItem: React.FC<CardItemProps> = ({ title, dates, favoriteCount, likeCount, author, schedules }) => {
+const CardItem: React.FC<CardItemProps> = ({
+  title,
+  createdAt,
+  dates,
+  bookMarkCount,
+  likeCount,
+  author,
+  schedules
+}) => {
   const location = useLocation()
   const path = location.pathname
+  const [startDate, endDate] = dates.split(" ~ ")
+  const start = parse(startDate, "yyyy-MM-dd", new Date())
+  const end = parse(endDate, "yyyy-MM-dd", new Date())
+
+  // 시작일과 종료일 사이의 일수 차이에 1을 추가하여 "박" 수를 보정합니다.
+  const nights = differenceInCalendarDays(end, start)
+  const days = nights + 1
+  const stayDuration = `${nights}박 ${days}일`
+
+  const formatDate = (dateString: string | number | Date) => {
+    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "2-digit", day: "2-digit" }
+    return new Date(dateString).toLocaleDateString("ko-KR", options)
+  }
 
   return (
     <>
@@ -95,7 +116,7 @@ const CardItem: React.FC<CardItemProps> = ({ title, dates, favoriteCount, likeCo
             <Box display="flex" justifyContent="space-between" mt="-79">
               <Box>
                 <Badge borderRadius="10px" colorScheme="green" minWidth="50px">
-                  2박 3일
+                  {stayDuration}
                 </Badge>
               </Box>
               {/* path name에 따라 동적으로 노출 */}
@@ -103,7 +124,7 @@ const CardItem: React.FC<CardItemProps> = ({ title, dates, favoriteCount, likeCo
                 {/* 엔드포인트가 'schedule_share' 이거나 경로에 아무 것도 없을 때 '즐겨찾기' 배지 표시 */}
                 {(path.includes("schedule_share") || path === "/") && (
                   <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
-                    즐겨찾기 {favoriteCount}
+                    즐겨찾기 {bookMarkCount}
                   </Badge>
                 )}
 
@@ -124,7 +145,7 @@ const CardItem: React.FC<CardItemProps> = ({ title, dates, favoriteCount, likeCo
             </Heading>
             <Box textAlign="left">
               <Text color="gray.500" fontSize="9px" mb="-2" mt="-1">
-                작성일자 : 2024-03-01
+                작성일자 : {formatDate(createdAt)}
               </Text>
             </Box>
           </Stack>

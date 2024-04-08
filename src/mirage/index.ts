@@ -102,7 +102,9 @@ export function makeServer({ environment = "development" } = {}) {
             ]
           }
         ],
-        totalBudget
+        totalBudget,
+        likeCount: 10,
+        bookMarkCount: 5
       } as any)
 
       server.createList("user", 10)
@@ -136,6 +138,8 @@ export function makeServer({ environment = "development" } = {}) {
       // 여행 일정 생성
       this.post("/schedules/create", (schema, request) => {
         const attrs = JSON.parse(request.requestBody)
+        // 현재 날짜와 시간을 'createdAt' 필드로 설정
+        attrs.createdAt = new Date().toISOString()
         const newSchedule = schema.db.schedules.insert(attrs)
         return newSchedule.attrs
       })

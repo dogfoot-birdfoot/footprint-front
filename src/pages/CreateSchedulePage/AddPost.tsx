@@ -97,6 +97,10 @@ const AddPost: React.FC = () => {
     try {
       const response = await axios.post("/api/schedules/create", data)
       console.log("Schedule created successfully", response.data)
+      const createdAt = new Date(response.data.createdAt) // 백엔드에서 받은 'createdAt'을 Date 객체로 변환
+      const formattedCreatedAt = createdAt.toISOString().split("T")[0] // 'YYYY-MM-DD' 형식으로 변환
+
+      // 이제 'formattedCreatedAt'를 사용하여 사용자에게 '작성일자'를 표시할 수 있습니다.
       resetTitle()
       resetFromDate()
       resetToDate()
