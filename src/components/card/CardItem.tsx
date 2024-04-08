@@ -46,25 +46,25 @@ interface TimelineItemProps {
 }
 export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
   return (
-    <Box w="full" backgroundColor="#f5f7fa" borderRadius="10px">
+    <Box w="280px" backgroundColor="#f5f7fa" borderRadius="10px">
       <HStack spacing={3} justify="start" w="full">
         <Tag size="sm" variant="solid" backgroundColor="primary" borderRadius="full" mr={2}>
           <Flex align="center">
-            <Text mr={1}>Day</Text>
-            <Text mr={2}>{day}</Text>
+            <Text mr={0.5}>Day</Text>
+            <Text mr={0.5}>{day}</Text>
           </Flex>
         </Tag>
-        <HStack spacing={1} w="220px">
+        <HStack spacing={1} w="200px">
           {places.slice(0, 3).map((place, index) => (
             <React.Fragment key={index}>
               <MdPlace size="15px" color="#10bbd5" />
               <Text fontWeight="semibold" fontSize="xs" isTruncated maxWidth="100px">
                 {place.placeName}
               </Text>
-              {/* 마지막 여행지가 아니거나 여행지가 3개 이하일 경우 가로점 아이콘을 추가하지 않음 */}
-              {index < places.length - 1 && <Icon as={BsThreeDots} color="gray.500" />}
             </React.Fragment>
           ))}
+          {/* 여행지가 3개를 초과하는 경우 마지막에 가로점 아이콘을 추가 */}
+          {places.length > 3 && <Icon as={BsThreeDots} color="gray.500" />}
         </HStack>
       </HStack>
     </Box>

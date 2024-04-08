@@ -8,6 +8,7 @@ import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { SimpleGrid } from "@chakra-ui/react"
 
 const koreanRegions = [
   "서울",
@@ -71,22 +72,20 @@ const ScheduleSharePage = () => {
         </MenuList>
       </Menu>
 
-      <CardListBox>
+      <SimpleGrid minChildWidth="300px" spacing="15px">
         {postedSchedules.map((schedule, index) => (
-          <Link to={`/schedule_share_detail/${schedule.id}`} key={index}>
-            <CardItem
-              title={schedule.title}
-              dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-              bookMarkCount={schedule.bookMarkCount}
-              likeCount={schedule.likeCount}
-              //서버에 author가 없음
-              author={schedule.author}
-              schedules={schedule.schedules}
-              createdAt={schedule.createdAt}
-            />
-          </Link>
+          <CardItem
+            key={index}
+            title={schedule.title}
+            dates={`${schedule.startDate} ~ ${schedule.endDate}`}
+            bookMarkCount={schedule.bookMarkCount}
+            likeCount={schedule.likeCount}
+            author={schedule.author}
+            schedules={schedule.schedules}
+            createdAt={schedule.createdAt}
+          />
         ))}
-      </CardListBox>
+      </SimpleGrid>
     </>
   )
 }
