@@ -27,7 +27,7 @@ import MySchedule from "@/pages/MyPage/Schedule/MySchedule"
 import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
 import { userState } from "./hooks/atom"
 import CheckPage from "./pages/CreateSchedulePage/CheckPage"
-import UserDetailPage from "./pages/UserDtailPage"
+import UserDetailPage from "./pages/UserDetailPage"
 
 function App() {
   return (
