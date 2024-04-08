@@ -99,6 +99,7 @@ const CardItem: React.FC<CardItemProps> = ({
   }
 
   return (
+
     <Link to={`/schedule_share_detail/${id}`}>
       <Card maxW="xs" marginLeft="10px">
         <CardBody>
@@ -109,6 +110,7 @@ const CardItem: React.FC<CardItemProps> = ({
                   <TimelineItem key={index} day={schedule.day} places={schedule.places} />
                 ))}
               </VStack>
+ 
               <PositionedAvatar>
                 <Avatar border="2px solid white" size="md" name={author} src="https://bit.ly/kent-c-dodds" />
               </PositionedAvatar>
