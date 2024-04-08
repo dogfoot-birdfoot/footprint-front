@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react"
 import CardItem from "@/components/Card/CardItem"
-import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
-import { Link } from "react-router-dom"
 import axios from "axios"
 import { SimpleGrid } from "@chakra-ui/react"
 
@@ -34,23 +32,27 @@ const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
   const [postedSchedules, setPostedSchedules] = useState<any[]>([])
 
-  // 게시된 일정 정보 가져오기
   useEffect(() => {
     const getPostedSchedules = async () => {
       try {
         const response = await axios.get("/api/schedules/get")
-        setPostedSchedules(response.data)
+        // 여기서 visible이 true인 항목만 필터링
+        const visibleSchedules = response.data.filter((schedule: { visible: boolean }) => schedule.visible === true)
+        setPostedSchedules(visibleSchedules)
       } catch (error) {
         console.error("Failed to fetch posted schedules", error)
       }
     }
 
-    // 페이지 렌더링 후에 게시된 일정 정보를 가져옵니다.
     getPostedSchedules()
   }, [])
+
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
-    setSelectedItem(itemName) // 메뉴 아이템 클릭 시 상태 업데이트
+    setSelectedItem(itemName)
   }
+  const filteredSchedules = postedSchedules.filter(
+    schedule => selectedItem === "전국" || schedule.region === selectedItem
+  )
 
   return (
     <>
@@ -73,7 +75,7 @@ const ScheduleSharePage = () => {
       </Menu>
 
       <SimpleGrid minChildWidth="300px" spacing="15px">
-        {postedSchedules.map((schedule, index) => (
+        {filteredSchedules.map((schedule, index) => (
           <CardItem
             key={index}
             title={schedule.title}
