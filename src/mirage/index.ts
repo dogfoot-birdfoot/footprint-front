@@ -16,6 +16,9 @@ export function makeServer({ environment = "development" } = {}) {
 
     factories: {
       user: Factory.extend({
+        id(i) {
+          return `${i}` // 각 유저마다 고유한 id를 설정합니다.
+        },
         email(i) {
           return `user${i}@example.com` // 동적 이메일 생성
         },
@@ -26,7 +29,6 @@ export function makeServer({ environment = "development" } = {}) {
         profilePicture: "" // 초기 프로필 사진은 비어있음
       })
     },
-
     seeds(server) {
       const places = [
         {
@@ -164,6 +166,13 @@ export function makeServer({ environment = "development" } = {}) {
         }
         return { user: user.attrs, token: "fake-jwt-token" } // 로그인 성공 시, 사용자 정보와 함께 가짜 토큰 반환
       })
+
+      // 사용자 조회
+      this.get("/users/:id", (schema, request) => {
+        const id = request.params.id // URL에서 ID 추출
+        return schema.db.users.find(id) // ID에 해당하는 사용자 정보 반환
+      })
+
       this.logging = true
     }
   })
