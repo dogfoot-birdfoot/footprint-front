@@ -7,7 +7,7 @@ import { LoadScheduleProps, placeObject } from "./type"
 
 // Recoil
 import { useSetRecoilState } from "recoil"
-import { placesByDateState } from "./atom"
+import { placesByDateState } from "../../hooks/atom"
 
 const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex }) => {
   const [showLikeSchedule, setShowLikeSchedule] = useState<boolean>(true)

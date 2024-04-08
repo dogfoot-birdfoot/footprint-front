@@ -1,32 +1,34 @@
 import { LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/LoginPage.style"
 import React, { FC } from "react"
-import { SubmitHandler, useForm } from "react-hook-form"
 import KakaoButton from "@/components/KakaoButton/KakaoButton"
-import { useSetRecoilState } from "recoil"
-import { userState } from "@/hooks/loginAtom"
 import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useRecoilState } from "recoil"
+import { userState } from "@/hooks/atom"
 
-export interface SignInFormProps {
+interface SignInFormProps {
   title: string
   getDataForm: (email: string, password: string) => void
 }
 
-export interface FormValues {
+interface FormValues {
   email: string
   password: string
 }
-
 const SignInForm: FC<SignInFormProps> = ({ title }) => {
-  const { register, handleSubmit, reset } = useForm<FormValues>({ mode: "onChange" })
-  const setUser = useSetRecoilState(userState)
+  const [user, setUser] = useRecoilState(userState)
   const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormValues>()
 
-  const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    // Mirage 서버에 로그인 요청을 보냅니다.
-    fetch("/api/login", {
+  const onSubmit = (data: FormValues) => {
+    fetch("/api/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify(data)
     })
       .then(response => {
         if (!response.ok) {
@@ -35,24 +37,25 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
         return response.json()
       })
       .then(userData => {
+        // 사용자 정보를 Recoil의 userState에 저장
         setUser({
-          name: userData.user.name || "user",
-          avatar: userData.user.avatar || "기본 아바타 URL"
+          nickname: userData.nickname, // 응답 구조에 따라 경로 조정 필요
+          profilePicture: userData.profilePicture // 응답 구조에 따라 경로 조정 필요
         })
-        reset()
-        navigate("/")
+        // sessionStorage에 사용자 정보 저장
+        sessionStorage.setItem(
+          "user",
+          JSON.stringify({
+            nickname: userData.nickname,
+            profilePicture: userData.profilePicture
+          })
+        )
+
+        navigate("/") // 로그인 성공 후 홈 페이지로 리디렉션
       })
       .catch(error => {
         console.error("Login error:", error)
-        // 로그인 실패 처리 (예: 에러 메시지 표시)
       })
-  }
-
-  // 폼 필드 유효성 검사 규칙
-  const userEmail = { required: "필수 필드입니다." }
-  const userPassword = {
-    required: "필수 필드입니다.",
-    minLength: { value: 6, message: "최소 6자입니다." }
   }
 
   const handleKakaoLogin = () => {
@@ -63,14 +66,36 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
   return (
     <LoginForm onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <LoginInput type="email" placeholder="E-mail" {...register("email", userEmail)} />
+        <LoginInput
+          type="email"
+          placeholder="Email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Entered value does not match email format"
+            }
+          })}
+        />
+        {errors.email && <p>{errors.email.message}</p>}
       </div>
       <div>
-        <LoginInput type="password" placeholder="Password" {...register("password", userPassword)} />
+        <LoginInput
+          type="password"
+          placeholder="Password"
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 6,
+              message: "Password must have at least 6 characters"
+            }
+          })}
+        />
+        {errors.password && <p>{errors.password.message}</p>}
       </div>
       <LoginButton type="submit">{title}</LoginButton>
 
-      <KakaoButton onClick={handleKakaoLogin}>Login for Kakao</KakaoButton>
+      <KakaoButton onClick={() => handleKakaoLogin}>Login for Kakao</KakaoButton>
     </LoginForm>
   )
 }

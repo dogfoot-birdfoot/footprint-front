@@ -12,7 +12,7 @@ import {
   Input,
   Text
 } from "@chakra-ui/react"
-import React, { forwardRef, useEffect, useState } from "react"
+import React, { forwardRef, useState } from "react"
 import { IndexStyle } from "../ScheduleDetailPage/ScheduleDetailPage.style"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
@@ -22,7 +22,7 @@ import "react-datepicker/dist/react-datepicker.css"
 
 // Recoil
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { currentKeywords, allDates, placesByDateState } from "./atom"
+import { currentKeywords, allDates, placesByDateState } from "../../hooks/atom"
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
@@ -108,6 +108,24 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
       [dateKey]: date
     }))
   }
+
+  const handleMemoAndCostUpdate = (dateIndex: number, placeIndex: number, memo?: string, cost?: number) => {
+    // placesByDate의 현재 상태를 복사합니다 (얕은 복사).
+    const updatedPlacesByDate = { ...placesByDate }
+    // 특정 날짜(dateIndex)에 대한 장소(placeObject[]) 배열을 복사합니다.
+    const places = [...updatedPlacesByDate[dateIndex]]
+    // 복사한 장소 배열에서 특정 장소(placeObject)를 업데이트합니다.
+    const updatedPlace = { ...places[placeIndex] }
+    if (memo !== undefined) updatedPlace.memo = memo
+    if (cost !== undefined) updatedPlace.cost = cost
+    // 업데이트된 장소 객체로 배열을 업데이트합니다.
+    places[placeIndex] = updatedPlace
+    // 전체 placesByDate 객체에 업데이트된 장소 배열을 할당합니다.
+    updatedPlacesByDate[dateIndex] = places
+    // Recoil 상태를 업데이트합니다.
+    setPlacesByDate(updatedPlacesByDate)
+  }
+
   // 커스텀 DatePicker 입력 컴포넌트
   const CustomInput = forwardRef<HTMLButtonElement, { value?: string; onClick?: () => void }>(
     ({ value, onClick }, ref) => (
@@ -159,10 +177,8 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Box mt="4">
                       <Editable
                         {...editableProps}
-                        textOverflow="ellipsis"
-                        defaultValue="메모 입력"
-                        border="1px solid lightgray"
-                        borderRadius="10px"
+                        defaultValue={place.memo || "메모 입력"}
+                        onSubmit={value => handleMemoAndCostUpdate(dateIndex, placeIndex, value)}
                       >
                         <EditablePreview height="100%" overflow="hidden" />
                         <EditableTextarea height="100%" rows={3} resize="none" maxLength={100} />
@@ -176,7 +192,15 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                         placeholder="예상경비를 입력하세요."
                         textAlign="right"
                         value={amounts[`${dateIndex}-${placeIndex}`] || ""}
-                        onChange={e => handleChange(e, dateIndex, placeIndex)}
+                        onChange={e => {
+                          handleChange(e, dateIndex, placeIndex)
+                          handleMemoAndCostUpdate(
+                            dateIndex,
+                            placeIndex,
+                            undefined,
+                            Number(e.target.value.replace(/[^0-9]/g, ""))
+                          )
+                        }}
                       />
                       <Text ml="2">원</Text>
                     </Flex>
