@@ -9,7 +9,7 @@ const CardItem = () => {
 
   return (
     <>
-      <Card maxW="xs" marginLeft="10px">
+      <Card maxW="xs" width="310px" marginLeft="10px">
         <CardBody>
           <Box display="flex" justifyContent="center">
             <ImageContainer>
@@ -17,7 +17,7 @@ const CardItem = () => {
                 src="https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="강원도 산 사진"
                 borderRadius="lg"
-                width={"330px"}
+                width={"280px"}
                 height={"160px"}
               />
               <PositionedAvatar>

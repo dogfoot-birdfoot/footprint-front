@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Menu, MenuButton, MenuList } from "@chakra-ui/react"
+import { Box, Menu, MenuButton, MenuItem, MenuItemOption, MenuList } from "@chakra-ui/react"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { MenuTitle, StyledMenuItem } from "@/components/DropDownButton/DropDown.style"
 
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 
 const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
   return (
-    <Menu isLazy>
+    <Menu isLazy closeOnSelect={true}>
       {({ isOpen }) => (
         <>
           <MenuButton>
@@ -23,7 +23,9 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
             {contents.map((item, index) => (
               <Box key={index}>
                 <Link to={`/${item[1]}`}>
-                  <StyledMenuItem href="#">{item[0]}</StyledMenuItem>
+                  <MenuItem margin="0" padding="0">
+                    <StyledMenuItem href="#">{item[0]}</StyledMenuItem>
+                  </MenuItem>
                 </Link>
               </Box>
             ))}

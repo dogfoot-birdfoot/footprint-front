@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import CardItem from "@/components/Card/CardItem"
 import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
@@ -7,13 +7,45 @@ import { Button } from "@chakra-ui/button"
 
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { Link } from "react-router-dom"
+import { Box } from "@chakra-ui/react"
+import useIntersectionObserver from "./useIntersectionObserver"
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
+  // 카드에 대한 상태 저장
+  const [cardLists, setCardLists] = useState<string[][]>([
+    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
+    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
+    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
+  ])
+
+  const target = useRef(null)
+  const [observe, unobserve] = useIntersectionObserver(addCards)
+
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName) // 메뉴 아이템 클릭 시 상태 업데이트
   }
+
+  function addCards() {
+    setCardLists(cardLists => [
+      ...cardLists,
+      Array(4).fill("/schedule_share_detail"),
+      Array(4).fill("/schedule_share_detail")
+    ])
+  }
+
+  useEffect(() => {
+    if (target.current) {
+      // cardList에 받아올 값이 더 존재한다면 observe.
+      observe(target.current)
+    }
+
+    if (target.current && cardLists.length === 30) {
+      // 서버에서 cardList에 받아올 값이 더 없다면 unobserve.
+      unobserve(target.current)
+    }
+  }, [cardLists])
 
   return (
     <>
@@ -32,22 +64,21 @@ const ScheduleSharePage = () => {
           <MenuItem onClick={() => handleMenuItemClick("경주")}>경주</MenuItem>
         </MenuList>
       </Menu>
-      <CardListBox>
-        {/* 나중에는 링크를 동적으로 받아와야함 */}
-        <Link to="/schedule_share_detail">
-          <CardItem />
-        </Link>
-        <CardItem />
-        <CardItem />
-        <CardItem />
-      </CardListBox>
 
-      <CardListBox>
-        <CardItem />
-        <CardItem />
-        <CardItem />
-        <CardItem />
-      </CardListBox>
+      {/* cardList 출력 */}
+      {cardLists.map((cardList, index) => (
+        <CardListBox key={index}>
+          {cardList.map((item, idx) => (
+            <Link key={idx} to={item}>
+              <CardItem />
+            </Link>
+          ))}
+        </CardListBox>
+      ))}
+
+      <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
+        요소가 보이면 callback 함수 호출
+      </Box>
     </>
   )
 }
