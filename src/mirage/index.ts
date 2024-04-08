@@ -132,7 +132,7 @@ export function makeServer({ environment = "development" } = {}) {
       // 특정 여행 일정 조회
       this.get("/schedules/:id", (schema, request) => {
         const id = request.params.id // URL에서 ID 추출
-        return schema.db.schedules.insert(id) // ID에 해당하는 여행 일정을 찾아 반환
+        return schema.db.schedules.find(id) // ID에 해당하는 여행 일정을 찾아 반환
       })
 
       // 여행 일정 생성

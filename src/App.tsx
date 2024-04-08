@@ -41,7 +41,7 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="schedule_share" element={<ScheduleSharePage />} />
               <Route path="review_share" element={<ReviewSharePage />} />
-              <Route path="schedule_share_detail" element={<ScheduleDetailPage />} />
+              <Route path="/schedule_share_detail/:id" element={<ScheduleDetailPage />} />
               <Route path="review_share_detail" element={<ReviewDetailPage />} />
               <Route path="search" element={<SearchResultsPage />} />
               <Route path="addreview" element={<AddReviewPage initialStep={1} />} />

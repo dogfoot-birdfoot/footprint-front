@@ -75,9 +75,10 @@ const ScheduleSharePage = () => {
       </Menu>
 
       <SimpleGrid minChildWidth="300px" spacing="15px">
-        {filteredSchedules.map((schedule, index) => (
+        {filteredSchedules.map(schedule => (
           <CardItem
-            key={index}
+            key={schedule.id}
+            id={schedule.id} // 각 CardItem에 id 전달
             title={schedule.title}
             dates={`${schedule.startDate} ~ ${schedule.endDate}`}
             bookMarkCount={schedule.bookMarkCount}

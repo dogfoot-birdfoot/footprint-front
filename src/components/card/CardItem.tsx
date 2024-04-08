@@ -15,7 +15,7 @@ import {
   VStack
 } from "@chakra-ui/react"
 import { PositionedAvatar } from "@/components/Card/CardItem.style"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"
 import { differenceInCalendarDays, parse } from "date-fns"
@@ -31,12 +31,13 @@ interface Place {
 }
 
 interface CardItemProps {
+  id: number // 각 CardItem의 고유 ID 추가
   title: string
   dates: string
   bookMarkCount: number
   likeCount: number
   author: string
-  schedules: { day: number; places: Place[] }[]
+  schedules: { day: number; places: Place[] }[] // 'id' 필드 제거
   createdAt: string
 }
 
@@ -73,6 +74,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
 
 const CardItem: React.FC<CardItemProps> = ({
   title,
+  id,
   createdAt,
   dates,
   bookMarkCount,
@@ -97,7 +99,7 @@ const CardItem: React.FC<CardItemProps> = ({
   }
 
   return (
-    <>
+    <Link to={`/schedule_share_detail/${id}`}>
       <Card maxW="xs" marginLeft="10px">
         <CardBody>
           <Box display="flex" justifyContent="center">
@@ -151,7 +153,7 @@ const CardItem: React.FC<CardItemProps> = ({
           </Stack>
         </CardBody>
       </Card>
-    </>
+    </Link>
   )
 }
 
