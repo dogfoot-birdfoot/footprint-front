@@ -88,5 +88,80 @@ const ScheduleDetailPage: React.FC = () => {
     </VStack>
   )
 }
+//   // return (
+//   //   <Box ml="100px" mb="30px">
+//   //     <HorizontalCard />
+//   //     <DayTab destinations={destinations} />
+//   //     <Box display="flex" mt="-2" ml="600px">
+//   //       <Box mt="-10">
+//   //         <RouteMap />
+//   //       </Box>
+//   //     </Box>
+//   //     <ScheduleDetailStyle>
+//   //       {destinations.map((destination, index) => (
+//   //         <Box width="500px" mt="10px" key={index} ml="-10px">
+//   //           <Card fontSize="15px" fontWeight="bold" ml="-10px">
+//   //             <CardHeader display="flex" justifyContent="space-between">
+//   //               <Box display="flex">
+//   //                 <IndexStyle>{index + 1}</IndexStyle>
+//   //                 <Text>{destination}</Text>
+//   //                 <Text color="gray.500" fontSize="15px" ml="5px">
+//   //                   13:00
+//   //                 </Text>
+//   //               </Box>
+//   //               <Text color="gray.500" fontSize="12px" ml="5px">
+//   //                 예상경비 : 30,000원
+//   //               </Text>
+//   //             </CardHeader>
+//   //             <CardBody>
+//   //               <Editable defaultValue="바다 풍경보고 사진 많이 찍기, 시장 맛집투어" mt="-4">
+//   //                 <EditablePreview />
+//   //                 <EditableTextarea />
+//   //               </Editable>
+//   //             </CardBody>
+//   //           </Card>
+//   //         </Box>
+//   //       ))}
+//   //     </ScheduleDetailStyle>
+//   //   </Box>
+//   // )
 
+//   return (
+//     <Box>
+//       <VStack spacing={4}>
+//         {/* 날짜별 탭 렌더링 */}
+//         {scheduleDetails.schedules.map((schedule, index) => (
+//           <Tag
+//             key={index}
+//             size="lg"
+//             colorScheme={selectedDay === schedule.day ? "blue" : "gray"}
+//             onClick={() => handleDayChange(schedule.day)}
+//             cursor="pointer"
+//           >
+//             Day {schedule.day}
+//           </Tag>
+//         ))}
+//       </VStack>
+
+//       <Flex direction="column" mt="4">
+//         {/* 선택된 날짜의 여행지 정보 렌더링 */}
+//         {scheduleDetails.schedules
+//           .find(schedule => schedule.day === selectedDay)
+//           ?.places.map((place, index) => (
+//             <HStack key={index} spacing={4} align="center">
+//               <MdPlace />
+//               <Text>{place.placeName}</Text>
+//               {place.placeDetails.map((detail, idx) => (
+//                 <Text key={idx} fontSize="sm">
+//                   {detail.memo} (비용: {detail.cost}원)
+//                 </Text>
+//               ))}
+//             </HStack>
+//           ))}
+//       </Flex>
+//     </Box>
+//   )
+// }
+
+// export default ScheduleDetailPage
 export default ScheduleDetailPage
