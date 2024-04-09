@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react"
 
 import CardItem from "@/components/Card/CardItem"
@@ -31,8 +30,6 @@ const koreanRegions = [
   "경남",
   "제주"
 ]
-
-
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
@@ -110,7 +107,6 @@ const ScheduleSharePage = () => {
         </MenuList>
       </Menu>
 
-
       <SimpleGrid minChildWidth="300px" spacing="15px">
         {filteredSchedules.map(schedule => (
           <CardItem
@@ -127,11 +123,9 @@ const ScheduleSharePage = () => {
         ))}
       </SimpleGrid>
 
-
       <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
         요소가 보이면 callback 함수 호출
       </Box>
-
     </>
   )
 }

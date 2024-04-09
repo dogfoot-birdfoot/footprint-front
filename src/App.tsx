@@ -27,6 +27,7 @@ import MySchedule from "@/pages/MyPage/Schedule/MySchedule"
 import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
 import { userState } from "./hooks/atom"
 import CheckPage from "./pages/CreateSchedulePage/CheckPage"
+import UserDetailPage from "./pages/UserDetailPage"
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
               <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
               <Route path="create_schedule" element={<CreateSchedulePage />} />
               <Route path="check" element={<CheckPage />} />
+              <Route path="/user/:userId" element={<UserDetailPage />} />
               <Route path="mypage" element={<MyPage />}>
                 <Route path="profile" element={<MyProfile />} />
                 <Route path="schedule" element={<MySchedule />} />

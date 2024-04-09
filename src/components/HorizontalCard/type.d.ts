@@ -1,8 +1,5 @@
-export interface HorizontalCardContentProps {
-  size: string
-}
-
 export interface CardInfoProps {
-  title?: stirng
+  title?: string
   ml_size: string
+  scheduleDetails: ScheduleDetails // scheduleDetails 속성 추가
 }

@@ -29,7 +29,8 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex }) => {
     address: "",
     memo: "",
     cost: 0,
-    visitTime: ""
+    visitTime: "",
+    placeDetails: undefined
   }
 
   const detailScheduleArray: placeObject[][] = [
@@ -136,7 +137,17 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex }) => {
                 cursor="pointer"
                 onClick={() => detailScheduleClickHandler(dateIndex)}
               >
-                <CardInfo title={item["title"]} ml_size="0px" />
+                <CardInfo
+                  title={item["title"]}
+                  ml_size="0px"
+                  scheduleDetails={{
+                    title: item["title"], // 이미 있는 정보
+                    startDate: "2023-04-01", // 샘플 날짜
+                    endDate: "2023-04-05" // 샘플 날짜
+                    // 필요한 다른 필드도 추가
+                  }}
+                />
+
                 <TagBox>
                   {item["tags"].map((tag, index) => (
                     <TagStyle key={index}>{tag}</TagStyle>
@@ -173,7 +184,16 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex }) => {
                 >
                   {"<"}
                 </Button>
-                <CardInfo title={cardList[selectedIndex]["title"]} ml_size="0px" />
+                <CardInfo
+                  title={cardList[selectedIndex]["title"]}
+                  ml_size="0px"
+                  scheduleDetails={{
+                    title: cardList[selectedIndex]["title"], // 이미 있는 정보
+                    startDate: "2023-04-01", // 샘플 날짜
+                    endDate: "2023-04-05" // 샘플 날짜
+                    // 필요한 다른 필드도 추가
+                  }}
+                />
               </Box>
               <Avatar
                 mt="25px"

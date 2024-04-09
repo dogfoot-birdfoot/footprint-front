@@ -16,6 +16,9 @@ export function makeServer({ environment = "development" } = {}) {
 
     factories: {
       user: Factory.extend({
+        id(i) {
+          return `${i}` // 각 유저마다 고유한 id를 설정합니다.
+        },
         email(i) {
           return `user${i}@example.com` // 동적 이메일 생성
         },
@@ -26,7 +29,6 @@ export function makeServer({ environment = "development" } = {}) {
         profilePicture: "" // 초기 프로필 사진은 비어있음
       })
     },
-
     seeds(server) {
       const places = [
         {
@@ -70,12 +72,12 @@ export function makeServer({ environment = "development" } = {}) {
             places: [
               {
                 placeName: "경복궁",
-                placeDetails: [{ memo: "오후 2시 방문", cost: 10000 }]
+                placeDetails: [{ memo: "오후 2시 방문", cost: 10000, visitTime: "14:00" }]
               },
               // 여기에 새로운 여행지를 추가
               {
                 placeName: "남산타워",
-                placeDetails: [{ memo: "저녁에 방문하여 야경 감상", cost: 15000 }]
+                placeDetails: [{ memo: "저녁에 방문하여 야경 감상", cost: 15000, visitTime: "15:00" }]
               }
             ]
           },
@@ -84,9 +86,9 @@ export function makeServer({ environment = "development" } = {}) {
             places: [
               {
                 placeName: "명동",
-                placeDetails: [{ memo: "쇼핑하기", cost: 50000 }]
+                placeDetails: [{ memo: "쇼핑하기", cost: 50000, visitTime: "14:00" }]
               },
-              { placeName: "신세계백화점", placeDetails: [{ memo: "쇼핑하기", cost: 600000 }] }
+              { placeName: "신세계백화점", placeDetails: [{ memo: "쇼핑하기", cost: 600000, visitTime: "15:00" }] }
             ]
           },
           {
@@ -94,11 +96,11 @@ export function makeServer({ environment = "development" } = {}) {
             places: [
               {
                 placeName: "종로",
-                placeDetails: [{ memo: "광장시장", cost: 50000 }]
+                placeDetails: [{ memo: "광장시장", cost: 50000, visitTime: "14:00" }]
               },
-              { placeName: "을지로", placeDetails: [{ memo: "쇼핑이랑 맛집", cost: 60000 }] },
-              { placeName: "청계천", placeDetails: [{ memo: "산책", cost: 0 }] },
-              { placeName: "동대문", placeDetails: [{ memo: "쇼핑", cost: 100000 }] }
+              { placeName: "을지로", placeDetails: [{ memo: "쇼핑이랑 맛집", cost: 60000, visitTime: "15:00" }] },
+              { placeName: "청계천", placeDetails: [{ memo: "산책", cost: 0, visitTime: "20:00" }] },
+              { placeName: "동대문", placeDetails: [{ memo: "쇼핑", cost: 100000, visitTime: "22:00" }] }
             ]
           }
         ],
@@ -164,6 +166,13 @@ export function makeServer({ environment = "development" } = {}) {
         }
         return { user: user.attrs, token: "fake-jwt-token" } // 로그인 성공 시, 사용자 정보와 함께 가짜 토큰 반환
       })
+
+      // 사용자 조회
+      this.get("/users/:id", (schema, request) => {
+        const id = request.params.id // URL에서 ID 추출
+        return schema.db.users.find(id) // ID에 해당하는 사용자 정보 반환
+      })
+
       this.logging = true
     }
   })
