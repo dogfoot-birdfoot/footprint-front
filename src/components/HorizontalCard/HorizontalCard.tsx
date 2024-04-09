@@ -66,6 +66,11 @@ export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, sch
 }
 
 export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) => {
+  // scheduleDetails가 undefined일 경우를 대비한 조기 반환
+  if (!scheduleDetails) {
+    return <div>로딩 중...</div> // 또는 원하는 다른 플레이스홀더 표시
+  }
+
   const calculateTripDuration = (startDate: string, endDate: string): string => {
     const start = new Date(startDate)
     const end = new Date(endDate)
@@ -85,7 +90,7 @@ export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) 
       <Box width="260px" ml={ml_size} mt="10px">
         <Box mt="-2" display="flex">
           <Badge variant="subtle" colorScheme="green" minWidth="50px" mt="5">
-            {calculateTripDuration(scheduleDetails.startDate, scheduleDetails.endDate)}
+            {calculateTripDuration(scheduleDetails?.startDate, scheduleDetails?.endDate)}
           </Badge>
 
           {/* 다른 정보도 이렇게 표시할 수 있습니다. */}
