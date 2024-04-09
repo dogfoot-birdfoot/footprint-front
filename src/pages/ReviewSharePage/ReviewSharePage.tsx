@@ -7,6 +7,7 @@ import { Button } from "@chakra-ui/button"
 
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { Link } from "react-router-dom"
+import ReviewCardItem from "@/components/Card/ReviewCardItem"
 
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
@@ -35,18 +36,18 @@ const ReviewSharePage = () => {
       <CardListBox>
         {/* 나중에는 링크를 동적으로 받아와야함 */}
         <Link to="/review_share_detail">
-          <CardItem />
+          <ReviewCardItem />
         </Link>
-        <CardItem />
-        <CardItem />
-        <CardItem />
+        <ReviewCardItem />
+        <ReviewCardItem />
+        <ReviewCardItem />
       </CardListBox>
 
       <CardListBox>
-        <CardItem />
-        <CardItem />
-        <CardItem />
-        <CardItem />
+        <ReviewCardItem />
+        <ReviewCardItem />
+        <ReviewCardItem />
+        <ReviewCardItem />
       </CardListBox>
     </>
   )
