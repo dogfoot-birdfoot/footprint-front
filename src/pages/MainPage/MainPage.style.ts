@@ -8,7 +8,7 @@ export const Title = styled.h1`
   margin-left: 20px;
   margin-top: 10px;
   font-size: 30px;
-  font-family: "Lobster";
+  font-family: "Courgette";
 `
 
 export const TitleBox = styled.div`

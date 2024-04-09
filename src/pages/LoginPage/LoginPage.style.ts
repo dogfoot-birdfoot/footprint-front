@@ -37,7 +37,7 @@ export const LoginCard = styled.div`
 export const LoginTitle = styled.h1`
   font-size: 26px;
   font-weight: bold;
-  font-family: "Lobster";
+  font-family: "Courgette";
   margin-bottom: 24px;
 `
 
