@@ -1,10 +1,11 @@
-import { Box, Button, Editable, EditablePreview, EditableTextarea, Input } from "@chakra-ui/react"
+import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useQuery } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import DropDownCheckBox from "@/components/DropDownButton/DropDownCheckBox"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 import axios from "axios"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 const editableProps = {
   width: "320px",
@@ -25,24 +26,34 @@ const AddPost = () => {
   const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
-  async function handleSubmit() {
-    const res = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/review/1")
-      .then(response => console.log(response.json()))
-      .then(data => console.log(data))
+  // React-Query
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: ReviewPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] })
+    }
+  })
 
-    // const data = {
-    //   memberId: 1, // 수정된 부분: title 상태를 직접 사용
-    //   title,
-    //   content,
-    //   imageIds
-    // }
-    // try {
-    //   const response = await axios.post("/api/reviews", data)
-    //   console.log("Review created successfully", response)
-    // } catch (error) {
-    //   console.error("Failed to create review", error)
-    // }
+  async function ReviewPost() {
+    try {
+      await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          memberId: 1,
+          title: title,
+          content: content,
+          imageIds: imageIds
+        })
+      }).then(response => console.log(response))
+    } catch (error) {
+      console.error("Failed to create review", error)
+    }
   }
+
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="320px" margin="0px 10px 0px 0px">
@@ -92,7 +103,15 @@ const AddPost = () => {
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%">
-        <Button onClick={handleSubmit} backgroundColor="primary" color="white" marginTop="10px" marginRight="20px">
+        <Button
+          onClick={() => {
+            mutation.mutate()
+          }}
+          backgroundColor="primary"
+          color="white"
+          marginTop="10px"
+          marginRight="20px"
+        >
           POST
         </Button>
       </Box>
