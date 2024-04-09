@@ -5,9 +5,9 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { makeServer } from "mirage"
 
-if (process.env.NODE_ENV === "development") {
-  makeServer({ environment: "development" })
-}
+// if (process.env.NODE_ENV === "development") {
+//   makeServer({ environment: "development" })
+// }
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(

@@ -25,20 +25,23 @@ const AddPost = () => {
   const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
-  const handleSubmit = async () => {
-    const data = {
-      memberId: 1, // 수정된 부분: title 상태를 직접 사용
-      title,
-      content,
-      imageIds
-    }
+  async function handleSubmit() {
+    const res = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/review/1")
+      .then(response => console.log(response.json()))
+      .then(data => console.log(data))
 
-    try {
-      const response = await axios.post("/api/reviews", data)
-      console.log("Review created successfully", response)
-    } catch (error) {
-      console.error("Failed to create review", error)
-    }
+    // const data = {
+    //   memberId: 1, // 수정된 부분: title 상태를 직접 사용
+    //   title,
+    //   content,
+    //   imageIds
+    // }
+    // try {
+    //   const response = await axios.post("/api/reviews", data)
+    //   console.log("Review created successfully", response)
+    // } catch (error) {
+    //   console.error("Failed to create review", error)
+    // }
   }
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
