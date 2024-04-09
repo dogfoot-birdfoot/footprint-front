@@ -1,4 +1,3 @@
-import { switchTheme } from "@/components/Switch/SwitchTheme"
 import { createServer, Model, Factory, RestSerializer } from "miragejs"
 import { addDays, format } from "date-fns"
 

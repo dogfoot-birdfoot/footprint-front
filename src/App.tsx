@@ -28,36 +28,43 @@ import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
 import { userState } from "./hooks/atom"
 import CheckPage from "./pages/CreateSchedulePage/CheckPage"
 import UserDetailPage from "./pages/UserDetailPage"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
     <RecoilRoot>
-      <ChakraProvider theme={theme}>
-        <BrowserRouter>
-          <UserSessionManager />
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<MainPage />} />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="schedule_share" element={<ScheduleSharePage />} />
-              <Route path="review_share" element={<ReviewSharePage />} />
-              <Route path="/schedule_share_detail/:id" element={<ScheduleDetailPage />} />
-              <Route path="review_share_detail" element={<ReviewDetailPage />} />
-              <Route path="search" element={<SearchResultsPage />} />
-              <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
-              <Route path="create_schedule" element={<CreateSchedulePage />} />
-              <Route path="check" element={<CheckPage />} />
-              <Route path="/user/:userId" element={<UserDetailPage />} />
-              <Route path="mypage" element={<MyPage />}>
-                <Route path="profile" element={<MyProfile />} />
-                <Route path="schedule" element={<MySchedule />} />
-                <Route path="favorite" element={<MyFavorite />} />
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools />
+        <ChakraProvider theme={theme}>
+          <BrowserRouter>
+            <UserSessionManager />
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<MainPage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
+                <Route path="schedule_share" element={<ScheduleSharePage />} />
+                <Route path="review_share" element={<ReviewSharePage />} />
+                <Route path="/schedule_share_detail/:id" element={<ScheduleDetailPage />} />
+                <Route path="review_share_detail" element={<ReviewDetailPage />} />
+                <Route path="search" element={<SearchResultsPage />} />
+                <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
+                <Route path="create_schedule" element={<CreateSchedulePage />} />
+                <Route path="check" element={<CheckPage />} />
+                <Route path="/user/:userId" element={<UserDetailPage />} />
+                <Route path="mypage" element={<MyPage />}>
+                  <Route path="profile" element={<MyProfile />} />
+                  <Route path="schedule" element={<MySchedule />} />
+                  <Route path="favorite" element={<MyFavorite />} />
+                </Route>
               </Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ChakraProvider>
+            </Routes>
+          </BrowserRouter>
+        </ChakraProvider>
+      </QueryClientProvider>
     </RecoilRoot>
   )
 }
