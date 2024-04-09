@@ -115,6 +115,19 @@ export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) 
   )
 }
 export const UserInfo: React.FC<{ scheduleDetails: ScheduleDetails }> = ({ scheduleDetails }) => {
+  // 'createdAt' 값을 Date 객체로 변환
+  const createdAtDate = new Date(scheduleDetails.createdAt)
+
+  // 'createdAtDate'를 'yyyy-MM-dd' 형식의 문자열로 변환
+  const formattedDate = createdAtDate
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    })
+    .replace(/\. /g, "-")
+    .replace(".", "")
+
   return (
     <Box display="flex" justifyContent="flex-end">
       <Box mt="5">
@@ -122,8 +135,9 @@ export const UserInfo: React.FC<{ scheduleDetails: ScheduleDetails }> = ({ sched
         <Text textAlign="end" color="gray.500" fontSize="10px" mr="5px">
           UserNickName
         </Text>
+        {/* 변환된 날짜 형식을 표시 */}
         <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
-          {scheduleDetails.createdAt}
+          작성일자 : {formattedDate}
         </Text>
       </Box>
       <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />
