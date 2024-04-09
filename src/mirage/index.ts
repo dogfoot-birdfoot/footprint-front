@@ -1,3 +1,4 @@
+import { switchTheme } from "@/components/Switch/SwitchTheme"
 import { createServer, Model, Factory, RestSerializer } from "miragejs"
 
 export function makeServer({ environment = "development" } = {}) {
@@ -9,7 +10,8 @@ export function makeServer({ environment = "development" } = {}) {
 
     models: {
       schedule: Model,
-      user: Model
+      user: Model,
+      review: Model
 
       // 다른 모델들을 여기에 추가
     },
@@ -144,6 +146,18 @@ export function makeServer({ environment = "development" } = {}) {
         attrs.createdAt = new Date().toISOString()
         const newSchedule = schema.db.schedules.insert(attrs)
         return newSchedule.attrs
+      })
+
+      // 리뷰 생성
+      this.post("/reviews", (schema, request) => {
+        const attrs = JSON.parse(request.requestBody)
+        const newReview = schema.db.reviews.insert(attrs)
+        return newReview.attrs
+      })
+
+      // 게시된 리뷰 조회
+      this.get("/reviews", schema => {
+        return schema.db.reviews // 모든 여행 일정 반환
       })
 
       // 회원가입

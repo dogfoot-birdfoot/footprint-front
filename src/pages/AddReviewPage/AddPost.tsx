@@ -4,16 +4,20 @@ import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import DropDownCheckBox from "@/components/DropDownButton/DropDownCheckBox"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
+import axios from "axios"
+
+const editableProps = {
+  width: "320px",
+  height: "270px",
+  fontSize: "13px",
+  whiteSpace: "pre-wrap",
+  padding: "10px 10px 10px 10px"
+}
 
 const AddPost = () => {
-  const editableProps = {
-    width: "320px",
-    height: "270px",
-    fontSize: "13px",
-    whiteSpace: "pre-wrap",
-    padding: "10px 10px 10px 10px"
-  }
-
+  const [title, setTitle] = useState<string>("")
+  const [content, setContent] = useState<string>("")
+  const [imageIds, setImageIds] = useState<string[]>([])
   const [notify, setNotify] = useState<boolean>(false)
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
 
@@ -21,6 +25,21 @@ const AddPost = () => {
   const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
+  const handleSubmit = async () => {
+    const data = {
+      memberId: 1, // 수정된 부분: title 상태를 직접 사용
+      title,
+      content,
+      imageIds
+    }
+
+    try {
+      const response = await axios.post("/api/reviews", data)
+      console.log("Review created successfully", response)
+    } catch (error) {
+      console.error("Failed to create review", error)
+    }
+  }
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="320px" margin="0px 10px 0px 0px">
@@ -38,7 +57,15 @@ const AddPost = () => {
         </Box>
       </Box>
       <Box width="320px">
-        <Input paddingLeft="10px" marginBottom="10px" placeholder="제목" fontSize={"sm"} color="black" />
+        <Input
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          paddingLeft="10px"
+          marginBottom="10px"
+          placeholder="제목"
+          fontSize={"sm"}
+          color="black"
+        />
         <Editable
           width="322px"
           height="272px"
@@ -49,14 +76,20 @@ const AddPost = () => {
           selectAllOnFocus={false}
         >
           <EditablePreview {...editableProps} color="gray" overflow={"hidden"} />
-          <EditableTextarea {...editableProps} resize="none" maxLength={300} />
+          <EditableTextarea
+            {...editableProps}
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            resize="none"
+            maxLength={300}
+          />
         </Editable>
         <Box display="flex" justifyContent="flex-end" marginTop="10px">
           <DropDownRadioBox title="내 일정과 연결" contents={scheduleContents} />
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%">
-        <Button backgroundColor="primary" color="white" marginTop="10px" marginRight="20px">
+        <Button onClick={handleSubmit} backgroundColor="primary" color="white" marginTop="10px" marginRight="20px">
           POST
         </Button>
       </Box>
