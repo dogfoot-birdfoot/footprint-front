@@ -7,7 +7,6 @@ import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import axios from "axios"
 import { SimpleGrid } from "@chakra-ui/react"
-import { Link } from "react-router-dom"
 import { Box } from "@chakra-ui/react"
 import useIntersectionObserver from "./useIntersectionObserver"
 

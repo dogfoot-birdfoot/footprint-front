@@ -20,17 +20,17 @@ import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"
 import { differenceInCalendarDays, parse } from "date-fns"
 
-interface PlaceDetail {
+export interface PlaceDetail {
   memo: string
   cost: number
 }
 
-interface Place {
+export interface Place {
   placeName: string
   placeDetails: PlaceDetail[]
 }
 
-interface CardItemProps {
+export interface CardItemProps {
   id: number // 각 CardItem의 고유 ID 추가
   title: string
   dates: string
