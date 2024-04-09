@@ -5,7 +5,7 @@ export const Logo = styled.a`
 
   margin-top: 10px;
   font-size: 40px;
-  font-family: "Lobster";
+  font-family: "Courgette";
 `
 
 export const NavBarStyle = styled.div`

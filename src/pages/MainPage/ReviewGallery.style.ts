@@ -44,7 +44,7 @@ export const ReviewItem = styled.div`
 export const ReviewTitle = styled.h1`
   text-align: center;
   font-size: 30px;
-  font-family: "Lobster";
+  font-family: "Courgette";
 `
 
 export const ReviewImage = styled.img`
