@@ -8,23 +8,24 @@ import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 
-interface PlaceDetail {
+export interface PlaceDetail {
   memo: string
   cost: number
   visitTime: string
 }
 
-interface Place {
+export interface Place {
   placeName: string
   placeDetails: PlaceDetail[]
 }
 
-interface ScheduleDay {
+export interface ScheduleDay {
   day: number
   places: Place[]
 }
 
-interface ScheduleDetails {
+export interface ScheduleDetails {
+  tags: string
   title: string
   startDate: string
   endDate: string
@@ -61,7 +62,7 @@ const ScheduleDetailPage: React.FC = () => {
   return (
     <>
       <Box ml="100px" mb="30px">
-        <HorizontalCard />
+        <HorizontalCard size="lg" scheduleDetails={scheduleDetails} />
         <DayTab
           destinations={scheduleDetails.schedules.map(schedule => schedule.places.map(place => place.placeName))}
           // 선택된 탭의 인덱스를 설정하는 함수
