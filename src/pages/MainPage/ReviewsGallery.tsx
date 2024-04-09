@@ -7,10 +7,11 @@ import {
   ReviewImage,
   ReviewItem
 } from "@/pages/MainPage/ReviewGallery.style"
+import { Box } from "@chakra-ui/react"
 
 const ReviewsGallery = () => {
   return (
-    <>
+    <Box mb={20}>
       <ReviewBox>
         {/* 태그정보, 이미지주소, 상세정보는 추후 데이터에서 받와야함 */}
         <ReviewItem>
@@ -112,7 +113,7 @@ const ReviewsGallery = () => {
           </DetailInfo>
         </ReviewItem>
       </ReviewBox>
-    </>
+    </Box>
   )
 }
 
