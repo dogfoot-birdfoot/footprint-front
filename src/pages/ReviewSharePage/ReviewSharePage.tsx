@@ -8,9 +8,22 @@ import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { Link } from "react-router-dom"
 import ReviewCardItem from "@/components/Card/ReviewCardItem"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
+
+  const queryClient = useQueryClient()
+
+  // Queries
+  const query = useQuery({ queryKey: ["reviews"], queryFn: getReviews })
+
+  async function getReviews() {
+    const data = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews")
+      .then(response => response.json())
+      .then(data => data.content)
+    return data
+  }
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName) // 메뉴 아이템 클릭 시 상태 업데이트
@@ -49,6 +62,11 @@ const ReviewSharePage = () => {
         <ReviewCardItem />
         <ReviewCardItem />
       </CardListBox>
+      {/* {Object.values(query.data).map((value, idx) => {
+        return <ReviewCardItem key={idx} />
+
+        if (idx % 4 == 0) return <CardListBox></CardListBox>
+      })} */}
     </>
   )
 }
