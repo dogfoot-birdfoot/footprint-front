@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react"
 import HorizontalCard from "@/components/HorizontalCard/HorizontalCard"
 import DayTab from "@/components/DayTab/DayTab"
-import { Card, CardBody, CardHeader } from "@chakra-ui/card"
-import { Box, Text, VStack, HStack, Tag, Flex, Heading, Badge, Divider } from "@chakra-ui/react"
-import { Editable, EditablePreview, EditableTextarea } from "@chakra-ui/editable"
+import { Card, CardHeader, CardBody } from "@chakra-ui/card"
+import { Box, Text } from "@chakra-ui/react"
 import { IndexStyle, ScheduleDetailStyle } from "./ScheduleDetailPage.style"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import { MdPlace } from "react-icons/md"
 
 interface PlaceDetail {
   memo: string
   cost: number
+  visitTime: string
 }
 
 interface Place {
@@ -40,6 +39,7 @@ interface ScheduleDetails {
 const ScheduleDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [scheduleDetails, setScheduleDetails] = useState<ScheduleDetails | null>(null)
+  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0) // 선택된 탭의 인덱스
 
   useEffect(() => {
     const fetchScheduleDetails = async () => {
@@ -59,109 +59,51 @@ const ScheduleDetailPage: React.FC = () => {
   }
 
   return (
-    <VStack spacing={4} align="stretch">
-      <Heading>{scheduleDetails.title}</Heading>
-      <Text>{`기간: ${scheduleDetails.startDate} - ${scheduleDetails.endDate}`}</Text>
-      <Badge colorScheme="purple">{scheduleDetails.region}</Badge>
-      <Divider />
-      {scheduleDetails.schedules.map((schedule, index) => (
-        <Box key={index} p={5} borderWidth="1px" borderRadius="lg">
-          <Heading size="md">Day {schedule.day}</Heading>
-          {schedule.places.map((place, placeIndex) => (
-            <Box key={placeIndex} mt={4}>
-              <Text fontWeight="bold">{place.placeName}</Text>
-              {place.placeDetails.map((detail, detailIndex) => (
-                <Box key={detailIndex} ml={4}>
-                  <Text>{`Memo: ${detail.memo}`}</Text>
-                  <Text>{`Cost: ${detail.cost}`}</Text>
-                </Box>
-              ))}
+    <>
+      <Box ml="100px" mb="30px">
+        <HorizontalCard />
+        <DayTab
+          destinations={scheduleDetails.schedules.map(schedule => schedule.places.map(place => place.placeName))}
+          // 선택된 탭의 인덱스를 설정하는 함수
+          onTabClick={index => setSelectedTabIndex(index)}
+        />
+
+        <Box display="flex" mt="-2" ml="600px">
+          <Box mt="-10">
+            <RouteMap />
+          </Box>
+        </Box>
+        <ScheduleDetailStyle>
+          {/* 선택된 탭에 해당하는 날짜의 스케줄만 렌더링합니다. */}
+          {scheduleDetails.schedules[selectedTabIndex].places.map((place, placeIndex) => (
+            <Box width="500px" mt="10px" key={placeIndex} ml="-10px">
+              <Card fontSize="15px" fontWeight="bold" ml="-10px">
+                <CardHeader>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box display="flex">
+                      <IndexStyle>{placeIndex + 1}</IndexStyle>
+                      <Text>{place.placeName}</Text>
+                    </Box>
+                    <Text color="gray.500" fontSize="15px" ml="5px">
+                      {place.placeDetails.length > 0 && `도착 시간: ${place.placeDetails[0].visitTime}`}
+                    </Text>
+                  </Box>
+                </CardHeader>
+                <CardBody display="flex" justifyContent="space-between">
+                  <Text color="gray.500" fontSize="15px" ml="5px">
+                    {place.placeDetails.length > 0 && `메모 : ${place.placeDetails[0].memo}`}
+                  </Text>
+                  <Text color="gray.500" fontSize="12px" ml="5px">
+                    {place.placeDetails.length > 0 && `예상 경비: ${place.placeDetails[0].cost}원`}
+                  </Text>
+                </CardBody>
+              </Card>
             </Box>
           ))}
-        </Box>
-      ))}
-      <Box>
-        <Text fontWeight="bold">총 예산: {scheduleDetails.totalBudget}원</Text>
-        <Text>좋아요: {scheduleDetails.likeCount}</Text>
-        <Text>북마크: {scheduleDetails.bookMarkCount}</Text>
+        </ScheduleDetailStyle>
       </Box>
-    </VStack>
+    </>
   )
 }
-//   // return (
-//   //   <Box ml="100px" mb="30px">
-//   //     <HorizontalCard />
-//   //     <DayTab destinations={destinations} />
-//   //     <Box display="flex" mt="-2" ml="600px">
-//   //       <Box mt="-10">
-//   //         <RouteMap />
-//   //       </Box>
-//   //     </Box>
-//   //     <ScheduleDetailStyle>
-//   //       {destinations.map((destination, index) => (
-//   //         <Box width="500px" mt="10px" key={index} ml="-10px">
-//   //           <Card fontSize="15px" fontWeight="bold" ml="-10px">
-//   //             <CardHeader display="flex" justifyContent="space-between">
-//   //               <Box display="flex">
-//   //                 <IndexStyle>{index + 1}</IndexStyle>
-//   //                 <Text>{destination}</Text>
-//   //                 <Text color="gray.500" fontSize="15px" ml="5px">
-//   //                   13:00
-//   //                 </Text>
-//   //               </Box>
-//   //               <Text color="gray.500" fontSize="12px" ml="5px">
-//   //                 예상경비 : 30,000원
-//   //               </Text>
-//   //             </CardHeader>
-//   //             <CardBody>
-//   //               <Editable defaultValue="바다 풍경보고 사진 많이 찍기, 시장 맛집투어" mt="-4">
-//   //                 <EditablePreview />
-//   //                 <EditableTextarea />
-//   //               </Editable>
-//   //             </CardBody>
-//   //           </Card>
-//   //         </Box>
-//   //       ))}
-//   //     </ScheduleDetailStyle>
-//   //   </Box>
-//   // )
 
-//   return (
-//     <Box>
-//       <VStack spacing={4}>
-//         {/* 날짜별 탭 렌더링 */}
-//         {scheduleDetails.schedules.map((schedule, index) => (
-//           <Tag
-//             key={index}
-//             size="lg"
-//             colorScheme={selectedDay === schedule.day ? "blue" : "gray"}
-//             onClick={() => handleDayChange(schedule.day)}
-//             cursor="pointer"
-//           >
-//             Day {schedule.day}
-//           </Tag>
-//         ))}
-//       </VStack>
-
-//       <Flex direction="column" mt="4">
-//         {/* 선택된 날짜의 여행지 정보 렌더링 */}
-//         {scheduleDetails.schedules
-//           .find(schedule => schedule.day === selectedDay)
-//           ?.places.map((place, index) => (
-//             <HStack key={index} spacing={4} align="center">
-//               <MdPlace />
-//               <Text>{place.placeName}</Text>
-//               {place.placeDetails.map((detail, idx) => (
-//                 <Text key={idx} fontSize="sm">
-//                   {detail.memo} (비용: {detail.cost}원)
-//                 </Text>
-//               ))}
-//             </HStack>
-//           ))}
-//       </Flex>
-//     </Box>
-//   )
-// }
-
-// export default ScheduleDetailPage
 export default ScheduleDetailPage
