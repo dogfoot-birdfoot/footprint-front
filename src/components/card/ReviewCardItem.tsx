@@ -1,8 +1,9 @@
 import React from "react"
 import { Avatar, Badge, Box, Card, CardBody, Heading, Image, Stack, Text } from "@chakra-ui/react"
 import { ImageContainer, PositionedAvatar } from "@/components/Card/ReviewCardItem.style"
+import { ReviewCardItemProps } from "./type"
 
-const ReviewCardItem = () => {
+const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes, createdAt }) => {
   return (
     <>
       <Card maxW="xs" marginLeft="10px">
@@ -30,7 +31,7 @@ const ReviewCardItem = () => {
               </Box>
               <Box display="flex" gap="2">
                 <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
-                  좋아요 30
+                  좋아요 {likes}
                 </Badge>
               </Box>
             </Box>
@@ -38,10 +39,10 @@ const ReviewCardItem = () => {
             <Text color="gray.500" fontSize="9px" mt="-2" mb="-2">
               2024.03.05 ~ 2024.03.07
             </Text>
-            <Heading size="sm">가족과 함께 가기 좋은 강원도 여행 일정</Heading>
+            <Heading size="sm">{title}</Heading>
             <Box textAlign="right">
               <Text color="gray.500" fontSize="9px" mb="-2">
-                작성일자 : 2024-03-01
+                작성일자 : {createdAt}
               </Text>
             </Box>
           </Stack>

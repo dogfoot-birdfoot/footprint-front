@@ -9,14 +9,20 @@ import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { Link } from "react-router-dom"
 import ReviewCardItem from "@/components/Card/ReviewCardItem"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { ReviewCardItemProps } from "@/components/Card/type"
+
+type ReviewType = {
+  title: string
+  memberId: number
+  likes: number
+  createdAt: string
+}
 
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
-  const queryClient = useQueryClient()
-
   // Queries
-  const query = useQuery({ queryKey: ["reviews"], queryFn: getReviews })
+  const query = useQuery<{ [key: string]: ReviewType }>({ queryKey: ["reviews"], queryFn: getReviews })
 
   async function getReviews() {
     const data = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews")
@@ -49,24 +55,25 @@ const ReviewSharePage = () => {
       <CardListBox>
         {/* 나중에는 링크를 동적으로 받아와야함 */}
         <Link to="/review_share_detail">
-          <ReviewCardItem />
+          <ReviewCardItem title="" memberId={1} likes={0} createdAt={"2021-03-20"} />
         </Link>
-        <ReviewCardItem />
-        <ReviewCardItem />
-        <ReviewCardItem />
+        {query.data &&
+          Object.entries(query.data).map(([key, value]) => {
+            return (
+              <ReviewCardItem
+                key={key}
+                title={value.title}
+                memberId={value.memberId}
+                likes={0}
+                createdAt={"2021-03-20"}
+              />
+            )
+          })}
       </CardListBox>
-
-      <CardListBox>
-        <ReviewCardItem />
-        <ReviewCardItem />
-        <ReviewCardItem />
-        <ReviewCardItem />
-      </CardListBox>
-      {/* {Object.values(query.data).map((value, idx) => {
-        return <ReviewCardItem key={idx} />
-
-        if (idx % 4 == 0) return <CardListBox></CardListBox>
-      })} */}
+      {query.data &&
+        Object.entries(query.data).map(([key, value]) => {
+          console.log(key, value)
+        })}
     </>
   )
 }
