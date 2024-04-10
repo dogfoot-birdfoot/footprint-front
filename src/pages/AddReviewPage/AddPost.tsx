@@ -4,8 +4,8 @@ import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import DropDownCheckBox from "@/components/DropDownButton/DropDownCheckBox"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
+import axios from "axios"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { AddPostProps } from "./type"
 
 const editableProps = {
   width: "320px",
@@ -15,7 +15,7 @@ const editableProps = {
   padding: "10px 10px 10px 10px"
 }
 
-const AddPost: React.FC<AddPostProps> = ({ sources }) => {
+const AddPost = () => {
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
   const [imageIds, setImageIds] = useState<string[]>([])
@@ -46,7 +46,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
           memberId: 1,
           title: title,
           content: content,
-          imageIds: sources
+          imageIds: imageIds
         })
       }).then(response => console.log(response))
     } catch (error) {
@@ -57,7 +57,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="320px" margin="0px 10px 0px 0px">
-        <ImageSlider images={sources} size="sm" />
+        <ImageSlider size="sm" />
         <Box display="flex" justifyContent="space-between" marginTop="10px" alignItems="center">
           <Box>
             <OnOffSwitch onText="알림" offText="" booleanState={notify} setBooleanState={setNotify} />

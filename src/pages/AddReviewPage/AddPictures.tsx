@@ -1,8 +1,17 @@
 import { Box, Button, Image, Text, keyframes } from "@chakra-ui/react"
-import React from "react"
-import { AddPictureProps } from "./type"
+import React, { useState } from "react"
 
-const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
+const AddPictures = () => {
+  const [sources, setSources] = useState<string[]>([
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  ])
+
   const textframes = keyframes`  
     0% {transform: translate(0%,0%)}
     60%{transform: translate(0%,0%)}
@@ -17,13 +26,6 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
     setSources(sources.filter((item, idx) => idx !== index))
   }
 
-  // 추가 버튼을 누르면 임시로 사진 추가(사용자가 사진을 직접 올리는 방식으로 변경 필요)
-  function addImage() {
-    setSources(sources => [
-      ...sources,
-      "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    ])
-  }
   return (
     <Box display="flex" flexDirection="column">
       <Box display="flex" justifyContent="center">
@@ -101,7 +103,7 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
             height="80px"
             margin="10px 10px 10px 10px"
           >
-            <Button onClick={addImage} borderRadius="20px" backgroundColor="white">
+            <Button borderRadius="20px" backgroundColor="white">
               +
             </Button>
           </Box>
