@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Badge, Box, Card, CardBody, Heading, Image, Stack, Text } from "@chakra-ui/react"
+import { Avatar, Badge, Box, Card, CardBody, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react"
 import { ImageContainer, PositionedAvatar } from "@/components/Card/ReviewCardItem.style"
 import { ReviewCardItemProps } from "./type"
 
@@ -7,7 +7,7 @@ const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes,
   return (
     <>
       <Card maxW="xs" marginLeft="10px">
-        <CardBody>
+        <CardBody pb="10px">
           <Box display="flex" justifyContent="center">
             <ImageContainer>
               <Image
@@ -24,24 +24,26 @@ const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes,
           </Box>
           <Stack mt="3" spacing="3">
             <Box display="flex" justifyContent="space-between" mt="-79">
-              <Box>
-                <Badge borderRadius="10px" colorScheme="green" minWidth="50px">
+              <Flex alignItems="center">
+                <Badge borderRadius="2px" colorScheme="green" minWidth="50px">
                   2박 3일
                 </Badge>
-              </Box>
-              <Box display="flex" gap="2">
-                <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
-                  좋아요 {likes}
-                </Badge>
-              </Box>
+                <Text color="gray.500" fontSize="9px" ml="1" mt="-2" mb="-2">
+                  2024.03.05 ~ 2024.03.07
+                </Text>
+              </Flex>
+
+              <Flex alignItems={"center"} color="red" fontSize="14px" userSelect={"none"} marginRight="5px">
+                ♥{" "}
+                <Text color="black" fontSize="10px" display="inline-block">
+                  {likes}
+                </Text>
+              </Flex>
             </Box>
 
-            <Text color="gray.500" fontSize="9px" mt="-2" mb="-2">
-              2024.03.05 ~ 2024.03.07
-            </Text>
             <Heading size="sm">{title}</Heading>
             <Box textAlign="right">
-              <Text color="gray.500" fontSize="9px" mb="-2">
+              <Text color="gray.500" fontSize="9px">
                 작성일자 : {createdAt}
               </Text>
             </Box>
