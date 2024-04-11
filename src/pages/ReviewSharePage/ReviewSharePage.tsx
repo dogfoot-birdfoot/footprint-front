@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import CardItem from "@/components/Card/CardItem"
 import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
@@ -10,6 +10,8 @@ import { Link } from "react-router-dom"
 import ReviewCardItem from "@/components/Card/ReviewCardItem"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { ReviewCardItemProps } from "@/components/Card/type"
+import { Box } from "@chakra-ui/react"
+import useIntersectionObserver from "./useIntersectionObserver"
 
 type ReviewType = {
   title: string
@@ -21,11 +23,15 @@ type ReviewType = {
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
-  // Queries
+  // // Intersection-Observer
+  // const target = useRef<HTMLElement>(null)
+  // const [observe, unobserve] = useIntersectionObserver(target)
+
+  // React-query
   const query = useQuery<{ [key: string]: ReviewType }>({ queryKey: ["reviews"], queryFn: getReviews })
 
   async function getReviews() {
-    const data = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews")
+    const data = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews?sort=id&page=0&size=16")
       .then(response => response.json())
       .then(data => data.content)
     return data
@@ -54,9 +60,6 @@ const ReviewSharePage = () => {
       </Menu>
       <CardListBox>
         {/* 나중에는 링크를 동적으로 받아와야함 */}
-        <Link to="/review_share_detail">
-          <ReviewCardItem title="" memberId={1} likes={0} createdAt={"2021-03-20"} />
-        </Link>
         {query.data &&
           Object.entries(query.data).map(([key, value]) => {
             return (
@@ -70,10 +73,9 @@ const ReviewSharePage = () => {
             )
           })}
       </CardListBox>
-      {query.data &&
-        Object.entries(query.data).map(([key, value]) => {
-          console.log(key, value)
-        })}
+      {/* <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
+        요소가 보이면 callback 함수 호출
+      </Box> */}
     </>
   )
 }
