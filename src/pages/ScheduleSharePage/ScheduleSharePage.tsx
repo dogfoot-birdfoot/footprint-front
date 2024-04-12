@@ -5,10 +5,10 @@ import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
-import axios from "axios"
 import { SimpleGrid } from "@chakra-ui/react"
 import { Box } from "@chakra-ui/react"
 import useIntersectionObserver from "./useIntersectionObserver"
+import { TravelPlan } from "./type"
 
 const koreanRegions = [
   "서울",
@@ -32,21 +32,17 @@ const koreanRegions = [
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
-  const [postedSchedules, setPostedSchedules] = useState<any[]>([])
+  const [plans, setPlans] = useState<TravelPlan[]>([])
 
   useEffect(() => {
-    const getPostedSchedules = async () => {
-      try {
-        const response = await axios.get("/api/schedules/get")
-        // 여기서 visible이 true인 항목만 필터링
-        const visibleSchedules = response.data.filter((schedule: { visible: boolean }) => schedule.visible === true)
-        setPostedSchedules(visibleSchedules)
-      } catch (error) {
-        console.error("Failed to fetch posted schedules", error)
-      }
+    const fetchPlans = async () => {
+      const response = await fetch(
+        "https://k903c4c87638da.user-app.krampoline.com/api/plans?page=0&size=10&sort=id,desc"
+      )
+      const data = await response.json()
+      setPlans(data.data.content)
     }
-
-    getPostedSchedules()
+    fetchPlans()
   }, [])
 
   // 카드에 대한 상태 저장
@@ -62,9 +58,7 @@ const ScheduleSharePage = () => {
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName)
   }
-  const filteredSchedules = postedSchedules.filter(
-    schedule => selectedItem === "전국" || schedule.region === selectedItem
-  )
+  const filteredSchedules = plans.filter(schedule => selectedItem === "전국" || schedule.region === selectedItem)
 
   function addCards() {
     setCardLists(cardLists => [
@@ -107,19 +101,25 @@ const ScheduleSharePage = () => {
       </Menu>
 
       <SimpleGrid minChildWidth="300px" spacing="15px">
-        {filteredSchedules.map(schedule => (
-          <CardItem
-            key={schedule.id}
-            id={schedule.id} // 각 CardItem에 id 전달
-            title={schedule.title}
-            dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-            bookMarkCount={schedule.bookMarkCount}
-            likeCount={schedule.likeCount}
-            author={schedule.author}
-            schedules={schedule.schedules}
-            createdAt={schedule.createdAt}
-          />
-        ))}
+        {filteredSchedules.map(schedule => {
+          if (typeof schedule.id === "number") {
+            // id가 number 타입일 때만 CardItem 렌더링
+            return (
+              <CardItem
+                key={schedule.id}
+                id={schedule.id}
+                title={schedule.title}
+                dates={`${schedule.startDate} ~ ${schedule.endDate}`}
+                bookMarkCount={schedule.bookMarkCount}
+                likeCount={schedule.likeCount}
+                author={schedule.author}
+                daySchedules={schedule.schedules}
+                createdAt={schedule.createdAt}
+              />
+            )
+          }
+          return null // id가 undefined인 경우 렌더링하지 않음
+        })}
       </SimpleGrid>
 
       <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">

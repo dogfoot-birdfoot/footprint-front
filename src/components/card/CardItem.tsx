@@ -19,32 +19,8 @@ import { Link, useLocation } from "react-router-dom"
 import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"
 import { differenceInCalendarDays, parse } from "date-fns"
+import { CardItemProps, TimelineItemProps } from "@/pages/ScheduleSharePage/type"
 
-export interface PlaceDetail {
-  memo: string
-  cost: number
-}
-
-export interface Place {
-  placeName: string
-  placeDetails: PlaceDetail[]
-}
-
-export interface CardItemProps {
-  id: number // 각 CardItem의 고유 ID 추가
-  title: string
-  dates: string
-  bookMarkCount: number
-  likeCount: number
-  author: string
-  schedules: { day: number; places: Place[] }[] // 'id' 필드 제거
-  createdAt: string
-}
-
-interface TimelineItemProps {
-  day: number
-  places: Place[]
-}
 export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
   return (
     <Box w="280px" backgroundColor="#f5f7fa" borderRadius="10px">
@@ -80,7 +56,7 @@ const CardItem: React.FC<CardItemProps> = ({
   bookMarkCount,
   likeCount,
   author,
-  schedules
+  daySchedules
 }) => {
   const location = useLocation()
   const path = location.pathname
@@ -105,7 +81,7 @@ const CardItem: React.FC<CardItemProps> = ({
           <Box display="flex" justifyContent="center">
             <Box display="flex" justifyContent="space-between" height="200px" width="300px">
               <VStack spacing={4}>
-                {schedules.map((schedule, index) => (
+                {daySchedules.map((schedule, index) => (
                   <TimelineItem key={index} day={schedule.day} places={schedule.places} />
                 ))}
               </VStack>
