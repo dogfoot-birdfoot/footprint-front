@@ -6,7 +6,7 @@ import ReviewsGallery from "./ReviewsGallery" // ReviewsGallery 컴포넌트를 
 import { ReviewTitle } from "./ReviewGallery.style" // 스타일을 임포트합니다.
 import CardItem from "@/components/Card/CardItem"
 import { useNavigate } from "react-router-dom"
-import { Schedule } from "../ScheduleSharePage/type"
+import { Schedule } from "./type"
 
 const MainPage: React.FC = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([])
@@ -15,8 +15,11 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await axios.get("/api/schedules")
-        setSchedules(response.data) // 가져온 데이터를 상태에 저장합니다.
+        const response = await axios.get(
+          "https://k903c4c87638da.user-app.krampoline.com/api/plans?page=0&size=10&sort=id%2Cdesc"
+        )
+        console.log("Fetched schedules:", response.data) // 추가된 부분
+        setSchedules(response.data.data.content)
       } catch (error) {
         console.error("Failed to fetch schedules:", error)
       }
