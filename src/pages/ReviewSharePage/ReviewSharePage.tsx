@@ -23,15 +23,15 @@ type ReviewType = {
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
-  // // Intersection-Observer
-  // const target = useRef<HTMLElement>(null)
-  // const [observe, unobserve] = useIntersectionObserver(target)
+  // Intersection-Observer
+  const target = useRef<HTMLElement>(null)
+  const [observe, unobserve] = useIntersectionObserver()
 
   // React-query
   const query = useQuery<{ [key: string]: ReviewType }>({ queryKey: ["reviews"], queryFn: getReviews })
 
   async function getReviews() {
-    const data = await fetch("https://ke4f765103c24a.user-app.krampoline.com/api/reviews?sort=id&page=0&size=16")
+    const data = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews?sort=id&page=0&size=16`)
       .then(response => response.json())
       .then(data => data.content)
     return data
@@ -73,9 +73,9 @@ const ReviewSharePage = () => {
             )
           })}
       </CardListBox>
-      {/* <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
+      <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
         요소가 보이면 callback 함수 호출
-      </Box> */}
+      </Box>
     </>
   )
 }
