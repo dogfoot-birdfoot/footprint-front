@@ -16,7 +16,7 @@ const MainPage: React.FC = () => {
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(
-          "https://k903c4c87638da.user-app.krampoline.com/api/plans?page=0&size=10&sort=id%2Cdesc"
+          "https://ke4f765103c24a.user-app.krampoline.com/api/plans?page=0&size=10&sort=id%2Cdesc"
         )
         console.log("Fetched schedules:", response.data) // 추가된 부분
         setSchedules(response.data.data.content)

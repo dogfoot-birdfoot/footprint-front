@@ -37,7 +37,7 @@ const ScheduleSharePage = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       const response = await fetch(
-        "https://k903c4c87638da.user-app.krampoline.com/api/plans?page=0&size=10&sort=id,desc"
+        "https://ke4f765103c24a.user-app.krampoline.com/api/plans?page=0&size=10&sort=id,desc"
       )
       const data = await response.json()
       setPlans(data.data.content)

@@ -7,56 +7,46 @@ import { IndexStyle, ScheduleDetailStyle } from "./ScheduleDetailPage.style"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import Loading from "../LoadingPage/Loading"
+import { ScheduleDetails } from "./type"
 
-export interface PlaceDetail {
-  memo: string
-  cost: number
-  visitTime: string
-}
-
-export interface Place {
-  placeName: string
-  placeDetails: PlaceDetail[]
-}
-
-export interface ScheduleDay {
-  day: number
-  places: Place[]
-}
-
-export interface ScheduleDetails {
-  tags: string
-  title: string
-  startDate: string
-  endDate: string
-  region: string
-  schedules: ScheduleDay[]
-  totalBudget: number
-  likeCount: number
-  bookMarkCount: number
-  createdAt: string
-}
-
+// ScheduleDetailPage 컴포넌트 내부의 처리 예제
 const ScheduleDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>()
+  const { id, memberId } = useParams<{ id: string; memberId: string }>()
   const [scheduleDetails, setScheduleDetails] = useState<ScheduleDetails | null>(null)
-  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0) // 선택된 탭의 인덱스
+  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchScheduleDetails = async () => {
+      setIsLoading(true)
       try {
-        const response = await axios.get(`/api/schedules/${id}`)
-        setScheduleDetails(response.data)
+        const response = await axios.get(
+          `https://ke4f765103c24a.user-app.krampoline.com/api/plans/1?memberId=1`
+          // `https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}?memberId=${memberId}`
+        )
+        setScheduleDetails(response.data.data)
+        setIsLoading(false)
       } catch (error) {
-        console.error("Error fetching schedule details:", error)
+        setError("Failed to fetch data")
+        setIsLoading(false)
       }
     }
 
     fetchScheduleDetails()
-  }, [id])
+  }, [id, memberId])
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <Box>Error: {error}</Box>
+  }
 
   if (!scheduleDetails) {
-    return <Text>Loading...</Text>
+    return <Box>No schedule details available.</Box>
   }
 
   return (
@@ -65,8 +55,7 @@ const ScheduleDetailPage: React.FC = () => {
         <HorizontalCard size="lg" scheduleDetails={scheduleDetails} />
         <DayTab
           destinations={scheduleDetails.schedules.map(schedule => schedule.places.map(place => place.placeName))}
-          // 선택된 탭의 인덱스를 설정하는 함수
-          onTabClick={index => setSelectedTabIndex(index)}
+          onTabClick={setSelectedTabIndex}
         />
 
         <Box display="flex" mt="-2" ml="600px">
@@ -74,8 +63,8 @@ const ScheduleDetailPage: React.FC = () => {
             <RouteMap />
           </Box>
         </Box>
+
         <ScheduleDetailStyle>
-          {/* 선택된 탭에 해당하는 날짜의 스케줄만 렌더링합니다. */}
           {scheduleDetails.schedules[selectedTabIndex].places.map((place, placeIndex) => (
             <Box width="500px" mt="10px" key={placeIndex} ml="-10px">
               <Card fontSize="15px" fontWeight="bold" ml="-10px">
@@ -86,16 +75,16 @@ const ScheduleDetailPage: React.FC = () => {
                       <Text>{place.placeName}</Text>
                     </Box>
                     <Text color="gray.500" fontSize="15px" ml="5px">
-                      {place.placeDetails.length > 0 && `도착 시간: ${place.placeDetails[0].visitTime}`}
+                      도착 시간: {place.placeDetails.visitTime}
                     </Text>
                   </Box>
                 </CardHeader>
                 <CardBody display="flex" justifyContent="space-between">
                   <Text color="gray.500" fontSize="15px" ml="5px">
-                    {place.placeDetails.length > 0 && `메모 : ${place.placeDetails[0].memo}`}
+                    메모: {place.placeDetails.memo}
                   </Text>
                   <Text color="gray.500" fontSize="12px" ml="5px">
-                    {place.placeDetails.length > 0 && `예상 경비: ${place.placeDetails[0].cost}원`}
+                    예상 경비: {place.placeDetails.cost}원
                   </Text>
                 </CardBody>
               </Card>

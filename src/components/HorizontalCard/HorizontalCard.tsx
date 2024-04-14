@@ -7,15 +7,9 @@ import { Avatar } from "@chakra-ui/avatar"
 import Buttons from "@/components/Buttons/Buttons"
 import { Badge, IconButton } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
-import { CardInfoProps } from "./type"
+import { CardInfoProps, HorizontalCardProps, ScheduleDay, ScheduleDetails } from "./type"
 import { TiStarFullOutline } from "react-icons/ti"
 import { FaRegThumbsUp } from "react-icons/fa"
-import { ScheduleDay, ScheduleDetails } from "@/pages/ScheduleDetailPage/ScheduleDetailPage"
-
-export interface HorizontalCardProps {
-  scheduleDetails: ScheduleDetails
-  size: string
-}
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -34,9 +28,8 @@ export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, sch
 
     schedules.forEach(schedule => {
       schedule.places.forEach(place => {
-        place.placeDetails.forEach(detail => {
-          totalCost += detail.cost
-        })
+        // placeDetails 객체에서 cost 속성에 직접 접근
+        totalCost += place.placeDetails.cost
       })
     })
 
