@@ -10,15 +10,8 @@ const AddReviewPage: React.FC<AddReviewPageProps> = ({ initialStep }) => {
   const [step, setStep] = useState<number>(initialStep)
 
   // 리뷰에 추가할 이미지 주소 배열
-  const [sources, setSources] = useState<string[]>([
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  ])
+  const [sources, setSources] = useState<File[]>([])
+  const [previewImages, setPreviewImages] = useState<string[]>([])
 
   function prevStep() {
     setStep(Math.max(1, step - 1))
@@ -47,8 +40,15 @@ const AddReviewPage: React.FC<AddReviewPageProps> = ({ initialStep }) => {
         </ButtonBox>
         <ContentBox>
           {step === 1 && <AddIntro nextStep={nextStep} />}
-          {step === 2 && <AddPictures sources={sources} setSources={setSources} />}
-          {step === 3 && <AddPost sources={sources} />}
+          {step === 2 && (
+            <AddPictures
+              sources={sources}
+              setSources={setSources}
+              previewImages={previewImages}
+              setPreviewImages={setPreviewImages}
+            />
+          )}
+          {step === 3 && <AddPost sources={sources} previewImages={previewImages} />}
         </ContentBox>
 
         <ButtonBox>

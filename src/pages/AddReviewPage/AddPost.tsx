@@ -15,14 +15,13 @@ const editableProps = {
   padding: "10px 10px 10px 10px"
 }
 
-const AddPost: React.FC<AddPostProps> = ({ sources }) => {
+const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
   const [notify, setNotify] = useState<boolean>(false)
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
 
   const regionContents = ["서울", "경기", "대구", "부산", "대전", "광주"]
-  const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
   // React-Query
@@ -31,11 +30,23 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
     mutationFn: ReviewPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      setContent("1")
+      setTitle("2")
     }
   })
 
   async function ReviewPost() {
     try {
+      // sources.map((item, idx) => {
+      //   const formData = new FormData()
+      //   formData.append("file", item)
+
+      //   await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
+      //     method: "post",
+      //     body: formData
+      //   }).then(result => console.log("요청성공"))
+      // })
+
       await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "POST",
         headers: {
@@ -56,16 +67,14 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="320px" margin="0px 10px 0px 0px">
-        <ImageSlider images={sources} size="sm" />
+        <ImageSlider images={previewImages} size="sm" />
         <Box display="flex" justifyContent="space-between" marginTop="10px" alignItems="center">
           <Box>
-            <OnOffSwitch onText="알림" offText="" booleanState={notify} setBooleanState={setNotify} />
             <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
           </Box>
 
-          <Box width="100px" display="flex" justifyContent="space-between">
+          <Box width="50px" display="flex" justifyContent="space-between">
             <DropDownCheckBox title="지역" contents={regionContents} />
-            <DropDownCheckBox title="태그" contents={tagContents} />
           </Box>
         </Box>
       </Box>
@@ -92,7 +101,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
           <EditableTextarea
             {...editableProps}
             value={content}
-            onChange={e => setContent(e.target.value)}
+            //onChange={e => setContent(e.target.value)}
             resize="none"
             maxLength={300}
           />

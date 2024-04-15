@@ -7,10 +7,13 @@ export interface AddIntroProps {
 }
 
 export interface AddPictureProps {
-  sources: stirng[]
-  setSources: React.Dispatch<React.SetStateAction<string[]>>
+  sources: File[]
+  setSources: React.Dispatch<React.SetStateAction<File[]>>
+  previewImages: string[]
+  setPreviewImages: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 export interface AddPostProps {
-  sources: stirng[]
+  sources: File[]
+  previewImages: string[]
 }

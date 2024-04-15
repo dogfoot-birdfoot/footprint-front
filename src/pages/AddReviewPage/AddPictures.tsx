@@ -1,9 +1,8 @@
-import { Box, Button, Image, Text, keyframes } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { Box, Button, Image, Input, Text, keyframes } from "@chakra-ui/react"
+import React, { ChangeEvent, useRef, useState } from "react"
 import { AddPictureProps } from "./type"
 
-const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
-  const textframes = keyframes`  
+const textframes = keyframes`  
     0% {transform: translate(0%,0%)}
     60%{transform: translate(0%,0%)}
     70% {transform: translate(0%,-20%)} 
@@ -11,17 +10,41 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
     100% {transform: translate(0%,0)} 
   `
 
-  const textAnimation = `${textframes} infinite 2s linear`
+const textAnimation = `${textframes} infinite 2s linear`
 
-  // 추가 버튼을 누르면 임시로 사진 추가(사용자가 사진을 직접 올리는 방식으로 변경 필요)
-  function addImage() {
-    setSources(sources => [
-      ...sources,
-      "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    ])
+const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources, previewImages, setPreviewImages }) => {
+  const fileUpload = useRef<HTMLInputElement>(null)
+
+  const clickFileUpload = () => {
+    if (fileUpload.current) fileUpload.current.click()
   }
 
+  async function postImage() {
+    try {
+      console.log(sources, previewImages)
+      // const formData = new FormData()
+      // formData.append("image", sources[0])
+      // await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
+      //   method: "POST",
+      //   body: formData
+      // }).then(result => console.log(result))
+    } catch (error) {}
+  }
+
+  const changeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      setSources(sources => [...sources, e.target.files![0]])
+      const reader = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      reader.onload = () => {
+        setPreviewImages(previewImages => [...previewImages, reader.result as string])
+      }
+    }
+  }
+  // 추가 버튼을 누르면 임시로 사진 추가(사용자가 사진을 직접 올리는 방식으로 변경 필요)
+
   function deleteImage(index: number) {
+    setPreviewImages(previewImages.filter((item, idx) => idx !== index))
     setSources(sources.filter((item, idx) => idx !== index))
   }
 
@@ -29,12 +52,12 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
     <Box display="flex" flexDirection="column">
       <Box display="flex" justifyContent="center">
         {/* 이미지가 하나라도 존재하면 출력 */}
-        {sources.length !== 0 && (
-          <Image src={sources[0]} borderRadius="lg" width="380px" height="300px" margin="10px 0px 10px 0px" />
+        {previewImages.length !== 0 && (
+          <Image src={previewImages[0]} borderRadius="lg" width="380px" height="300px" margin="10px 0px 10px 0px" />
         )}
 
         {/* 이미지가 없을 떄 출력 */}
-        {sources.length === 0 && (
+        {previewImages.length === 0 && (
           <Box
             pos="relative"
             color="white"
@@ -65,7 +88,7 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
         )}
       </Box>
       <Box display="flex" flexWrap="wrap" width="400px" height="200px">
-        {sources.map((source, index) => (
+        {previewImages.map((image, index) => (
           <Box
             width="80px"
             height="80px"
@@ -76,7 +99,7 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
             transition="all .3s ease"
             _hover={{ opacity: "0.7", color: "white", transform: "scale(1.1)" }}
           >
-            <Image src={source} borderRadius="lg" width="80px" height="80px" />
+            <Image src={image} borderRadius="lg" width="80px" height="80px" />
             <Text
               display="flex"
               justifyContent={"center"}
@@ -102,11 +125,21 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources }) => {
             height="80px"
             margin="10px 10px 10px 10px"
           >
-            <Button onClick={addImage} borderRadius="20px" backgroundColor="white">
+            <Button onClick={clickFileUpload} borderRadius="20px" backgroundColor="white">
               +
             </Button>
           </Box>
         )}
+
+        {/* File Upload를 위한 Input Element(hidden) */}
+        <Input
+          ref={fileUpload}
+          onChange={changeFile}
+          accept=".png, .jpeg, .jpg"
+          type="file"
+          style={{ display: "none" }}
+        />
+        {/* <Button onClick={postImage}>이미지 POST</Button> */}
       </Box>
     </Box>
   )
