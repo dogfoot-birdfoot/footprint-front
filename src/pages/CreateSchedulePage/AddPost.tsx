@@ -93,9 +93,9 @@ const AddPost: React.FC = () => {
       schedules: formattedSchedules,
       tags
     }
-
+    console.log("Sending the following data to the server:", data) // 로그 출력
     try {
-      const response = await axios.post("/api/schedules/create", data)
+      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=5", data)
       console.log("Schedule created successfully", response.data)
       const createdAt = new Date(response.data.createdAt) // 백엔드에서 받은 'createdAt'을 Date 객체로 변환
       const formattedCreatedAt = createdAt.toISOString().split("T")[0] // 'YYYY-MM-DD' 형식으로 변환

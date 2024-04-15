@@ -42,7 +42,7 @@ export interface Schedule {
   createdAt: string // 생성 날짜
 }
 export interface CardItemProps {
-  id: number
+  id: number | undefined
   title: string
   dates: string
   bookMarkCount: number

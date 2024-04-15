@@ -23,8 +23,8 @@ const ScheduleDetailPage: React.FC = () => {
       setIsLoading(true)
       try {
         const response = await axios.get(
-          `https://ke4f765103c24a.user-app.krampoline.com/api/plans/1?memberId=1`
-          // `https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}?memberId=${memberId}`
+          // `https://ke4f765103c24a.user-app.krampoline.com/api/plans/1?memberId=1`
+          `https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}?memberId=${memberId}`
         )
         setScheduleDetails(response.data.data)
         setIsLoading(false)
