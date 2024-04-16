@@ -19,18 +19,6 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources, previewIm
     if (fileUpload.current) fileUpload.current.click()
   }
 
-  async function postImage() {
-    try {
-      console.log(sources, previewImages)
-      // const formData = new FormData()
-      // formData.append("image", sources[0])
-      // await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
-      //   method: "POST",
-      //   body: formData
-      // }).then(result => console.log(result))
-    } catch (error) {}
-  }
-
   const changeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       setSources(sources => [...sources, e.target.files![0]])
@@ -139,7 +127,6 @@ const AddPictures: React.FC<AddPictureProps> = ({ sources, setSources, previewIm
           type="file"
           style={{ display: "none" }}
         />
-        {/* <Button onClick={postImage}>이미지 POST</Button> */}
       </Box>
     </Box>
   )

@@ -18,7 +18,6 @@ const editableProps = {
 const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
-  const [notify, setNotify] = useState<boolean>(false)
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
 
   const regionContents = ["서울", "경기", "대구", "부산", "대전", "광주"]
@@ -37,15 +36,18 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
 
   async function ReviewPost() {
     try {
-      // sources.map((item, idx) => {
-      //   const formData = new FormData()
-      //   formData.append("file", item)
+      const imageIds: number[] = []
+      for (const item of sources) {
+        const formData = new FormData()
+        formData.append("image", item)
 
-      //   await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
-      //     method: "post",
-      //     body: formData
-      //   }).then(result => console.log("요청성공"))
-      // })
+        await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
+          method: "POST",
+          body: formData
+        })
+          .then(result => result.json())
+          .then(result => imageIds.push(result["imageId"]))
+      }
 
       await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "POST",
@@ -56,9 +58,22 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           memberId: 1,
           title: title,
           content: content,
-          imageIds: sources
+          imageIds: imageIds
         })
-      }).then(response => console.log(response))
+      }).then(response => console.log(response, response.json()))
+
+      console.log({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          memberId: 1,
+          title: title,
+          content: content,
+          imageIds: imageIds
+        })
+      })
     } catch (error) {
       console.error("Failed to create review", error)
     }
