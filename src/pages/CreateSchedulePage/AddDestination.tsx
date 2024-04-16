@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Box } from "@chakra-ui/react"
 import { RegionBox } from "@/pages/CreateSchedulePage/AddDestination.style"
 

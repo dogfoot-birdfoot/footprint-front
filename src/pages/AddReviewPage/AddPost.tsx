@@ -36,7 +36,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
 
   async function ReviewPost() {
     try {
-      await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews", {
+      await fetch("https://ke4f765103c24a.user-app.krampoline.com/api/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -6,44 +6,7 @@ import ReviewsGallery from "./ReviewsGallery" // ReviewsGallery 컴포넌트를 
 import { ReviewTitle } from "./ReviewGallery.style" // 스타일을 임포트합니다.
 import CardItem from "@/components/Card/CardItem"
 import { useNavigate } from "react-router-dom"
-
-// CardItemProps.ts
-export interface PlaceDetail {
-  memo: string
-  cost: number
-}
-
-export interface Place {
-  placeName: string
-  placeDetails: PlaceDetail[]
-}
-
-export interface Schedule {
-  id: number // 각 Schedule의 고유 ID
-  title: string // Schedule의 제목
-  startDate: string // 시작 날짜
-  endDate: string // 종료 날짜
-  bookMarkCount: number // 북마크 수
-  likeCount: number // 좋아요 수
-  author: string // 작성자
-  schedules: {
-    // 하루의 여행 일정
-    day: number
-    places: Place[]
-  }[]
-  createdAt: string // 생성 날짜
-}
-
-export interface CardItemProps {
-  id: number
-  title: string
-  dates: string
-  bookMarkCount: number
-  likeCount: number
-  author: string
-  schedules: Schedule[]
-  createdAt: string
-}
+import { Schedule } from "./type"
 
 const MainPage: React.FC = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([])
@@ -52,8 +15,11 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await axios.get("/api/schedules")
-        setSchedules(response.data) // 가져온 데이터를 상태에 저장합니다.
+        const response = await axios.get(
+          "https://ke4f765103c24a.user-app.krampoline.com/api/plans?page=0&size=10&sort=id%2Cdesc"
+        )
+        console.log("Fetched schedules:", response.data) // 추가된 부분
+        setSchedules(response.data.data.content)
       } catch (error) {
         console.error("Failed to fetch schedules:", error)
       }
@@ -88,7 +54,7 @@ const MainPage: React.FC = () => {
               bookMarkCount={schedule.bookMarkCount}
               likeCount={schedule.likeCount}
               author={schedule.author}
-              schedules={schedule.schedules}
+              daySchedules={schedule.schedules}
               createdAt={schedule.createdAt}
             />
           )
@@ -116,7 +82,7 @@ const MainPage: React.FC = () => {
               bookMarkCount={schedule.bookMarkCount}
               likeCount={schedule.likeCount}
               author={schedule.author}
-              schedules={schedule.schedules}
+              daySchedules={schedule.schedules}
               createdAt={schedule.createdAt}
             />
           )

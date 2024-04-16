@@ -31,7 +31,7 @@ const ReviewSharePage = () => {
   const query = useQuery<{ [key: string]: ReviewType }>({ queryKey: ["reviews"], queryFn: getReviews })
 
   async function getReviews() {
-    const data = await fetch("https://k903c4c87638da.user-app.krampoline.com/api/reviews?sort=id&page=0&size=16")
+    const data = await fetch("https://ke4f765103c24a.user-app.krampoline.com/api/reviews?sort=id&page=0&size=16")
       .then(response => response.json())
       .then(data => data.content)
     return data

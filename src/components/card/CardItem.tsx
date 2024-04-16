@@ -19,32 +19,8 @@ import { Link, useLocation } from "react-router-dom"
 import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"
 import { differenceInCalendarDays, parse } from "date-fns"
+import { CardItemProps, TimelineItemProps } from "@/pages/ScheduleSharePage/type"
 
-export interface PlaceDetail {
-  memo: string
-  cost: number
-}
-
-export interface Place {
-  placeName: string
-  placeDetails: PlaceDetail[]
-}
-
-export interface CardItemProps {
-  id: number // 각 CardItem의 고유 ID 추가
-  title: string
-  dates: string
-  bookMarkCount: number
-  likeCount: number
-  author: string
-  schedules: { day: number; places: Place[] }[] // 'id' 필드 제거
-  createdAt: string
-}
-
-interface TimelineItemProps {
-  day: number
-  places: Place[]
-}
 export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
   return (
     <Box w="280px" backgroundColor="#f5f7fa" borderRadius="10px">
@@ -80,7 +56,7 @@ const CardItem: React.FC<CardItemProps> = ({
   bookMarkCount,
   likeCount,
   author,
-  schedules
+  daySchedules
 }) => {
   const location = useLocation()
   const path = location.pathname
@@ -99,62 +75,60 @@ const CardItem: React.FC<CardItemProps> = ({
   }
 
   return (
-    <Link to={`/schedule_share_detail/${id}`}>
-      <Card maxW="xs" marginLeft="10px">
-        <CardBody>
-          <Box display="flex" justifyContent="center">
-            <Box display="flex" justifyContent="space-between" height="200px" width="300px">
-              <VStack spacing={4}>
-                {schedules.map((schedule, index) => (
-                  <TimelineItem key={index} day={schedule.day} places={schedule.places} />
-                ))}
-              </VStack>
+    <Card maxW="xs" marginLeft="10px">
+      <CardBody>
+        <Box display="flex" justifyContent="center">
+          <Box display="flex" justifyContent="space-between" height="200px" width="300px">
+            <VStack spacing={4}>
+              {daySchedules.map((schedule, index) => (
+                <TimelineItem key={index} day={schedule.day} places={schedule.places} />
+              ))}
+            </VStack>
 
-              <PositionedAvatar>
-                <Avatar border="2px solid white" size="md" name={author} src="https://bit.ly/kent-c-dodds" />
-              </PositionedAvatar>
+            <PositionedAvatar>
+              <Avatar border="2px solid white" size="md" name={author} src="https://bit.ly/kent-c-dodds" />
+            </PositionedAvatar>
+          </Box>
+        </Box>
+        <Stack mt="3" spacing="3">
+          <Box display="flex" justifyContent="space-between" mt="-79">
+            <Box>
+              <Badge borderRadius="10px" colorScheme="green" minWidth="50px">
+                {stayDuration}
+              </Badge>
+            </Box>
+            {/* path name에 따라 동적으로 노출 */}
+            <Box display="flex" gap="2">
+              {/* 엔드포인트가 'schedule_share' 이거나 경로에 아무 것도 없을 때 '즐겨찾기' 배지 표시 */}
+              {(path.includes("schedule_share") || path === "/") && (
+                <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
+                  즐겨찾기 {bookMarkCount}
+                </Badge>
+              )}
+
+              {/* 엔드포인트가 'schedule_share', 'review_share', 또는 경로에 아무 것도 없을 때 '좋아요' 배지 표시 */}
+              {(path.includes("schedule_share") || path.includes("review_share") || path === "/") && (
+                <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
+                  좋아요 {likeCount}
+                </Badge>
+              )}
             </Box>
           </Box>
-          <Stack mt="3" spacing="3">
-            <Box display="flex" justifyContent="space-between" mt="-79">
-              <Box>
-                <Badge borderRadius="10px" colorScheme="green" minWidth="50px">
-                  {stayDuration}
-                </Badge>
-              </Box>
-              {/* path name에 따라 동적으로 노출 */}
-              <Box display="flex" gap="2">
-                {/* 엔드포인트가 'schedule_share' 이거나 경로에 아무 것도 없을 때 '즐겨찾기' 배지 표시 */}
-                {(path.includes("schedule_share") || path === "/") && (
-                  <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
-                    즐겨찾기 {bookMarkCount}
-                  </Badge>
-                )}
 
-                {/* 엔드포인트가 'schedule_share', 'review_share', 또는 경로에 아무 것도 없을 때 '좋아요' 배지 표시 */}
-                {(path.includes("schedule_share") || path.includes("review_share") || path === "/") && (
-                  <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
-                    좋아요 {likeCount}
-                  </Badge>
-                )}
-              </Box>
-            </Box>
-
-            <Text color="gray.500" fontSize="9px" mt="-2" mb="-2">
-              {dates}
+          <Text color="gray.500" fontSize="9px" mt="-2" mb="-2">
+            {dates}
+          </Text>
+          <Heading size="sm" mt="1">
+            {title}
+          </Heading>
+          <Box textAlign="left">
+            <Text color="gray.500" fontSize="9px" mb="-2" mt="-1">
+              작성일자 : {formatDate(createdAt)}
             </Text>
-            <Heading size="sm" mt="1">
-              {title}
-            </Heading>
-            <Box textAlign="left">
-              <Text color="gray.500" fontSize="9px" mb="-2" mt="-1">
-                작성일자 : {formatDate(createdAt)}
-              </Text>
-            </Box>
-          </Stack>
-        </CardBody>
-      </Card>
-    </Link>
+          </Box>
+        </Stack>
+      </CardBody>
+    </Card>
   )
 }
 

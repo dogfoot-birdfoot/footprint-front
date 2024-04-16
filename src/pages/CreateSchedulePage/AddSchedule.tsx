@@ -26,8 +26,7 @@ import { currentKeywords, allDates, placesByDateState } from "../../hooks/atom"
 
 // 날짜 포맷 함수
 const formatDate = (date: Date) => {
-  // "3월 19일 (화)"와 같은 형식으로 날짜를 포맷
-  return format(date, "M월 d일 (EEE)", { locale: ko })
+  return format(date, "M월 d일 (EEE)", { locale: ko }) // "3월 19일 (화)" 형식
 }
 
 const AddSchedule: React.FC<AddScheduleProps> = ({
@@ -38,16 +37,13 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   activeIndex,
   setActiveIndex
 }) => {
-  // Component State
   const [amounts, setAmounts] = useState<Amounts>({})
-  const [formTimes, setFormTimes] = useState<Record<string, Date>>({}) // 상태의 타입을 string 기반의 키로 변경
+  const [formTimes, setFormTimes] = useState<Record<string, Date>>({})
 
-  // Recoil State
   const setSelectedKeywords = useSetRecoilState(currentKeywords)
   const selectedDates = useRecoilValue(allDates)
   const [placesByDate, setPlacesByDate] = useRecoilState(placesByDateState)
 
-  // CSS
   const editableProps = {
     width: "370px",
     marginTop: "10px",
@@ -56,17 +52,13 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     padding: "10px 10px 10px 10px"
   }
 
-  // "장소 추가" 버튼 클릭 핸들러, 날짜 인덱스를 인자로 받음
   const handleAddPlaceClick = (dateIndex: number) => {
-    // SearchBox 비활성화, LoadSchedule 활성화 시 or 다른 일정 검색창 활성화
     if (showLoadSchedule || activeIndex === -1 || (showSearchBox === true && dateIndex !== activeIndex)) {
       setShowLoadSchedule(false)
       setShowSearchBox(true)
       setActiveIndex(dateIndex)
       setSelectedKeywords(placesByDate[dateIndex] ? placesByDate[dateIndex] : [])
-    }
-    // 같은 일정의 장소추가 버튼을 누르면 닫음(값 초기화)
-    else if (showSearchBox && dateIndex === activeIndex) {
+    } else if (showSearchBox && dateIndex === activeIndex) {
       setShowSearchBox(false)
       setActiveIndex(-1)
       setSelectedKeywords([])
@@ -75,13 +67,10 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
 
   const handleLoadScheduleClick = (dateIndex: number) => {
     if (showSearchBox || activeIndex === -1 || (showLoadSchedule === true && dateIndex !== activeIndex)) {
-      // SearchBox 활성화, LoadSchedule 비활성화 시 or 다른 일정 불러오기 창 활성화
-      setShowLoadSchedule(false)
       setShowLoadSchedule(true)
       setShowSearchBox(false)
       setActiveIndex(dateIndex)
     } else if (dateIndex === activeIndex) {
-      // 같은 일정의 일정 불러오기 버튼을 누르면 닫음(값 초기화)
       setShowLoadSchedule(false)
       setActiveIndex(-1)
     }
@@ -90,43 +79,61 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, dateIndex: number, placeIndex: number) => {
     const { value } = e.target
-    // 숫자만 추출 (쉼표, 비숫자 제거)
     const numericValue = value.replace(/[^0-9]/g, "")
-    // 숫자를 한국식 금액 형식으로 변환
     const formattedValue = new Intl.NumberFormat("ko-KR").format(Number(numericValue))
 
-    // amounts 상태 업데이트
     setAmounts(prevAmounts => ({
       ...prevAmounts,
       [`${dateIndex}-${placeIndex}`]: formattedValue
     }))
   }
 
-  const handleTimeChange = (dateKey: string, date: Date) => {
+  const handleTimeChange = (dateIndex: number, placeIndex: number, date: Date) => {
     setFormTimes(prevTimes => ({
       ...prevTimes,
-      [dateKey]: date
+      [`${dateIndex}-${placeIndex}`]: date
     }))
+
+    const formattedTime = format(date, "HH:mm:ss")
+
+    const updatedPlaces = [...placesByDate[dateIndex]]
+    const updatedPlace = { ...updatedPlaces[placeIndex], visitTime: formattedTime }
+    updatedPlaces[placeIndex] = updatedPlace
+
+    const newPlacesByDate = { ...placesByDate, [dateIndex]: updatedPlaces }
+    setPlacesByDate(newPlacesByDate)
   }
 
-  const handleMemoAndCostUpdate = (dateIndex: number, placeIndex: number, memo?: string, cost?: number) => {
-    // placesByDate의 현재 상태를 복사합니다 (얕은 복사).
-    const updatedPlacesByDate = { ...placesByDate }
-    // 특정 날짜(dateIndex)에 대한 장소(placeObject[]) 배열을 복사합니다.
-    const places = [...updatedPlacesByDate[dateIndex]]
-    // 복사한 장소 배열에서 특정 장소(placeObject)를 업데이트합니다.
-    const updatedPlace = { ...places[placeIndex] }
-    if (memo !== undefined) updatedPlace.memo = memo
-    if (cost !== undefined) updatedPlace.cost = cost
-    // 업데이트된 장소 객체로 배열을 업데이트합니다.
-    places[placeIndex] = updatedPlace
-    // 전체 placesByDate 객체에 업데이트된 장소 배열을 할당합니다.
-    updatedPlacesByDate[dateIndex] = places
-    // Recoil 상태를 업데이트합니다.
-    setPlacesByDate(updatedPlacesByDate)
+  const handlePlaceDetailsUpdate = (
+    dateIndex: number,
+    placeIndex: number,
+    memo?: string,
+    cost?: number,
+    visitTime?: Date
+  ) => {
+    const updatedPlacesByDate = { ...placesByDate } // 상위 객체 복사
+    const places = [...updatedPlacesByDate[dateIndex]] // 해당 날짜의 장소 배열 복사
+    const updatedPlace = { ...places[placeIndex] } // 수정할 장소 객체 복사
+    const newPlaceDetails = { ...updatedPlace.placeDetails } // placeDetails 또한 복사
+
+    // 수정 사항 적용
+    if (memo !== undefined) {
+      newPlaceDetails.memo = memo // 복사된 객체 수정
+    }
+    if (cost !== undefined) {
+      newPlaceDetails.cost = cost // 복사된 객체 수정
+    }
+    if (visitTime !== undefined) {
+      newPlaceDetails.visitTime = visitTime.toISOString().split("T")[0] + " " + visitTime.toTimeString().split(" ")[0] // 복사된 객체 수정
+    }
+
+    updatedPlace.placeDetails = newPlaceDetails // 수정된 details로 갱신
+    places[placeIndex] = updatedPlace // 배열에 수정된 장소 객체를 다시 할당
+    updatedPlacesByDate[dateIndex] = places // 날짜별 장소 데이터를 업데이트된 배열로 갱신
+
+    setPlacesByDate(updatedPlacesByDate) // Recoil 상태 업데이트
   }
 
-  // 커스텀 DatePicker 입력 컴포넌트
   const CustomInput = forwardRef<HTMLButtonElement, { value?: string; onClick?: () => void }>(
     ({ value, onClick }, ref) => (
       <Button onClick={onClick} ref={ref} size="sm">
@@ -165,7 +172,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                         </Text>
                         <DatePicker
                           selected={formTimes[`${dateIndex}-${placeIndex}`]}
-                          onChange={(date: Date) => handleTimeChange(`${dateIndex}-${placeIndex}`, date)}
+                          onChange={(date: Date) => handleTimeChange(dateIndex, placeIndex, date)}
                           showTimeSelect
                           showTimeSelectOnly
                           timeIntervals={30}
@@ -177,8 +184,8 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Box mt="4">
                       <Editable
                         {...editableProps}
-                        defaultValue={place.memo || "메모 입력"}
-                        onSubmit={value => handleMemoAndCostUpdate(dateIndex, placeIndex, value)}
+                        defaultValue={place.placeDetails.memo || "메모 입력"}
+                        onSubmit={value => handlePlaceDetailsUpdate(dateIndex, placeIndex, value)}
                       >
                         <EditablePreview height="100%" overflow="hidden" />
                         <EditableTextarea height="100%" rows={3} resize="none" maxLength={100} />
@@ -194,7 +201,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                         value={amounts[`${dateIndex}-${placeIndex}`] || ""}
                         onChange={e => {
                           handleChange(e, dateIndex, placeIndex)
-                          handleMemoAndCostUpdate(
+                          handlePlaceDetailsUpdate(
                             dateIndex,
                             placeIndex,
                             undefined,

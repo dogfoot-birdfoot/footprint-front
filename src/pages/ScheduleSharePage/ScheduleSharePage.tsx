@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
-
 import CardItem from "@/components/Card/CardItem"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
-import axios from "axios"
 import { SimpleGrid } from "@chakra-ui/react"
 import { Box } from "@chakra-ui/react"
 import useIntersectionObserver from "./useIntersectionObserver"
+import { TravelPlan } from "./type"
+import { useNavigate } from "react-router-dom"
 
 const koreanRegions = [
   "서울",
@@ -32,23 +32,29 @@ const koreanRegions = [
 
 const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
-  const [postedSchedules, setPostedSchedules] = useState<any[]>([])
+  const [plans, setPlans] = useState<TravelPlan[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const getPostedSchedules = async () => {
-      try {
-        const response = await axios.get("/api/schedules/get")
-        // 여기서 visible이 true인 항목만 필터링
-        const visibleSchedules = response.data.filter((schedule: { visible: boolean }) => schedule.visible === true)
-        setPostedSchedules(visibleSchedules)
-      } catch (error) {
-        console.error("Failed to fetch posted schedules", error)
-      }
+    const fetchPlans = async () => {
+      const response = await fetch(
+        "https://ke4f765103c24a.user-app.krampoline.com/api/plans?page=0&size=10&sort=id,desc"
+      )
+      const data = await response.json()
+      setPlans(data.data.content)
     }
-
-    getPostedSchedules()
+    fetchPlans()
   }, [])
 
+  // memberId가 필요한 경우 여기서 정의하거나 다른 방법으로 가져옵니다.
+  const memberId = "1" // 예시입니다. 실제 값에 맞게 조정하세요.
+
+  const handleCardClick = (id: number) => {
+    // id 타입을 number로 명시합니다.
+    if (id !== undefined) {
+      navigate(`/schedule_share_detail/${id}/member/${memberId}`)
+    }
+  }
   // 카드에 대한 상태 저장
   const [cardLists, setCardLists] = useState<string[][]>([
     ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
@@ -62,9 +68,7 @@ const ScheduleSharePage = () => {
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName)
   }
-  const filteredSchedules = postedSchedules.filter(
-    schedule => selectedItem === "전국" || schedule.region === selectedItem
-  )
+  const filteredSchedules = plans.filter(schedule => selectedItem === "전국" || schedule.region === selectedItem)
 
   function addCards() {
     setCardLists(cardLists => [
@@ -108,17 +112,18 @@ const ScheduleSharePage = () => {
 
       <SimpleGrid minChildWidth="300px" spacing="15px">
         {filteredSchedules.map(schedule => (
-          <CardItem
-            key={schedule.id}
-            id={schedule.id} // 각 CardItem에 id 전달
-            title={schedule.title}
-            dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-            bookMarkCount={schedule.bookMarkCount}
-            likeCount={schedule.likeCount}
-            author={schedule.author}
-            schedules={schedule.schedules}
-            createdAt={schedule.createdAt}
-          />
+          <div key={schedule.id} onClick={() => schedule.id && handleCardClick(schedule.id)}>
+            <CardItem
+              id={schedule.id}
+              title={schedule.title}
+              dates={`${schedule.startDate} ~ ${schedule.endDate}`}
+              bookMarkCount={schedule.bookMarkCount}
+              likeCount={schedule.likeCount}
+              author={schedule.author}
+              daySchedules={schedule.schedules}
+              createdAt={schedule.createdAt}
+            />
+          </div>
         ))}
       </SimpleGrid>
 

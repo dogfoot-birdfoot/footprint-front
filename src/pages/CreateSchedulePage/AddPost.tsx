@@ -61,6 +61,17 @@ const AddPost: React.FC = () => {
   const selectedTagBg = useColorModeValue("primary", "primary")
 
   const handleSubmit = async () => {
+    const startDate = new Date(fromDate)
+    const endDate = new Date(toDate)
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.error("Invalid date value")
+      return // 유효하지 않은 날짜를 처리하고 함수를 종료
+    }
+
+    const formattedStartDate = startDate.toISOString()
+    const formattedEndDate = endDate.toISOString()
+
     const tags = Object.entries(selectedTags)
       .filter(([_, isSelected]) => isSelected)
       .map(([tag]) => tag)
@@ -68,34 +79,39 @@ const AddPost: React.FC = () => {
     const formattedSchedules = Object.values(placesByDate || {}).map((places, index) => ({
       day: index + 1,
       places: places.map(place => ({
+        kakaoPlaceId: place.kakaoPlaceId || "defaultId", // 필요시 kakaoPlaceId 추가
         placeName: place.placeName,
         latitude: place.latitude,
         longitude: place.longitude,
         address: place.address,
-        placeDetails: [
-          {
-            // placeDetails 배열 추가
-            memo: place.memo || "", // memo를 placeDetails 내에 포함
-            cost: place.cost || 0, // cost를 placeDetails 내에 포함
-            visitTime: place.visitTime || "" // visitTime을 placeDetails 내에 포함, 필요하다면
-          }
-        ]
+        placeDetails: {
+          // 배열에서 객체로 변환
+          memo: place.placeDetails.memo || "",
+          cost: place.placeDetails.cost || 0,
+          visitTime: place.placeDetails.visitTime || ""
+        }
       }))
     }))
 
+    const totalCost = formattedSchedules.reduce((total, day) => {
+      return total + day.places.reduce((dayTotal, place) => dayTotal + place.placeDetails.cost, 0)
+    }, 0)
+
     const data = {
-      title, // 수정된 부분: title 상태를 직접 사용
+      title,
       startDate: fromDate,
       endDate: toDate,
       region: regions.join(", "),
+      totalCost, // totalCost 추가
       visible,
       copyAllowed,
       schedules: formattedSchedules,
       tags
     }
 
+    console.log("Sending the following data to the server:", data) // 로그 출력
     try {
-      const response = await axios.post("/api/schedules/create", data)
+      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=4", data)
       console.log("Schedule created successfully", response.data)
       const createdAt = new Date(response.data.createdAt) // 백엔드에서 받은 'createdAt'을 Date 객체로 변환
       const formattedCreatedAt = createdAt.toISOString().split("T")[0] // 'YYYY-MM-DD' 형식으로 변환

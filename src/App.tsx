@@ -26,7 +26,7 @@ import MyProfile from "@/pages/MyPage/Profile/MyProfile"
 import MySchedule from "@/pages/MyPage/Schedule/MySchedule"
 import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
 import { userState } from "./hooks/atom"
-import CheckPage from "./pages/CreateSchedulePage/CheckPage"
+import CheckPage from "./pages/CheckPage/CheckPage"
 import UserDetailPage from "./pages/UserDetailPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -48,13 +48,13 @@ function App() {
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="schedule_share" element={<ScheduleSharePage />} />
                 <Route path="review_share" element={<ReviewSharePage />} />
-                <Route path="/schedule_share_detail/:id" element={<ScheduleDetailPage />} />
+                <Route path="/schedule_share_detail/:id/member/:memberId" element={<ScheduleDetailPage />} />
                 <Route path="review_share_detail" element={<ReviewDetailPage />} />
                 <Route path="search" element={<SearchResultsPage />} />
                 <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
                 <Route path="create_schedule" element={<CreateSchedulePage />} />
                 <Route path="check" element={<CheckPage />} />
-                <Route path="/user/:userId" element={<UserDetailPage />} />
+                <Route path="/user" element={<UserDetailPage />} />
                 <Route path="mypage" element={<MyPage />}>
                   <Route path="profile" element={<MyProfile />} />
                   <Route path="schedule" element={<MySchedule />} />

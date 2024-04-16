@@ -8,15 +8,16 @@ export interface scheduleObject {
 }
 
 export interface placeObject {
-  placeDetails: any
   kakaoPlaceId: string
   placeName: string
   latitude: number
   longitude: number
   address: string
-  memo: string | undefined
-  cost: number | undefined
-  visitTime: string | undefined
+  placeDetails: {
+    memo: string
+    cost: number
+    visitTime: string
+  }
 }
 
 // Props
