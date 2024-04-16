@@ -111,19 +111,27 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     cost?: number,
     visitTime?: Date
   ) => {
-    const updatedPlacesByDate = { ...placesByDate }
-    const places = [...updatedPlacesByDate[dateIndex]]
-    const updatedPlace = { ...places[placeIndex] }
+    const updatedPlacesByDate = { ...placesByDate } // 상위 객체 복사
+    const places = [...updatedPlacesByDate[dateIndex]] // 해당 날짜의 장소 배열 복사
+    const updatedPlace = { ...places[placeIndex] } // 수정할 장소 객체 복사
+    const newPlaceDetails = { ...updatedPlace.placeDetails } // placeDetails 또한 복사
 
-    if (memo !== undefined) updatedPlace.placeDetails.memo = memo
-    if (cost !== undefined) updatedPlace.placeDetails.cost = cost
-    if (visitTime !== undefined)
-      updatedPlace.placeDetails.visitTime =
-        visitTime.toISOString().split("T")[0] + " " + visitTime.toTimeString().split(" ")[0]
+    // 수정 사항 적용
+    if (memo !== undefined) {
+      newPlaceDetails.memo = memo // 복사된 객체 수정
+    }
+    if (cost !== undefined) {
+      newPlaceDetails.cost = cost // 복사된 객체 수정
+    }
+    if (visitTime !== undefined) {
+      newPlaceDetails.visitTime = visitTime.toISOString().split("T")[0] + " " + visitTime.toTimeString().split(" ")[0] // 복사된 객체 수정
+    }
 
-    places[placeIndex] = updatedPlace
-    updatedPlacesByDate[dateIndex] = places
-    setPlacesByDate(updatedPlacesByDate)
+    updatedPlace.placeDetails = newPlaceDetails // 수정된 details로 갱신
+    places[placeIndex] = updatedPlace // 배열에 수정된 장소 객체를 다시 할당
+    updatedPlacesByDate[dateIndex] = places // 날짜별 장소 데이터를 업데이트된 배열로 갱신
+
+    setPlacesByDate(updatedPlacesByDate) // Recoil 상태 업데이트
   }
 
   const CustomInput = forwardRef<HTMLButtonElement, { value?: string; onClick?: () => void }>(

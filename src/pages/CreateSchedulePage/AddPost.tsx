@@ -61,7 +61,17 @@ const AddPost: React.FC = () => {
   const selectedTagBg = useColorModeValue("primary", "primary")
 
   const handleSubmit = async () => {
-    // 기존 코드에서 데이터 수집 및 포맷팅 부분...
+    const startDate = new Date(fromDate)
+    const endDate = new Date(toDate)
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.error("Invalid date value")
+      return // 유효하지 않은 날짜를 처리하고 함수를 종료
+    }
+
+    const formattedStartDate = startDate.toISOString()
+    const formattedEndDate = endDate.toISOString()
+
     const tags = Object.entries(selectedTags)
       .filter(([_, isSelected]) => isSelected)
       .map(([tag]) => tag)
