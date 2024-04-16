@@ -115,10 +115,11 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     const places = [...updatedPlacesByDate[dateIndex]]
     const updatedPlace = { ...places[placeIndex] }
 
-    if (memo !== undefined) updatedPlace.memo = memo
-    if (cost !== undefined) updatedPlace.cost = cost
+    if (memo !== undefined) updatedPlace.placeDetails.memo = memo
+    if (cost !== undefined) updatedPlace.placeDetails.cost = cost
     if (visitTime !== undefined)
-      updatedPlace.visitTime = visitTime.toISOString().split("T")[0] + " " + visitTime.toTimeString().split(" ")[0]
+      updatedPlace.placeDetails.visitTime =
+        visitTime.toISOString().split("T")[0] + " " + visitTime.toTimeString().split(" ")[0]
 
     places[placeIndex] = updatedPlace
     updatedPlacesByDate[dateIndex] = places
@@ -175,7 +176,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Box mt="4">
                       <Editable
                         {...editableProps}
-                        defaultValue={place.memo || "메모 입력"}
+                        defaultValue={place.placeDetails.memo || "메모 입력"}
                         onSubmit={value => handlePlaceDetailsUpdate(dateIndex, placeIndex, value)}
                       >
                         <EditablePreview height="100%" overflow="hidden" />

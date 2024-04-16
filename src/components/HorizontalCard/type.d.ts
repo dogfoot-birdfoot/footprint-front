@@ -12,7 +12,7 @@ export interface ScheduleDay {
   places: Place[]
 }
 export interface ScheduleDetails {
-  tags: string
+  tags: string[]
   title: string
   startDate: string
   endDate: string

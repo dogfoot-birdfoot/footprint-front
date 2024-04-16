@@ -61,6 +61,7 @@ const AddPost: React.FC = () => {
   const selectedTagBg = useColorModeValue("primary", "primary")
 
   const handleSubmit = async () => {
+    // 기존 코드에서 데이터 수집 및 포맷팅 부분...
     const tags = Object.entries(selectedTags)
       .filter(([_, isSelected]) => isSelected)
       .map(([tag]) => tag)
@@ -68,31 +69,36 @@ const AddPost: React.FC = () => {
     const formattedSchedules = Object.values(placesByDate || {}).map((places, index) => ({
       day: index + 1,
       places: places.map(place => ({
+        kakaoPlaceId: place.kakaoPlaceId || "defaultId", // 필요시 kakaoPlaceId 추가
         placeName: place.placeName,
         latitude: place.latitude,
         longitude: place.longitude,
         address: place.address,
-        placeDetails: [
-          {
-            // placeDetails 배열 추가
-            memo: place.memo || "", // memo를 placeDetails 내에 포함
-            cost: place.cost || 0, // cost를 placeDetails 내에 포함
-            visitTime: place.visitTime || "" // visitTime을 placeDetails 내에 포함, 필요하다면
-          }
-        ]
+        placeDetails: {
+          // 배열에서 객체로 변환
+          memo: place.placeDetails.memo || "",
+          cost: place.placeDetails.cost || 0,
+          visitTime: place.placeDetails.visitTime || ""
+        }
       }))
     }))
 
+    const totalCost = formattedSchedules.reduce((total, day) => {
+      return total + day.places.reduce((dayTotal, place) => dayTotal + place.placeDetails.cost, 0)
+    }, 0)
+
     const data = {
-      title, // 수정된 부분: title 상태를 직접 사용
+      title,
       startDate: fromDate,
       endDate: toDate,
       region: regions.join(", "),
+      totalCost, // totalCost 추가
       visible,
       copyAllowed,
       schedules: formattedSchedules,
       tags
     }
+
     console.log("Sending the following data to the server:", data) // 로그 출력
     try {
       const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=5", data)
