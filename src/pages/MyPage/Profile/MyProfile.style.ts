@@ -67,8 +67,8 @@ export const ProfileContent = styled.div`
 export const NicknameEditButton = styled.button``
 export const ChangePasswordButton = styled.button`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 4rem;
-  transform: translate(0%, 25%);
+  width: 5rem;
+  transform: translate(-10%, 25%);
   border-radius: 3px;
   font-size: 0.7rem;
 `

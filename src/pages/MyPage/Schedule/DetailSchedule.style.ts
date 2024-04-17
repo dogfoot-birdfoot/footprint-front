@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 export const DaySchedule = styled.div`
   margin-left: 10px;
+  margin-bottom: 10px;
   width: 420px;
 `
 export const ScheduleDetail = styled.div`
