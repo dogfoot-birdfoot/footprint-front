@@ -30,6 +30,7 @@ import CheckPage from "./pages/CheckPage/CheckPage"
 import UserDetailPage from "./pages/UserDetailPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import ScrollToTop from "ScrollToTop"
 
 const queryClient = new QueryClient()
 
@@ -40,6 +41,7 @@ function App() {
         <ReactQueryDevtools />
         <ChakraProvider theme={theme}>
           <BrowserRouter>
+            <ScrollToTop />
             <UserSessionManager />
             <Routes>
               <Route path="/" element={<Layout />}>
@@ -49,7 +51,7 @@ function App() {
                 <Route path="schedule_share" element={<ScheduleSharePage />} />
                 <Route path="review_share" element={<ReviewSharePage />} />
                 <Route path="/schedule_share_detail/:id/member/:memberId" element={<ScheduleDetailPage />} />
-                <Route path="review_share_detail" element={<ReviewDetailPage />} />
+                <Route path="/review/:id" element={<ReviewDetailPage />} />
                 <Route path="search" element={<SearchResultsPage />} />
                 <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
                 <Route path="create_schedule" element={<CreateSchedulePage />} />

@@ -1,7 +1,7 @@
 export interface CardInfoProps {
   title?: string
   ml_size: string
-  scheduleDetails: ScheduleDetails // scheduleDetails 속성 추가
+  scheduleDetails: ScheduleDetails | undefined // scheduleDetails 속성 추가
 }
 export interface HorizontalCardProps {
   scheduleDetails: ScheduleDetails
@@ -22,4 +22,8 @@ export interface ScheduleDetails {
   likeCount: number
   bookMarkCount: number
   createdAt: string
+}
+
+export interface UserInfoProps {
+  createdAtDate: Date
 }

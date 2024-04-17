@@ -1,41 +1,23 @@
-import React, { useRef, useState } from "react"
-import CardItem from "@/components/Card/CardItem"
-import { CardListBox } from "@/pages/MainPage/MainPage.style"
+import React, { useState } from "react"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
+import { TbLoader } from "react-icons/tb"
 import { Button } from "@chakra-ui/button"
 
+// component
+import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
-import { Link } from "react-router-dom"
 import ReviewCardItem from "@/components/Card/ReviewCardItem"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { ReviewCardItemProps } from "@/components/Card/type"
 import { Box } from "@chakra-ui/react"
-import useIntersectionObserver from "./useIntersectionObserver"
 
-type ReviewType = {
-  title: string
-  memberId: number
-  likes: number
-  createdAt: string
-}
+// custom hook
+import useIntersectionObserver from "@/pages/ReviewSharePage/useIntersectionObserver"
+import { Link } from "react-router-dom"
 
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
-  // // Intersection-Observer
-  // const target = useRef<HTMLElement>(null)
-  // const [observe, unobserve] = useIntersectionObserver(target)
-
-  // React-query
-  const query = useQuery<{ [key: string]: ReviewType }>({ queryKey: ["reviews"], queryFn: getReviews })
-
-  async function getReviews() {
-    const data = await fetch("https://ke4f765103c24a.user-app.krampoline.com/api/reviews?sort=id&page=0&size=16")
-      .then(response => response.json())
-      .then(data => data.content)
-    return data
-  }
+  const [data, target, hasNextPage] = useIntersectionObserver()
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName) // 메뉴 아이템 클릭 시 상태 업데이트
@@ -59,23 +41,22 @@ const ReviewSharePage = () => {
         </MenuList>
       </Menu>
       <CardListBox>
-        {/* 나중에는 링크를 동적으로 받아와야함 */}
-        {query.data &&
-          Object.entries(query.data).map(([key, value]) => {
-            return (
-              <ReviewCardItem
-                key={key}
-                title={value.title}
-                memberId={value.memberId}
-                likes={0}
-                createdAt={"2021-03-20"}
-              />
-            )
+        {data &&
+          data.pages.map((page, pageIndex) => {
+            return page.map((item: ReviewType, itemIndex: number) => {
+              return (
+                <Link key={pageIndex.toString() + itemIndex.toString()} to={`/review/${item.reviewId}`}>
+                  <ReviewCardItem title={item.title} memberId={item.memberId} likes={0} createdAt={"2021-03-20"} />
+                </Link>
+              )
+            })
           })}
       </CardListBox>
-      {/* <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
-        요소가 보이면 callback 함수 호출
-      </Box> */}
+      {hasNextPage && (
+        <Box ref={target} width="100%" display="flex" mb="10px" justifyContent={"center"}>
+          <TbLoader />
+        </Box>
+      )}
     </>
   )
 }

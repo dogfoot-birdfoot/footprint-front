@@ -1,43 +1,52 @@
-import { MutableRefObject, RefObject, useEffect, useRef } from "react"
-import { InfiniteQueryObserverResult } from "@tanstack/react-query"
+import { useEffect, useRef, useState } from "react"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
-interface useIntersectionObserverProps {
-  target: RefObject<HTMLElement>
-  hasNextPage: boolean | undefined
-  fetchNextPage: any
-}
+export default function useIntersectionObserver() {
+  const [loading, setLoading] = useState<boolean>(false)
+  const target = useRef<HTMLDivElement>(null)
+  const [lastPageIndex, setLastPageIndex] = useState<number>(-1)
 
-export default function useIntersectionObserver({ target, hasNextPage, fetchNextPage }: useIntersectionObserverProps) {
-  const observer = useRef(
-    new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && hasNextPage) {
-            fetchNextPage()
-          }
-        })
-      },
-      { threshold: 1 }
+  const getReviews = async ({ page }: getReviewsType) => {
+    const data = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews?sort=id&page=${page}&size=16`).then(
+      response => response.json()
     )
+    setLoading(true)
+    setLastPageIndex(data.totalPages - 1)
+    return data.content
+  }
+
+  const { fetchNextPage, data, status, hasNextPage, isFetchingNextPage, isPending } = useInfiniteQuery({
+    queryKey: ["reviews"],
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) => getReviews({ page: pageParam }),
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      if (lastPageIndex != -1) {
+        return lastPageParam < lastPageIndex ? lastPageParam + 1 : undefined
+      }
+    }
+  })
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && hasNextPage) {
+          // 로딩 Div를 보면 다음 페이지 fetch.
+          fetchNextPage()
+        }
+      })
+    },
+    { threshold: 0.5 }
   )
 
-  // useEffect(() => {
-  //   if (!target) return
+  // fetch가 된 이후에 target을 observe. (loading 이전에는 target이 ref로 심어지지 않아 로딩이 되지 않음.)
+  useEffect(() => {
+    if (loading && target.current) observer.observe(target.current)
+    return () => {
+      observer.disconnect()
+    }
+  }, [loading])
 
-  //   if (target.current) observer.current.observe(target.current)
-
-  //   return() =>
-  //     // 서버에서 cardList에 받아올 값이 더 없다면 unobserve.
-  //     observer.current.unobserve(target.current)
-  //   }
-  // }, [])
-
-  const observe = (element: Element) => {
-    observer.current.observe(element)
-  }
-  const unobserve = (element: HTMLElement) => {
-    observer.current.unobserve(element)
-  }
-
-  return [observe, unobserve]
+  return [data, target, hasNextPage] as const
 }
+
+export type useIntersectionObserverType = ReturnType<typeof useIntersectionObserver>

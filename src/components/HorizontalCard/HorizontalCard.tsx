@@ -7,7 +7,7 @@ import { Avatar } from "@chakra-ui/avatar"
 import Buttons from "@/components/Buttons/Buttons"
 import { Badge, Button, IconButton, useToast } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
-import { CardInfoProps, HorizontalCardProps, ScheduleDay, ScheduleDetails } from "./type"
+import { CardInfoProps, HorizontalCardProps, ScheduleDay, ScheduleDetails, UserInfoProps } from "./type"
 import { TiStarFullOutline } from "react-icons/ti"
 import { FaRegThumbsUp } from "react-icons/fa"
 import axios from "axios"
@@ -52,7 +52,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, sch
               <KakaoButton onClick={shareScheduleWithKakao}>카카오톡으로 일정 공유하기</KakaoButton>
             </Box>
             <TagBox>{scheduleDetails.tags && <TagStyle>{scheduleDetails.tags}</TagStyle>}</TagBox>
-            <UserInfo scheduleDetails={scheduleDetails} />
+            <UserInfo createdAtDate={new Date(scheduleDetails.createdAt)} />
           </Box>
         </Box>
       </Box>
@@ -109,7 +109,17 @@ export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) 
     </>
   )
 }
-export const UserInfo: React.FC<{ scheduleDetails: ScheduleDetails }> = () => {
+export const UserInfo: React.FC<UserInfoProps> = ({ createdAtDate }) => {
+  // 'createdAtDate'를 'yyyy-MM-dd' 형식의 문자열로 변환
+  const formattedDate = createdAtDate
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    })
+    .replace(/\. /g, "-")
+    .replace(".", "")
+
   return (
     <Box display="flex" justifyContent="flex-end">
       <Box mt="5">

@@ -15,14 +15,12 @@ const editableProps = {
   padding: "10px 10px 10px 10px"
 }
 
-const AddPost: React.FC<AddPostProps> = ({ sources }) => {
+const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
-  const [notify, setNotify] = useState<boolean>(false)
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
 
   const regionContents = ["서울", "경기", "대구", "부산", "대전", "광주"]
-  const tagContents = ["휴식", "관광", "혼자 여행", "우정 여행", "커플 여행", "가족 여행"]
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
   // React-Query
@@ -31,12 +29,38 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
     mutationFn: ReviewPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      setTitle("")
+      setContent("")
     }
   })
 
   async function ReviewPost() {
     try {
-      await fetch("https://ke4f765103c24a.user-app.krampoline.com/api/reviews", {
+      // error handling
+      if (title === "") {
+        alert("제목을 입력하세요.")
+        throw new Error("Empty Title")
+      }
+
+      if (content === "") {
+        alert("내용을 입력하세요.")
+        throw new Error("Empty Content")
+      }
+
+      const imageIds: number[] = []
+      for (const item of sources) {
+        const formData = new FormData()
+        formData.append("image", item)
+
+        await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
+          method: "POST",
+          body: formData
+        })
+          .then(result => result.json())
+          .then(result => imageIds.push(result["imageId"]))
+      }
+
+      await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -45,9 +69,22 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
           memberId: 1,
           title: title,
           content: content,
-          imageIds: sources
+          imageIds: imageIds
         })
-      }).then(response => console.log(response))
+      }).then(response => response.json())
+
+      // console.log({
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //     memberId: 1,
+      //     title: title,
+      //     content: content,
+      //     imageIds: imageIds
+      //   })
+      // })
     } catch (error) {
       console.error("Failed to create review", error)
     }
@@ -56,16 +93,14 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="320px" margin="0px 10px 0px 0px">
-        <ImageSlider images={sources} size="sm" />
+        <ImageSlider images={previewImages} size="sm" />
         <Box display="flex" justifyContent="space-between" marginTop="10px" alignItems="center">
           <Box>
-            <OnOffSwitch onText="알림" offText="" booleanState={notify} setBooleanState={setNotify} />
             <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
           </Box>
 
-          <Box width="100px" display="flex" justifyContent="space-between">
+          <Box width="50px" display="flex" justifyContent="space-between">
             <DropDownCheckBox title="지역" contents={regionContents} />
-            <DropDownCheckBox title="태그" contents={tagContents} />
           </Box>
         </Box>
       </Box>
@@ -82,6 +117,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
         <Editable
           width="322px"
           height="272px"
+          value={content}
           placeholder="문구를 입력하세요."
           _placeholder={{ color: "green" }}
           border="1px solid lightgray"
@@ -91,7 +127,6 @@ const AddPost: React.FC<AddPostProps> = ({ sources }) => {
           <EditablePreview {...editableProps} color="gray" overflow={"hidden"} />
           <EditableTextarea
             {...editableProps}
-            value={content}
             onChange={e => setContent(e.target.value)}
             resize="none"
             maxLength={300}
