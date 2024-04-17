@@ -29,13 +29,24 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
     mutationFn: ReviewPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
-      setContent("1")
-      setTitle("2")
+      setTitle("")
+      setContent("")
     }
   })
 
   async function ReviewPost() {
     try {
+      // error handling
+      if (title === "") {
+        alert("제목을 입력하세요.")
+        throw new Error("Empty Title")
+      }
+
+      if (content === "") {
+        alert("내용을 입력하세요.")
+        throw new Error("Empty Content")
+      }
+
       const imageIds: number[] = []
       for (const item of sources) {
         const formData = new FormData()
@@ -60,20 +71,20 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           content: content,
           imageIds: imageIds
         })
-      }).then(response => console.log(response, response.json()))
+      }).then(response => response.json())
 
-      console.log({
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          memberId: 1,
-          title: title,
-          content: content,
-          imageIds: imageIds
-        })
-      })
+      // console.log({
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //     memberId: 1,
+      //     title: title,
+      //     content: content,
+      //     imageIds: imageIds
+      //   })
+      // })
     } catch (error) {
       console.error("Failed to create review", error)
     }
@@ -106,6 +117,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         <Editable
           width="322px"
           height="272px"
+          value={content}
           placeholder="문구를 입력하세요."
           _placeholder={{ color: "green" }}
           border="1px solid lightgray"
@@ -115,8 +127,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           <EditablePreview {...editableProps} color="gray" overflow={"hidden"} />
           <EditableTextarea
             {...editableProps}
-            value={content}
-            //onChange={e => setContent(e.target.value)}
+            onChange={e => setContent(e.target.value)}
             resize="none"
             maxLength={300}
           />
