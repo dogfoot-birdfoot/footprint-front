@@ -12,6 +12,7 @@ import { Box } from "@chakra-ui/react"
 
 // custom hook
 import useIntersectionObserver from "@/pages/ReviewSharePage/useIntersectionObserver"
+import { Link } from "react-router-dom"
 
 const ReviewSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
@@ -44,13 +45,9 @@ const ReviewSharePage = () => {
           data.pages.map((page, pageIndex) => {
             return page.map((item: ReviewType, itemIndex: number) => {
               return (
-                <ReviewCardItem
-                  key={pageIndex.toString() + itemIndex.toString()}
-                  title={item.title}
-                  memberId={item.memberId}
-                  likes={0}
-                  createdAt={"2021-03-20"}
-                />
+                <Link key={pageIndex.toString() + itemIndex.toString()} to={`/review/${item.reviewId}`}>
+                  <ReviewCardItem title={item.title} memberId={item.memberId} likes={0} createdAt={"2021-03-20"} />
+                </Link>
               )
             })
           })}
