@@ -63,13 +63,15 @@ const Calendar: React.FC = () => {
   const [toValue, setToValue] = useRecoilState(toDateState) // 종료 날짜 입력 필드의 값
   const setSelectedDates = useSetRecoilState(allDates) // selectedDates
 
-  // 시작 날짜 입력 필드 변경 시 호출되는 함수
   const handleFromChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const date = parse(e.target.value, "yyyy-MM-dd", new Date())
     setFromValue(e.target.value)
-    const date = parse(e.target.value, "y-MM-dd", new Date())
+
     if (!isValid(date)) {
+      console.error("Invalid start date")
       return setSelectedRange({ from: undefined, to: selectedRange?.to })
     }
+
     if (selectedRange?.to && isBefore(date, selectedRange.to)) {
       setSelectedRange({ from: date, to: selectedRange.to })
     } else {
@@ -77,14 +79,15 @@ const Calendar: React.FC = () => {
     }
   }
 
-  // 종료 날짜 입력 필드 변경 시 호출되는 함수
   const handleToChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const date = parse(e.target.value, "yyyy-MM-dd", new Date())
     setToValue(e.target.value)
-    const date = parse(e.target.value, "y-MM-dd", new Date())
 
     if (!isValid(date)) {
+      console.error("Invalid end date")
       return setSelectedRange({ from: selectedRange?.from, to: undefined })
     }
+
     if (selectedRange?.from && isAfter(date, selectedRange.from)) {
       setSelectedRange({ from: selectedRange.from, to: date })
     } else {

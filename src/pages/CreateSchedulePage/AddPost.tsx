@@ -1,6 +1,6 @@
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import React from "react"
-import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button } from "@chakra-ui/react"
+import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button, useToast } from "@chakra-ui/react"
 
 // Recoil
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
@@ -38,6 +38,7 @@ const AddPost: React.FC = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useRecoilState(titleState)
   const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState)
+  const toast = useToast()
 
   // 게시글 공개 여부, 복사 여부를 설정하는 변수
   const [postVisible, setPostVisible] = useRecoilState(visibleState)
@@ -61,16 +62,34 @@ const AddPost: React.FC = () => {
   const selectedTagBg = useColorModeValue("primary", "primary")
 
   const handleSubmit = async () => {
+    console.log("Received fromDate:", fromDate) // 로그: 받은 fromDate 출력
+    console.log("Received toDate:", toDate) // 로그: 받은 toDate 출력
+
     const startDate = new Date(fromDate)
     const endDate = new Date(toDate)
 
+    console.log("Converted startDate:", startDate) // 로그: 변환된 startDate 출력
+    console.log("Converted endDate:", endDate) // 로그: 변환된 endDate 출력
+
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
       console.error("Invalid date value")
-      return // 유효하지 않은 날짜를 처리하고 함수를 종료
+      toast({
+        title: "Invalid Date",
+        description: "The provided dates are invalid. Please check the dates.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+      return // 날짜가 유효하지 않으면 함수를 종료합니다.
     }
 
+    // 유효한 날짜인 경우, 날짜를 ISO 문자열로 변환
     const formattedStartDate = startDate.toISOString()
     const formattedEndDate = endDate.toISOString()
+
+    console.log("Formatted startDate:", formattedStartDate) // 로그: 포맷된 startDate 출력
+    console.log("Formatted endDate:", formattedEndDate) // 로그: 포맷된 endDate 출력
 
     const tags = Object.entries(selectedTags)
       .filter(([_, isSelected]) => isSelected)
@@ -113,10 +132,15 @@ const AddPost: React.FC = () => {
     try {
       const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=4", data)
       console.log("Schedule created successfully", response.data)
-      const createdAt = new Date(response.data.createdAt) // 백엔드에서 받은 'createdAt'을 Date 객체로 변환
-      const formattedCreatedAt = createdAt.toISOString().split("T")[0] // 'YYYY-MM-DD' 형식으로 변환
+      toast({
+        title: "여행 일정 생성 성공",
+        description: "여행 일정이 성공적으로 생성되었습니다.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
 
-      // 이제 'formattedCreatedAt'를 사용하여 사용자에게 '작성일자'를 표시할 수 있습니다.
       resetTitle()
       resetFromDate()
       resetToDate()
@@ -126,6 +150,14 @@ const AddPost: React.FC = () => {
       resetSchedules()
     } catch (error) {
       console.error("Failed to create schedule", error)
+      toast({
+        title: "여행 일정 생성 실패",
+        description: "일정 생성 중 오류가 발생했습니다.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
     }
   }
 
