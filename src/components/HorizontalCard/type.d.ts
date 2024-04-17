@@ -23,3 +23,7 @@ export interface ScheduleDetails {
   bookMarkCount: number
   createdAt: string
 }
+
+export interface UserInfoProps {
+  createdAtDate: Date
+}
