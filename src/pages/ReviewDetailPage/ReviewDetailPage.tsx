@@ -150,7 +150,7 @@ const ReviewDetailPage = () => {
       <Box ml="80px" mb="40px">
         <Box display="flex">
           <Box display="flex" width="1000px" justifyContent="space-between" ml="-20px">
-            <CardInfo ml_size="50px" scheduleDetails={"undefined"} />
+            <CardInfo ml_size="50px" scheduleDetails={undefined} />
             <Box ml="20px" mt="30px">
               <Box display="flex">
                 {modify && (
