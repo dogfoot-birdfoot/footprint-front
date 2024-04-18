@@ -2,6 +2,7 @@ import styled, { css } from "styled-components"
 
 export const ReviewBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 20px;
 `
@@ -24,7 +25,7 @@ export const DetailInfo = styled.div`
 `
 
 export const ReviewItem = styled.div`
-  margin-left: 20px;
+  margin: 10px 0px 10px 20px;
   position: relative;
   width: 250px; // 초기 너비 설정
   height: 250px; // 초기 높이 설정
