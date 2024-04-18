@@ -1,4 +1,4 @@
-import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useQuery } from "@chakra-ui/react"
+import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useQuery, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
@@ -17,6 +17,7 @@ const editableProps = {
 }
 
 const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
+  const toast = useToast()
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
@@ -48,6 +49,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         throw new Error("Empty Content")
       }
 
+      // 이미지 등록 부분
       const imageIds: number[] = []
       for (const item of sources) {
         const formData = new FormData()
@@ -61,7 +63,8 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           .then(result => imageIds.push(result["imageId"]))
       }
 
-      await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
+      // 반환된 imageIds를 이용해 POST
+      const response = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -72,22 +75,29 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           content: content,
           imageIds: imageIds
         })
-      }).then(response => response.json())
+      })
 
-      // console.log({
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     memberId: 1,
-      //     title: title,
-      //     content: content,
-      //     imageIds: imageIds
-      //   })
-      // })
+      if (!response.ok) {
+        throw new Error("Review not Registered.")
+      }
+      toast({
+        title: "리뷰가 등록되었습니다.",
+        description: "리뷰가 정상적으로 등록되었습니다.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
     } catch (error) {
       console.error("Failed to create review", error)
+      toast({
+        title: "리뷰 생성에 실패했습니다.",
+        description: "리뷰 생성에 실패했습니다. 다시 시도해주세요.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
     }
   }
 
