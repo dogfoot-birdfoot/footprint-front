@@ -31,8 +31,12 @@ const MainPage: React.FC = () => {
   return (
     <>
       <BannerStyle>
-        <img src="/mainImage2.jpg" alt="mainImage" width={"100%"} />
+        <video autoPlay muted loop width="100%">
+          <source src="/mainImagePlay.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </BannerStyle>
+
       <TitleBox>
         <Title>Latest Plans</Title>
         <Box display="flex" justifyContent="center" mt={4}>
