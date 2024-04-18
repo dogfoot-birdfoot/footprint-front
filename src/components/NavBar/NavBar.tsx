@@ -45,6 +45,8 @@ const NavBar: React.FC = () => {
     // 여기에 로그아웃 처리 로직을 추가하세요.
     // 예: 사용자 상태를 null로 설정하고 로그인 페이지로 리디렉션
     setUser(null) // setUser는 useRecoilState(userState)로부터 얻은 setter 함수
+    localStorage.removeItem("accessToken") // localStorage에서 토큰 제거
+    localStorage.removeItem("refreshToken")
     navigate("/login") // 로그인 페이지로 리디렉션
   }
 
@@ -80,26 +82,13 @@ const NavBar: React.FC = () => {
             </BreadcrumbItem>
           </Breadcrumb>
           <SearchBar />
-          <div style={{ marginLeft: "20px", marginRight: "20px" }}>
-            <Menu isOpen={bellIsOpen} onClose={() => setBellIsOpen(false)}>
-              <MenuButton onClick={handleBellToggle} px={1} py={2}>
-                <AiOutlineBell size="25px" color={bellIsOpen ? "var(--chakra-colors-primary)" : "gray"} />
-              </MenuButton>
-              <MenuList>
-                {/* menu Item이 동적으로 들어와야함 */}
-                <StyledMenuItem>OO님이 user nickname 님의 게시물을 즐겨찾기했습니다.</StyledMenuItem>
-                <StyledMenuItem>OO님이 user nickname 님의 게시물을 좋아요했습니다.</StyledMenuItem>
-                <StyledMenuItem>OO님이 user nickname 님의 게시물을 즐겨찾기했습니다.</StyledMenuItem>
-                <StyledMenuItem>OO님이 user nickname 님의 게시물을 좋아요했습니다.</StyledMenuItem>
-              </MenuList>
-            </Menu>
-          </div>
-          <Wrap>
+
+          <Wrap ml="20px">
             <WrapItem>
-              {user ? (
+              {localStorage.getItem("accessToken") ? (
                 <>
                   <NavLink to="/mypage/profile">
-                    <Avatar name={user.nickname} src={user.profilePicture} size="sm" />
+                    <Avatar name={user?.nickname} src={user?.profilePicture} size="sm" />
                   </NavLink>
                   <FiLogOut
                     onClick={handleLogout}
