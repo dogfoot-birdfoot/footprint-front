@@ -184,7 +184,7 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
                     <Box mt="4">
                       <Editable
                         {...editableProps}
-                        defaultValue={place.placeDetails.memo || "메모 입력"}
+                        defaultValue={"메모 입력"}
                         onSubmit={value => handlePlaceDetailsUpdate(dateIndex, placeIndex, value)}
                       >
                         <EditablePreview height="100%" overflow="hidden" />

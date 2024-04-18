@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios" // API 요청을 위해 axios를 사용합니다.
 import { Box, Divider, Text } from "@chakra-ui/react"
-import { BannerStyle, CardListBox, Title, TitleBox } from "./MainPage.style" // 스타일을 임포트합니다.
+import { BannerStyle, CardListBox, Title, TitleBox, TypingText } from "./MainPage.style" // 스타일을 임포트합니다.
 import ReviewsGallery from "./ReviewsGallery" // ReviewsGallery 컴포넌트를 임포트합니다.
 import { ReviewTitle } from "./ReviewGallery.style" // 스타일을 임포트합니다.
 import CardItem from "@/components/Card/CardItem"
@@ -27,11 +27,15 @@ const MainPage: React.FC = () => {
 
     fetchSchedules()
   }, [])
+  const handleBannerClick = () => {
+    navigate("/schedule_share") // 이동할 경로
+  }
 
   return (
     <>
-      <BannerStyle>
-        <img src="/mainImage.jpg" alt="mainImage" width={"80%"} />
+      <BannerStyle onClick={handleBannerClick}>
+        <img src="/mainImage2.jpg" alt="main image" width={"100%"} />
+        <TypingText>나에게 맞는 여행 일정을 찾아보세요!</TypingText>
       </BannerStyle>
       <TitleBox>
         <Title>Latest Plans</Title>
