@@ -149,7 +149,7 @@ const ReviewDetailPage = () => {
     <>
       <Box ml="80px" mb="40px">
         <Box display="flex">
-          <Box display="flex" width="100%" justifyContent="space-between">
+          <Box display="flex" width="85%" justifyContent="space-between">
             <CardInfo ml_size="50px" scheduleDetails={undefined} />
             <Box ml="20px" mt="30px">
               <Box display="flex" justifyContent="flex-end">
@@ -186,7 +186,7 @@ const ReviewDetailPage = () => {
           ))}
         </DaySchedule>
 
-        <Box width="100%" display="flex" justifyContent="flex-end" mt="-10">
+        <Box width="85%" display="flex" justifyContent="flex-end" mt="-10">
           <Box>
             <Flex mt="3">
               {modify && (
