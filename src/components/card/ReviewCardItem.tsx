@@ -4,6 +4,14 @@ import { ImageContainer, PositionedAvatar } from "@/components/Card/ReviewCardIt
 import { ReviewCardItemProps } from "./type"
 
 const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes, createdAt }) => {
+  const formattedDate = createdAt
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    })
+    .replace(/\. /g, "-")
+    .replace(".", "")
   return (
     <>
       <Card maxW="xs" marginLeft="10px">
@@ -44,7 +52,7 @@ const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes,
             <Heading size="sm">{title}</Heading>
             <Box textAlign="right">
               <Text color="gray.500" fontSize="9px">
-                작성일자 : {createdAt}
+                작성일자 : {formattedDate}
               </Text>
             </Box>
           </Stack>

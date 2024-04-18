@@ -129,7 +129,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ createdAtDate }) => {
         </Text>
         {/* 변환된 날짜 형식을 표시 */}
         <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
-          작성일자 :
+          작성일자 : {formattedDate}
         </Text>
       </Box>
       <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />

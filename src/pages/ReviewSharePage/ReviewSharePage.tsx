@@ -46,7 +46,12 @@ const ReviewSharePage = () => {
             return page.map((item: ReviewType, itemIndex: number) => {
               return (
                 <Link key={pageIndex.toString() + itemIndex.toString()} to={`/review/${item.reviewId}`}>
-                  <ReviewCardItem title={item.title} memberId={item.memberId} likes={0} createdAt={"2021-03-20"} />
+                  <ReviewCardItem
+                    title={item.title}
+                    memberId={item.memberId}
+                    likes={item.likes}
+                    createdAt={new Date(item.createdAt)}
+                  />
                 </Link>
               )
             })
