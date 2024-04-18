@@ -22,7 +22,6 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const [content, setContent] = useState<string>("")
   const [visiblePost, setVisiblePost] = useState<boolean>(false)
 
-  const regionContents = ["서울", "경기", "대구", "부산", "대전", "광주"]
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
   // React-Query
@@ -105,15 +104,6 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
     <Box display="flex" flexWrap="wrap" justifyContent="center">
       <Box width="320px" margin="0px 10px 0px 0px">
         <ImageSlider images={previewImages} size="sm" />
-        <Box display="flex" justifyContent="space-between" marginTop="10px" alignItems="center">
-          <Box>
-            <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
-          </Box>
-
-          <Box width="50px" display="flex" justifyContent="space-between">
-            <DropDownCheckBox title="지역" contents={regionContents} />
-          </Box>
-        </Box>
       </Box>
       <Box width="320px">
         <Input
@@ -144,6 +134,9 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           />
         </Editable>
         <Box display="flex" justifyContent="flex-end" marginTop="10px">
+          <Box mr="20px">
+            <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
+          </Box>
           <DropDownRadioBox title="내 일정과 연결" contents={scheduleContents} />
         </Box>
       </Box>

@@ -8,7 +8,7 @@ import { Button } from "@chakra-ui/button"
 import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import ReviewCardItem from "@/components/Card/ReviewCardItem"
-import { Box } from "@chakra-ui/react"
+import { Box, Heading, Text } from "@chakra-ui/react"
 
 // custom hook
 import useIntersectionObserver from "@/pages/ReviewSharePage/useIntersectionObserver"
@@ -25,21 +25,9 @@ const ReviewSharePage = () => {
 
   return (
     <>
-      <Menu>
-        <SortButton>
-          <MenuButton as={Button} rightIcon={<FiChevronDown />} bg="primary" color="white" _hover={{ bg: "secondary" }}>
-            {" "}
-            현재지역 : {selectedItem}
-          </MenuButton>
-        </SortButton>
-        {/* 추후 메뉴 list를 동적으로 받아와야함 */}
-        <MenuList>
-          <MenuItem onClick={() => handleMenuItemClick("전국")}>전국</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick("가평,양평")}>가평,양평</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick("강릉,속초")}>강릉,속초</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick("경주")}>경주</MenuItem>
-        </MenuList>
-      </Menu>
+      <Heading userSelect="none" size="sm" mt="50px" ml="30px" mb="10px">
+        리뷰 전체 보기
+      </Heading>
       <CardListBox>
         {data &&
           data.pages.map((page, pageIndex) => {
