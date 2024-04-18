@@ -149,36 +149,16 @@ const ReviewDetailPage = () => {
     <>
       <Box ml="80px" mb="40px">
         <Box display="flex">
-          <Box display="flex" width="1000px" justifyContent="space-between" ml="-20px">
+          <Box display="flex" width="100%" justifyContent="space-between">
             <CardInfo ml_size="50px" scheduleDetails={undefined} />
             <Box ml="20px" mt="30px">
-              <Box display="flex">
-                {modify && (
-                  <>
-                    <Box ml="2">
-                      <Buttons
-                        text="수정 완료"
-                        onClick={() => {
-                          modifyPost.mutate(), setModify(false)
-                        }}
-                        size="sm"
-                      />
-                    </Box>
-                    <Box ml="2" mr="2">
-                      <Buttons text="취소" onClick={() => setModify(false)} size="sm" />
-                    </Box>
-                  </>
-                )}
-                {!modify && (
-                  <Box mr="2" ml="2">
-                    {" "}
-                    <Buttons text="수정" onClick={() => setModify(true)} size="sm" />
-                  </Box>
-                )}
-                <Box mr="2">
-                  <Buttons text="삭제" onClick={() => deletePost.mutate()} size="sm" />
-                </Box>
-                {/* {query?.data?.["likes"]} */}
+              <Box display="flex" justifyContent="flex-end">
+                <Flex height="40px" width="30px" alignItems={"center"}>
+                  <Text color="red" fontSize={"20px"} display="inline-block">
+                    ♥
+                  </Text>
+                  <Text display="inline-block">{query?.data?.["likes"]}</Text>
+                </Flex>
                 <Flex>
                   <IconButton
                     onClick={() => addLike.mutate()}
@@ -197,7 +177,7 @@ const ReviewDetailPage = () => {
             </Box>
           </Box>
         </Box>
-
+        <Buttons text="일정 상세보기" size="sm" />
         <DaySchedule>
           {destinations.map((destination, index) => (
             <Box key={index}>
@@ -205,8 +185,37 @@ const ReviewDetailPage = () => {
             </Box>
           ))}
         </DaySchedule>
-        <Box width="980px" display="flex" justifyContent="flex-end" mt="-10">
-          <Buttons text="일정 상세보기" size="sm" />
+
+        <Box width="100%" display="flex" justifyContent="flex-end" mt="-10">
+          <Box>
+            <Flex mt="3">
+              {modify && (
+                <>
+                  <Box ml="2">
+                    <Buttons
+                      text="수정 완료"
+                      onClick={() => {
+                        modifyPost.mutate(), setModify(false)
+                      }}
+                      size="sm"
+                    />
+                  </Box>
+                  <Box ml="2" mr="2">
+                    <Buttons text="취소" onClick={() => setModify(false)} size="sm" />
+                  </Box>
+                </>
+              )}
+              {!modify && (
+                <Box mr="2" ml="2">
+                  {" "}
+                  <Buttons text="수정" onClick={() => setModify(true)} size="sm" />
+                </Box>
+              )}
+              <Box mr="2">
+                <Buttons text="삭제" onClick={() => deletePost.mutate()} size="sm" />
+              </Box>
+            </Flex>
+          </Box>
         </Box>
 
         <Divider mt="50px" />

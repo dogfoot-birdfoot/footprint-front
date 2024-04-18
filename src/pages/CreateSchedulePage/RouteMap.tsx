@@ -33,11 +33,42 @@ function RouteMap() {
     ]
 
     const linePositions = []
-    // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
-    // 인포윈도우를 생성합니다
+    function createMarkerImageWithText(text: string) {
+      // SVG 요소 생성
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+      svg.setAttribute("width", "20")
+      svg.setAttribute("height", "20")
+
+      // 배경 사각형 생성
+      const rect = document.createElementNS("http://www.w3.org/2000/svg", "circle")
+      rect.setAttribute("cx", "10")
+      rect.setAttribute("cy", "10")
+      rect.setAttribute("r", "10")
+      rect.setAttribute("fill", "black") // 배경 색상 설정
+      svg.appendChild(rect)
+
+      // 텍스트 생성
+      const textNode = document.createElementNS("http://www.w3.org/2000/svg", "text")
+      textNode.setAttribute("x", "10")
+      textNode.setAttribute("y", "10")
+      textNode.setAttribute("font-family", "Arial")
+      textNode.setAttribute("font-size", "10")
+      textNode.setAttribute("fill", "white") // 텍스트 색상 설정
+      textNode.setAttribute("text-anchor", "middle")
+      textNode.setAttribute("alignment-baseline", "middle")
+      textNode.textContent = text
+      svg.appendChild(textNode)
+
+      // SVG를 Data URL로 변환하여 반환
+      const svgData = new XMLSerializer().serializeToString(svg)
+      const svg64 = btoa(svgData)
+      const dataURL = "data:image/svg+xml;base64," + svg64
+      return dataURL
+    }
 
     for (let i = 0; i < positions.length; i++) {
+      const markerImage = createMarkerImageWithText((i + 1).toString())
       // 표기할 선 위치
       linePositions.push(positions[i].latlng)
 
@@ -45,14 +76,13 @@ function RouteMap() {
       const marker = new kakao.maps.Marker({
         map: map,
         title: positions[i].title,
-        position: positions[i].latlng
-      })
-
-      // InfoWindow 표시
-      const infowindow = new kakao.maps.InfoWindow({
-        map: map,
         position: positions[i].latlng,
-        content: `<div style="width:100px; text-align:center;">` + positions[i].title + `</div>`
+        image: new kakao.maps.MarkerImage(
+          markerImage,
+          new kakao.maps.Size(20, 20),
+          new kakao.maps.Size(10, 20),
+          new kakao.maps.Size(10, 20)
+        )
       })
     }
 
@@ -60,10 +90,10 @@ function RouteMap() {
     const polyline = new kakao.maps.Polyline({
       map: map,
       path: linePositions, // 선을 구성하는 좌표배열
-      strokeWeight: 4,
-      strokeColor: "#10bbd5",
-      strokeOpacity: 0.7,
-      strokeStyle: "solid"
+      strokeWeight: 2,
+      strokeColor: "black",
+      strokeOpacity: 0.6,
+      strokeStyle: "dashed"
     })
   }, [])
 

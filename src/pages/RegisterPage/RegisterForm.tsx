@@ -2,6 +2,8 @@ import React, { FC } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/LoginPage.style"
 import { useNavigate } from "react-router-dom"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { error } from "console"
 
 export interface RegisterFormProps {
   title: string
@@ -28,11 +30,12 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
 
   const navigate = useNavigate()
 
-  const onSubmit: SubmitHandler<FormValues> = ({ email, password, nickname }) => {
-    // confirmPassword는 서버에 보낼 필요가 없으므로 제외하고 요청을 보냅니다.
-    fetch("/api/users/register", {
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password, nickname }) => {
+    const result = await fetch(`${process.env.REACT_APP_API_URL}/api/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ email, password, nickname })
     })
       .then(response => {
@@ -88,7 +91,11 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
         <LoginInput
           type="password"
           placeholder="Confirm Password"
-          {...register("confirmPassword", { validate: validatePasswordConfirm })}
+          {...register("confirmPassword", {
+            validate: validatePasswordConfirm,
+            required: "필수 필드입니다.",
+            minLength: { value: 6, message: "최소 6자입니다." }
+          })}
         />
         {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
       </div>
