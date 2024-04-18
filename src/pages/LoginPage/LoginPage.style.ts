@@ -1,6 +1,10 @@
+import { Box } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
+export const ErrorBox = styled(Box)`
+  margin-bottom: 10px;
+`
 export const FullPageContainer = styled.div`
   display: flex;
   align-items: center;
@@ -66,7 +70,7 @@ export const LoginInput = styled.input`
   focus: ring-2;
   focus: ring-blue-500;
   focus: border-transparent;
-  margin-bottom: 16px; // space-y-4 대신 사용
+  margin-bottom: 10px; // space-y-4 대신 사용
 `
 
 export const LoginButton = styled.button`
