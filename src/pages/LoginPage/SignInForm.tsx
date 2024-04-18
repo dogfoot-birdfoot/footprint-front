@@ -24,8 +24,8 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
     formState: { errors }
   } = useForm<FormValues>()
 
-  const onSubmit = (data: FormValues) => {
-    fetch("/api/users/login", {
+  const onSubmit = async (data: FormValues) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -42,14 +42,9 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
           nickname: userData.nickname, // 응답 구조에 따라 경로 조정 필요
           profilePicture: userData.profilePicture // 응답 구조에 따라 경로 조정 필요
         })
-        // sessionStorage에 사용자 정보 저장
-        sessionStorage.setItem(
-          "user",
-          JSON.stringify({
-            nickname: userData.nickname,
-            profilePicture: userData.profilePicture
-          })
-        )
+        // localStorage에 사용자 정보 저장
+        localStorage.setItem("accessToken", userData["accessToken"])
+        localStorage.setItem("refreshToken", userData["refreshToken"])
 
         navigate("/") // 로그인 성공 후 홈 페이지로 리디렉션
       })

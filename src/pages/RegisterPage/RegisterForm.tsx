@@ -25,77 +25,41 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
     watch,
     formState: { errors }
   } = useForm<FormValues>({
-    mode: "onBlur"
+    mode: "onChange"
   })
 
   const navigate = useNavigate()
 
-  async function registerSubmit({ email, password, confirmPassword, nickname }: FormValues) {
-    console.log("REGISTER")
-    try {
-      if (email === "") {
-        setError("email", { message: "이메일 없음" }, { shouldFocus: true })
-        throw new Error("REGISTER ERROR")
-      }
-      if (password !== confirmPassword) {
-        setError("confirmPassword", { message: "비밀번호가 일치하지 않습니다." }, { shouldFocus: true })
-      }
-
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password, nickname })
-      }).then(result => result)
-
-      console.log(result)
-
-      if (!result.ok) {
-        throw new Error("REGISTER ERROR")
-      }
-    } catch (error) {
-      console.error("Failed to register", error)
-    }
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password, nickname }) => {
+    const result = await fetch(`${process.env.REACT_APP_API_URL}/api/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password, nickname })
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else if (response.status === 409) {
+          throw new Error("이메일이 이미 사용 중입니다.")
+        } else {
+          throw new Error("회원가입에 실패했습니다.")
+        }
+      })
+      .then(user => {
+        console.log("Registered successfully:", user)
+        reset() // 폼 초기화
+        navigate("/login") // 로그인 페이지로 리다이렉트
+      })
+      .catch(error => {
+        console.error("Registration error:", error.message)
+        // 회원가입 실패 처리 (예: 에러 메시지 표시)
+      })
   }
 
-  // React-Query
-  const queryClient = useQueryClient()
-  const registerMutation = useMutation({
-    mutationFn: registerSubmit
-  })
-
-  // const onSubmit: SubmitHandler<FormValues> = ({ email, password, nickname }) => {
-  //   // confirmPassword는 서버에 보낼 필요가 없으므로 제외하고 요청을 보냅니다.
-  //   fetch("/api/users/register", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ email, password, nickname })
-  //   })
-  //     .then(response => {
-  //       if (response.ok) {
-  //         return response.json()
-  //       } else if (response.status === 409) {
-  //         throw new Error("이메일이 이미 사용 중입니다.")
-  //       } else {
-  //         throw new Error("회원가입에 실패했습니다.")
-  //       }
-  //     })
-  //     .then(user => {
-  //       console.log("Registered successfully:", user)
-  //       reset() // 폼 초기화
-  //       navigate("/login") // 로그인 페이지로 리다이렉트
-  //     })
-  //     .catch(error => {
-  //       console.error("Registration error:", error.message)
-  //       // 회원가입 실패 처리 (예: 에러 메시지 표시)
-  //     })
-  // }
-
   // 비밀번호 필드 값을 실시간으로 관찰
-  const emailValue = watch("email")
   const passwordValue = watch("password")
-  const nicknameValue = watch("nickname")
 
   // 필드 유효성 검사 규칙
   const userEmail = { required: "필수 필드입니다." }
@@ -109,16 +73,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
   const validatePasswordConfirm = (value: string) => value === passwordValue || "비밀번호가 일치하지 않습니다."
 
   return (
-    <LoginForm
-      onSubmit={() =>
-        registerMutation.mutate({
-          email: emailValue,
-          password: passwordValue,
-          confirmPassword: passwordValue,
-          nickname: nicknameValue
-        })
-      }
-    >
+    <LoginForm onSubmit={handleSubmit(onSubmit)}>
       <div>
         <LoginInput type="email" placeholder="E-mail" {...register("email", userEmail)} />
         {errors.email && <p>{errors.email.message}</p>}
@@ -144,12 +99,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
         />
         {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
       </div>
-      <LoginButton
-        type="submit"
-        disabled={!errors.confirmPassword && !errors.password && !errors.email && !errors.nickname}
-      >
-        {title}
-      </LoginButton>
+      <LoginButton type="submit">{title}</LoginButton>
     </LoginForm>
   )
 }

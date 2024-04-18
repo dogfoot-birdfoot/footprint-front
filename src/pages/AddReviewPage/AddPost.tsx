@@ -6,6 +6,7 @@ import DropDownCheckBox from "@/components/DropDownButton/DropDownCheckBox"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 import { AddPostProps } from "./type"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import useCustomFetch from "@/hooks/useCustomFetch"
 
 const editableProps = {
   width: "320px",
@@ -52,7 +53,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         const formData = new FormData()
         formData.append("image", item)
 
-        await fetch(`${process.env.REACT_APP_API_URL}/api/images`, {
+        await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/images`, {
           method: "POST",
           body: formData
         })
@@ -60,7 +61,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           .then(result => imageIds.push(result["imageId"]))
       }
 
-      await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
+      await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
