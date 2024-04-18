@@ -31,7 +31,7 @@ const MainPage: React.FC = () => {
   return (
     <>
       <BannerStyle>
-        <img src="/mainImage.jpg" alt="mainImage" width={"80%"} />
+        <img src="/mainImage2.jpg" alt="mainImage" width={"100%"} />
       </BannerStyle>
       <TitleBox>
         <Title>Latest Plans</Title>

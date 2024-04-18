@@ -62,34 +62,34 @@ const AddPost: React.FC = () => {
   const selectedTagBg = useColorModeValue("primary", "primary")
 
   const handleSubmit = async () => {
-    console.log("Received fromDate:", fromDate) // 로그: 받은 fromDate 출력
-    console.log("Received toDate:", toDate) // 로그: 받은 toDate 출력
+    // console.log("Received fromDate:", fromDate) // 로그: 받은 fromDate 출력
+    // console.log("Received toDate:", toDate) // 로그: 받은 toDate 출력
 
-    const startDate = new Date(fromDate)
-    const endDate = new Date(toDate)
+    // const startDate = new Date(fromDate)
+    // const endDate = new Date(toDate)
 
-    console.log("Converted startDate:", startDate) // 로그: 변환된 startDate 출력
-    console.log("Converted endDate:", endDate) // 로그: 변환된 endDate 출력
+    // console.log("Converted startDate:", startDate) // 로그: 변환된 startDate 출력
+    // console.log("Converted endDate:", endDate) // 로그: 변환된 endDate 출력
 
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      console.error("Invalid date value")
-      toast({
-        title: "Invalid Date",
-        description: "The provided dates are invalid. Please check the dates.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top"
-      })
-      return // 날짜가 유효하지 않으면 함수를 종료합니다.
-    }
+    // if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    //   console.error("Invalid date value")
+    //   toast({
+    //     title: "Invalid Date",
+    //     description: "The provided dates are invalid. Please check the dates.",
+    //     status: "error",
+    //     duration: 5000,
+    //     isClosable: true,
+    //     position: "top"
+    //   })
+    //   return // 날짜가 유효하지 않으면 함수를 종료합니다.
+    // }
 
-    // 유효한 날짜인 경우, 날짜를 ISO 문자열로 변환
-    const formattedStartDate = startDate.toISOString()
-    const formattedEndDate = endDate.toISOString()
+    // // 유효한 날짜인 경우, 날짜를 ISO 문자열로 변환
+    // const formattedStartDate = startDate.toISOString()
+    // const formattedEndDate = endDate.toISOString()
 
-    console.log("Formatted startDate:", formattedStartDate) // 로그: 포맷된 startDate 출력
-    console.log("Formatted endDate:", formattedEndDate) // 로그: 포맷된 endDate 출력
+    // console.log("Formatted startDate:", formattedStartDate) // 로그: 포맷된 startDate 출력
+    // console.log("Formatted endDate:", formattedEndDate) // 로그: 포맷된 endDate 출력
 
     const tags = Object.entries(selectedTags)
       .filter(([_, isSelected]) => isSelected)
@@ -130,7 +130,7 @@ const AddPost: React.FC = () => {
 
     console.log("Sending the following data to the server:", data) // 로그 출력
     try {
-      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=4", data)
+      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=1", data)
       console.log("Schedule created successfully", response.data)
       toast({
         title: "여행 일정 생성 성공",
