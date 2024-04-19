@@ -3,4 +3,5 @@ export interface ReviewCardItemProps {
   memberId: number
   likes: number
   createdAt: Date
+  previewImage: string | null
 }

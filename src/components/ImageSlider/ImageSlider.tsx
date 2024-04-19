@@ -36,7 +36,12 @@ export const ImageSlider: React.FC<ImageSliderProps> = ({ size, images = [] }) =
       {images.length === 0 && (
         <SliderContainer size={size}>
           <Flex width="100%" height="100%" justifyContent={"center"} alignItems={"center"} userSelect={"none"}>
-            No Image
+            <SlideImage
+              src={
+                "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
+              alt={`Slide`}
+            />
           </Flex>
         </SliderContainer>
       )}

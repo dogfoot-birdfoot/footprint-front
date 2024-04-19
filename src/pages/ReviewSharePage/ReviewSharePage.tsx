@@ -39,6 +39,7 @@ const ReviewSharePage = () => {
                     memberId={item.memberId}
                     likes={item.likes}
                     createdAt={new Date(item.createdAt)}
+                    previewImage={item.previewImageUrl}
                   />
                 </Link>
               )

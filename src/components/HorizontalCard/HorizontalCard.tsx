@@ -63,7 +63,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, sch
 export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) => {
   // scheduleDetails가 undefined일 경우를 대비한 조기 반환
   if (!scheduleDetails) {
-    return <div>로딩 중...</div> // 또는 원하는 다른 플레이스홀더 표시
+    return <div></div> // 또는 원하는 다른 플레이스홀더 표시
   }
 
   const calculateTripDuration = (startDate: string, endDate: string): string => {

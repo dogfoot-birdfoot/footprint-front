@@ -27,6 +27,7 @@ async function getPopularReview() {
     console.log(error)
   }
 }
+
 const ReviewsGallery = () => {
   const query = useQuery({ queryKey: ["reviewGallery"], queryFn: getPopularReview })
 
@@ -38,10 +39,12 @@ const ReviewsGallery = () => {
         {query.data?.content.map((item: ReviewType, index: number) => (
           <Link key={index} to={`/review/${item.reviewId}`}>
             <ReviewItem>
-              <ImageTag>커플여행</ImageTag>
-              <ImageTag2>제주도</ImageTag2>
               <ReviewImage
-                src="https://images.unsplash.com/photo-1612977423916-8e4bb45b5233?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={
+                  item.previewImageUrl
+                    ? item.previewImageUrl
+                    : "https://images.unsplash.com/photo-1612977423916-8e4bb45b5233?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                }
                 alt="제주도바다"
               />
               <DetailInfo>
