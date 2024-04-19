@@ -18,7 +18,7 @@ export interface ScheduleDay {
 }
 
 export interface ScheduleDetails {
-  tags: string
+  tags: string[]
   title: string
   startDate: string
   endDate: string
