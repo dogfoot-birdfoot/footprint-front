@@ -10,6 +10,7 @@ import {
 import { Box } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { Link } from "react-router-dom"
+import { TbEmpathize } from "react-icons/tb"
 
 async function getPopularReview() {
   try {
@@ -29,7 +30,6 @@ async function getPopularReview() {
 const ReviewsGallery = () => {
   const query = useQuery({ queryKey: ["reviewGallery"], queryFn: getPopularReview })
 
-  console.log(query.data?.content)
   return (
     <Box mb={20}>
       <ReviewBox>
@@ -50,6 +50,23 @@ const ReviewsGallery = () => {
             </ReviewItem>
           </Link>
         ))}
+
+        {query.data?.content.length < 8 &&
+          Array(8 - query.data?.content.length)
+            .fill(0)
+            .map((item, index) => {
+              return (
+                <ReviewItem key={index}>
+                  <ReviewImage
+                    src="https://images.unsplash.com/photo-1612977423916-8e4bb45b5233?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="제주도바다"
+                  />
+                  <DetailInfo>
+                    <Box>새로운 리뷰를 추가해주세요.</Box>
+                  </DetailInfo>
+                </ReviewItem>
+              )
+            })}
       </ReviewBox>
     </Box>
   )
