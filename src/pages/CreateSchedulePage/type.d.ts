@@ -10,13 +10,14 @@ export interface scheduleObject {
 export interface placeObject {
   kakaoPlaceId: string
   placeName: string
-  latitude: number
-  longitude: number
+  longitude: string
+  latitude: string
   address: string
-  placeDetails: {
-    memo: string
-    cost: number
-    visitTime: string
+  placeDetails?: {
+    // 옵셔널로 변경
+    memo?: string
+    cost?: number
+    visitTime?: string
   }
 }
 
