@@ -61,7 +61,12 @@ const ScheduleDetailPage: React.FC = () => {
 
         <Box display="flex" mt="-2" ml="600px">
           <Box mt="-10">
-            <RouteMap />
+            <RouteMap
+              positions={scheduleDetails.schedules[selectedTabIndex].places.map(place => ({
+                title: place.placeName,
+                latlng: new window.kakao.maps.LatLng(place.latitude, place.longitude)
+              }))}
+            />
           </Box>
         </Box>
 

@@ -75,9 +75,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({ activeIndex }) => {
           longitude: data[index]["x"].toString(),
           latitude: data[index]["y"].toString(),
           address: data[index]["address_name"],
-          memo: undefined,
-          cost: undefined,
-          visitTime: undefined
+          placeDetails: {
+            // placeDetails 객체 추가
+            memo: undefined,
+            cost: undefined,
+            visitTime: undefined
+          }
         })
       }
       setQueryResults(resultData)
