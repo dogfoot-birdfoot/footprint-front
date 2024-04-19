@@ -7,6 +7,7 @@ import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 import { AddPostProps } from "./type"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import useCustomFetch from "@/hooks/useCustomFetch"
+import getMemberId from "@/hooks/getMemberId"
 
 const editableProps = {
   width: "320px",
@@ -18,9 +19,10 @@ const editableProps = {
 
 const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const toast = useToast()
+  const memberId = getMemberId()
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
-  const [visiblePost, setVisiblePost] = useState<boolean>(false)
+  const [visiblePost, setVisiblePost] = useState<boolean>(true)
 
   const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
 
@@ -59,7 +61,9 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           body: formData
         })
           .then(result => result.json())
-          .then(result => imageIds.push(result["imageId"]))
+          .then(result => {
+            imageIds.push(result["imageId"])
+          })
       }
 
       // 반환된 imageIds를 이용해 POST
@@ -69,12 +73,17 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          memberId: 1,
+          memberId: memberId,
+          planId: 2,
           title: title,
           content: content,
+          region: "서울",
+          visible: visiblePost,
           imageIds: imageIds
         })
       })
+
+      console.log(response)
 
       if (!response.ok) {
         throw new Error("Review not Registered.")
@@ -147,8 +156,9 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           }}
           backgroundColor="primary"
           color="white"
+          height="35px"
           marginTop="10px"
-          marginRight="20px"
+          marginRight="10px"
         >
           POST
         </Button>

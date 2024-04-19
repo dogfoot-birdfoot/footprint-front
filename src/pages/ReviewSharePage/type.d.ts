@@ -4,6 +4,7 @@ type ReviewType = {
   reviewId: number
   likes: number
   createdAt: string
+  previewImageUrl: string
 }
 
 interface getReviewsType {

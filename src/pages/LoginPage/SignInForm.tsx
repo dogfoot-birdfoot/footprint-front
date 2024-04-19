@@ -3,12 +3,10 @@ import React, { FC } from "react"
 import KakaoButton from "@/components/KakaoButton/KakaoButton"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { useRecoilState } from "recoil"
-import { userState } from "@/hooks/atom"
+import { useToast } from "@chakra-ui/react"
 
 interface SignInFormProps {
   title: string
-  getDataForm: (email: string, password: string) => void
 }
 
 interface FormValues {
@@ -16,7 +14,7 @@ interface FormValues {
   password: string
 }
 const SignInForm: FC<SignInFormProps> = ({ title }) => {
-  const [user, setUser] = useRecoilState(userState)
+  const toast = useToast()
   const navigate = useNavigate()
   const {
     register,
@@ -37,11 +35,6 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
         return response.json()
       })
       .then(userData => {
-        // 사용자 정보를 Recoil의 userState에 저장
-        setUser({
-          nickname: userData.nickname, // 응답 구조에 따라 경로 조정 필요
-          profilePicture: userData.profilePicture // 응답 구조에 따라 경로 조정 필요
-        })
         // localStorage에 사용자 정보 저장
         localStorage.setItem("accessToken", userData["accessToken"])
         localStorage.setItem("refreshToken", userData["refreshToken"])
@@ -50,6 +43,14 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
       })
       .catch(error => {
         console.error("Login error:", error)
+        toast({
+          title: "로그인에 실패했습니다.",
+          description: "다시 시도해주세요.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top"
+        })
       })
   }
 

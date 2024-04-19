@@ -25,7 +25,6 @@ import MyPage from "@/pages/MyPage/MyPage"
 import MyProfile from "@/pages/MyPage/Profile/MyProfile"
 import MySchedule from "@/pages/MyPage/Schedule/MySchedule"
 import MyFavorite from "@/pages/MyPage/Favorite/MyFavorite"
-import { userState } from "./hooks/atom"
 import CheckPage from "./pages/CheckPage/CheckPage"
 import UserDetailPage from "./pages/UserDetailPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -42,7 +41,6 @@ function App() {
         <ChakraProvider theme={theme}>
           <BrowserRouter>
             <ScrollToTop />
-            <UserSessionManager />
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<MainPage />} />
@@ -69,19 +67,6 @@ function App() {
       </QueryClientProvider>
     </RecoilRoot>
   )
-}
-
-const UserSessionManager = () => {
-  const setUser = useSetRecoilState(userState)
-
-  useEffect(() => {
-    const storedUser = sessionStorage.getItem("user")
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
-    }
-  }, [setUser])
-
-  return null // 이 컴포넌트는 UI를 렌더링하지 않음
 }
 
 export default App

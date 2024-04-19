@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { Box, Button, FormControl, FormLabel, Input, VStack, HStack } from "@chakra-ui/react"
+import getMemberId from "@/hooks/getMemberId"
 
 type PlaceDetails = {
   memo: string
@@ -77,6 +78,7 @@ const CreatePlan: React.FC = () => {
 
   const updatePlace = (dayIndex: number, placeIndex: number, field: keyof Place, value: any) => {
     const newSchedules = [...plan.schedules]
+    const memberId = getMemberId()
     const place = newSchedules[dayIndex].places[placeIndex]
     if (field in place.placeDetails) {
       place.placeDetails[field as keyof PlaceDetails] = value
@@ -88,7 +90,10 @@ const CreatePlan: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=4", plan)
+      const response = await axios.post(
+        "https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=${memberId}",
+        plan
+      )
       console.log("Response:", response.data)
     } catch (error) {
       console.error("Error posting the plan:", error)

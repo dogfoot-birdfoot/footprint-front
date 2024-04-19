@@ -17,6 +17,8 @@ import {
 } from "@/hooks/atom"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import useCustomFetch from "@/hooks/useCustomFetch"
+import getMemberId from "@/hooks/getMemberId"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
@@ -36,6 +38,7 @@ const tagArray: string[] = [
 
 const AddPost: React.FC = () => {
   const navigate = useNavigate()
+  const memberId = getMemberId()
   const [title, setTitle] = useRecoilState(titleState)
   const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState)
   const toast = useToast()
@@ -130,8 +133,17 @@ const AddPost: React.FC = () => {
 
     console.log("Sending the following data to the server:", data) // 로그 출력
     try {
-      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=4", data)
-      console.log("Schedule created successfully", response.data)
+      const response = await useCustomFetch(
+        `https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=${memberId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        }
+      )
+      console.log("Schedule created successfully", response)
       toast({
         title: "여행 일정 생성 성공",
         description: "여행 일정이 성공적으로 생성되었습니다.",

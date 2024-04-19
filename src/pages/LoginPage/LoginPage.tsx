@@ -16,7 +16,7 @@ const LoginPage = () => {
       <LoginContainer>
         <LoginCard>
           <LoginTitle>Welcome!</LoginTitle>
-          <SignInForm title="Login" getDataForm={(email, password) => console.log(email, password)} />
+          <SignInForm title="Login" />
 
           <LinkContainer>
             <LoginStyledLink to="/register">회원가입하기</LoginStyledLink>
