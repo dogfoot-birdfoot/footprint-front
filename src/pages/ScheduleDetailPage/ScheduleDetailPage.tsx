@@ -23,7 +23,6 @@ const ScheduleDetailPage: React.FC = () => {
       setIsLoading(true)
       try {
         const response = await axios.get(
-          // `https://ke4f765103c24a.user-app.krampoline.com/api/plans/1?memberId=1`
           `https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}?memberId=${memberId}`
         )
         setScheduleDetails(response.data.data)
@@ -60,7 +59,12 @@ const ScheduleDetailPage: React.FC = () => {
 
         <Box display="flex" mt="-2" ml="600px">
           <Box mt="-10">
-            <RouteMap />
+            <RouteMap
+              positions={scheduleDetails.schedules[selectedTabIndex].places.map(place => ({
+                title: place.placeName,
+                latlng: new window.kakao.maps.LatLng(place.latitude, place.longitude)
+              }))}
+            />
           </Box>
         </Box>
 

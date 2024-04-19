@@ -7,6 +7,8 @@ export interface PlaceDetail {
 
 // Place 인터페이스 정의
 export interface Place {
+  latitude: number
+  longitude: number
   placeName: string
   placeDetails: PlaceDetail // 배열 대신 객체로 정의
 }
