@@ -116,9 +116,6 @@ const CreateScheduleForm: React.FC = ({}) => {
             <LoadSchedule activeIndex={activeIndex} />
           </Box>
         )}
-
-        {/* Map 표기 부분(임시) */}
-        {activeIndex < 0 && showSearchBox === false && showLoadSchedule === false && <RouteMap />}
       </>
     </>
   )

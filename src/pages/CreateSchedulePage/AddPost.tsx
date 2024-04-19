@@ -17,6 +17,7 @@ import {
 } from "@/hooks/atom"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import useCustomFetch from "@/hooks/useCustomFetch"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
@@ -39,6 +40,7 @@ const AddPost: React.FC = () => {
   const [title, setTitle] = useRecoilState(titleState)
   const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState)
   const toast = useToast()
+  const customFetch = useCustomFetch
 
   // 게시글 공개 여부, 복사 여부를 설정하는 변수
   const [postVisible, setPostVisible] = useRecoilState(visibleState)
@@ -50,13 +52,13 @@ const AddPost: React.FC = () => {
   // const schedules = useRecoilValue(scheduleState)
   const placesByDate = useRecoilValue(placesByDateState)
 
-  const resetTitle = useResetRecoilState(titleState)
-  const resetFromDate = useResetRecoilState(fromDateState)
-  const resetToDate = useResetRecoilState(toDateState)
-  const resetRegions = useResetRecoilState(regionState)
-  const resetVisible = useResetRecoilState(visibleState)
-  const resetCopyAllowed = useResetRecoilState(copyAllowedState)
-  const resetSchedules = useResetRecoilState(scheduleState)
+  // const resetTitle = useResetRecoilState(titleState)
+  // const resetFromDate = useResetRecoilState(fromDateState)
+  // const resetToDate = useResetRecoilState(toDateState)
+  // const resetRegions = useResetRecoilState(regionState)
+  // const resetVisible = useResetRecoilState(visibleState)
+  // const resetCopyAllowed = useResetRecoilState(copyAllowedState)
+  // const resetSchedules = useResetRecoilState(scheduleState)
 
   const tagBg = useColorModeValue("gray.500", "gray.500")
   const selectedTagBg = useColorModeValue("primary", "primary")
@@ -130,8 +132,21 @@ const AddPost: React.FC = () => {
 
     console.log("Sending the following data to the server:", data) // 로그 출력
     try {
-      const response = await axios.post("https://ke4f765103c24a.user-app.krampoline.com/api/plans?memberId=1", data)
-      console.log("Schedule created successfully", response.data)
+      // useCustomFetch를 사용하여 데이터를 서버에 전송
+      const response = await customFetch(`${process.env.REACT_APP_API_URL}/api/plans?memberId=6`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to create schedule")
+      }
+
+      const responseData = await response.json()
+      console.log("Schedule created successfully", responseData)
       toast({
         title: "여행 일정 생성 성공",
         description: "여행 일정이 성공적으로 생성되었습니다.",
@@ -141,13 +156,7 @@ const AddPost: React.FC = () => {
         position: "top"
       })
 
-      resetTitle()
-      resetFromDate()
-      resetToDate()
-      resetRegions()
-      resetVisible()
-      resetCopyAllowed()
-      resetSchedules()
+      // state 초기화 코드
     } catch (error) {
       console.error("Failed to create schedule", error)
       toast({

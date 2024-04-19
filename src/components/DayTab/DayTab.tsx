@@ -1,3 +1,4 @@
+// DayTab 컴포넌트
 import React, { useState } from "react"
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs"
 import DaySummary from "@/components/DaySummary/DaySummary"
