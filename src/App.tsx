@@ -49,7 +49,6 @@ function App() {
                 <Route path="schedule_share" element={<ScheduleSharePage />} />
                 <Route path="review_share" element={<ReviewSharePage />} />
                 <Route path="/schedule_share_detail/:id" element={<ScheduleDetailPage />} />
-
                 <Route path="/review/:id" element={<ReviewDetailPage />} />
                 <Route path="search" element={<SearchResultsPage />} />
                 <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
