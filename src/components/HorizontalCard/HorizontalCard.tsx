@@ -165,7 +165,7 @@ export const ScheduleButtons = () => {
       // 에러 처리
       toast({
         title: "오류 발생",
-        description: "일정 삭제에 실패했습니다. " + error.response.data.message,
+        description: "일정 삭제에 실패했습니다. ",
         status: "error",
         duration: 9000,
         isClosable: true
