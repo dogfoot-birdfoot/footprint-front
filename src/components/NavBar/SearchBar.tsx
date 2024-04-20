@@ -9,7 +9,11 @@ const SearchBar: React.FC = () => {
   const handleSearch = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault() // 폼 제출 시 페이지 리로드 방지
     // 검색 결과 페이지로 이동, 예를 들어 '/search' 경로를 검색 결과 페이지로 사용
-    navigate(`/search?query=${encodeURIComponent(searchTerm)}`)
+    if (searchTerm === "") {
+      alert("검색어를 입력해주세요.")
+    } else {
+      navigate(`/search?query=${encodeURIComponent(searchTerm)}`)
+    }
   }
 
   return (

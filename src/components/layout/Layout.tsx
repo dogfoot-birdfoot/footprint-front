@@ -8,6 +8,7 @@ import { Content, LayoutWrapper } from "@/components/Layout/Layout.style"
 import { Outlet } from "react-router"
 
 const Layout = () => {
+  // 최상위 레이아웃
   return (
     <LayoutWrapper>
       <Content>

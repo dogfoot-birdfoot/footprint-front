@@ -1,94 +1,27 @@
 import React, { useEffect, useRef, useState } from "react"
 import CardItem from "@/components/Card/CardItem"
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
+import { Menu, MenuButton, MenuItem, MenuList, MenuGroup } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import { SimpleGrid } from "@chakra-ui/react"
 import { Box } from "@chakra-ui/react"
 import useIntersectionObserver from "./useIntersectionObserver"
-import { TravelPlan } from "./type"
-import { useNavigate } from "react-router-dom"
-
-const koreanRegions = [
-  "서울",
-  "부산",
-  "대구",
-  "인천",
-  "광주",
-  "대전",
-  "울산",
-  "세종",
-  "경기",
-  "강원",
-  "충북",
-  "충남",
-  "전북",
-  "전남",
-  "경북",
-  "경남",
-  "제주"
-]
+import { Schedule, TravelPlan } from "./type"
+import { Link, useNavigate } from "react-router-dom"
+import { TbLoader } from "react-icons/tb"
+import getMemberId from "@/hooks/getMemberId"
+import { koreanRegions } from "@/styles/config"
+import { CardListBox } from "../MainPage/MainPage.style"
 
 const ScheduleSharePage = () => {
+  const memberId = getMemberId() // 예시입니다. 실제 값에 맞게 조정하세요.
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
-  const [plans, setPlans] = useState<TravelPlan[]>([])
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const fetchPlans = async () => {
-      const response = await fetch(
-        "https://ke4f765103c24a.user-app.krampoline.com/api/plans?page=0&size=10&sort=id,desc"
-      )
-      const data = await response.json()
-      setPlans(data.data.content)
-    }
-    fetchPlans()
-  }, [])
-
-  // memberId가 필요한 경우 여기서 정의하거나 다른 방법으로 가져옵니다.
-  const memberId = "1" // 예시입니다. 실제 값에 맞게 조정하세요.
-
-  const handleCardClick = (id: number) => {
-    // id 타입을 number로 명시합니다.
-    if (id !== undefined) {
-      navigate(`/schedule_share_detail/${id}/member/${memberId}`)
-    }
-  }
-  // 카드에 대한 상태 저장
-  const [cardLists, setCardLists] = useState<string[][]>([
-    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
-    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
-    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
-  ])
-
-  const target = useRef(null)
-  const [observe, unobserve] = useIntersectionObserver(addCards)
+  const [data, target, hasNextPage] = useIntersectionObserver()
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName)
   }
-  const filteredSchedules = plans.filter(schedule => selectedItem === "전국" || schedule.region === selectedItem)
-
-  function addCards() {
-    setCardLists(cardLists => [
-      ...cardLists,
-      Array(4).fill("/schedule_share_detail"),
-      Array(4).fill("/schedule_share_detail")
-    ])
-  }
-
-  useEffect(() => {
-    if (target.current) {
-      // cardList에 받아올 값이 더 존재한다면 observe.
-      observe(target.current)
-    }
-
-    if (target.current && cardLists.length === 30) {
-      // 서버에서 cardList에 받아올 값이 더 없다면 unobserve.
-      unobserve(target.current)
-    }
-  }, [cardLists])
 
   return (
     <>
@@ -100,36 +33,65 @@ const ScheduleSharePage = () => {
           </MenuButton>
         </SortButton>
         {/* 추후 메뉴 list를 동적으로 받아와야함 */}
-        <MenuList>
-          <MenuItem onClick={() => handleMenuItemClick("전국")}>전국</MenuItem>
+
+        <MenuList
+          id="menuList"
+          minWidth="150px"
+          maxHeight="200px"
+          overflowY={"scroll"}
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "5px",
+              borderRadius: "2px"
+            },
+            "&::-webkit-scrollbar-thumb": {
+              color: "white",
+              backgroundColor: "var(--chakra-colors-primary)",
+              borderRadius: "5px"
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "white"
+            }
+          }}
+        >
+          <MenuItem justifyContent={"center"} onClick={() => handleMenuItemClick("전국")}>
+            전국
+          </MenuItem>
           {koreanRegions.map(region => (
-            <MenuItem key={region} onClick={() => handleMenuItemClick(region)}>
+            <MenuItem justifyContent={"center"} key={region} onClick={() => handleMenuItemClick(region)}>
               {region}
             </MenuItem>
           ))}
         </MenuList>
       </Menu>
 
-      <SimpleGrid minChildWidth="300px" spacing="15px">
-        {filteredSchedules.map(schedule => (
-          <div key={schedule.id} onClick={() => schedule.id && handleCardClick(schedule.id)}>
-            <CardItem
-              id={schedule.id}
-              title={schedule.title}
-              dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-              bookMarkCount={schedule.bookMarkCount}
-              likeCount={schedule.likeCount}
-              author={schedule.author}
-              daySchedules={schedule.schedules}
-              createdAt={schedule.createdAt}
-            />
-          </div>
-        ))}
-      </SimpleGrid>
+      <CardListBox>
+        {data &&
+          data.pages.map((page, pageIndex) => {
+            return page?.map((schedule: TravelPlan, itemIndex: number) => {
+              return selectedItem === "전국" || selectedItem === schedule.region ? (
+                <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}/member/${memberId}`}>
+                  <CardItem
+                    id={schedule.id}
+                    title={schedule.title}
+                    dates={`${schedule.startDate} ~ ${schedule.endDate}`}
+                    bookMarkCount={schedule.bookMarkCount}
+                    likeCount={schedule.likeCount}
+                    author={schedule.author}
+                    daySchedules={schedule.schedules}
+                    createdAt={schedule.createdAt}
+                  />
+                </Link>
+              ) : undefined
+            })
+          })}
+      </CardListBox>
 
-      <Box ref={target} width="100%" display="flex" justifyContent={"center"} border="1px solid black">
-        요소가 보이면 callback 함수 호출
-      </Box>
+      {hasNextPage && (
+        <Box ref={target} width="100%" display="flex" mb="10px" justifyContent={"center"}>
+          <TbLoader />
+        </Box>
+      )}
     </>
   )
 }

@@ -15,9 +15,8 @@ import useIntersectionObserver from "@/pages/ReviewSharePage/useIntersectionObse
 import { Link } from "react-router-dom"
 
 const ReviewSharePage = () => {
-  const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
-
   const [data, target, hasNextPage] = useIntersectionObserver()
+  const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
     setSelectedItem(itemName) // 메뉴 아이템 클릭 시 상태 업데이트
@@ -29,8 +28,8 @@ const ReviewSharePage = () => {
         리뷰 전체 보기
       </Heading>
       <CardListBox>
-        {data &&
-          data.pages.map((page, pageIndex) => {
+        {data?.pages &&
+          data?.pages.map((page, pageIndex) => {
             return page.map((item: ReviewType, itemIndex: number) => {
               return (
                 <Link key={pageIndex.toString() + itemIndex.toString()} to={`/review/${item.reviewId}`}>
