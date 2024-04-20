@@ -96,7 +96,6 @@ const ScheduleSharePage = () => {
             현재지역 : {selectedItem}
           </MenuButton>
         </SortButton>
-        {/* 추후 메뉴 list를 동적으로 받아와야함 */}
         <MenuList>
           <MenuItem onClick={() => handleMenuItemClick("전국")}>전국</MenuItem>
           {koreanRegions.map(region => (

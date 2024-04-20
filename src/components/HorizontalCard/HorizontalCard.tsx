@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Card } from "@chakra-ui/card"
 import { Box, Text } from "@chakra-ui/layout"
 import KakaoButton from "../KakaoButton/KakaoButton"
@@ -12,6 +12,8 @@ import { TiStarFullOutline } from "react-icons/ti"
 import { FaRegThumbsUp } from "react-icons/fa"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
+import getMemberId from "@/hooks/getMemberId"
+import useCustomFetch from "@/hooks/useCustomFetch"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -140,32 +142,117 @@ export const UserInfo: React.FC<UserInfoProps> = ({ createdAtDate }) => {
 export const ScheduleButtons = () => {
   const toast = useToast()
   const navigate = useNavigate()
-  const { id } = useParams() // URL에서 id와 memberId 파라미터 추출
+  const { id } = useParams()
+  const memberId = getMemberId()
 
+  const likePlan = async () => {
+    const response = await useCustomFetch(
+      `https://ke4f765103c24a.user-app.krampoline.com/api/plans/like/${id}?memberId=${memberId}`,
+      { method: "POST" }
+    )
+    if (response.ok) {
+      toast({
+        title: "좋아요!",
+        description: "이 여행계획을 좋아합니다.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to like the plan.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+    }
+  }
+
+  const bookmarkPlan = async () => {
+    const response = await useCustomFetch(
+      `https://ke4f765103c24a.user-app.krampoline.com/api/bookmarks/${id}?memberId=${memberId}`,
+      { method: "POST" }
+    )
+    if (response.ok) {
+      toast({
+        title: "즐겨찾기",
+        description: "여행계획이 즐겨찾기 되었습니다.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to bookmark the plan.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+    }
+  }
+
+  const unbookmarkPlan = async () => {
+    try {
+      const response = await useCustomFetch(
+        `https://ke4f765103c24a.user-app.krampoline.com/api/bookmarks/${id}?memberId=${memberId}`,
+        { method: "DELETE" }
+      )
+      if (response.ok) {
+        toast({
+          title: "즐겨찾기 취소",
+          description: "여행계획의 즐겨찾기가 취소되었습니다.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top"
+        })
+      } else {
+        toast({
+          title: "Error",
+          description: "즐겨찾기 취소에 실패했습니다.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top"
+        })
+      }
+    } catch (error) {
+      toast({
+        title: "Error Occurred",
+        description: "Network error or server issue.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+    }
+  }
   const handleDelete = async () => {
-    const token = localStorage.getItem("accessToken") // 로컬 스토리지에서 토큰 가져오기
     try {
       const response = await axios.delete(`https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}` // 요청 헤더에 인증 토큰 추가
-        }
+        headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
       })
-      // 성공적으로 요청 처리
       if (response.status === 200) {
         toast({
-          title: "여행 일정이 삭제되었습니다.",
-          description: "일정이 성공적으로 삭제되었습니다.",
+          title: "여행계획 삭제",
+          description: "여행계획이 삭제되었습니다.",
           status: "success",
           duration: 9000,
-          isClosable: true
+          isClosable: true,
+          position: "top"
         })
         navigate("/schedule_share")
       }
     } catch (error) {
-      // 에러 처리
       toast({
-        title: "오류 발생",
-        description: "일정 삭제에 실패했습니다. ",
+        title: "Error Occurred",
+        description: "Failed to delete the travel plan.",
         status: "error",
         duration: 9000,
         isClosable: true
@@ -173,31 +260,62 @@ export const ScheduleButtons = () => {
     }
   }
 
+  const handleEditClick = () => {
+    navigate(`/schedule/${id}/edit`)
+  }
+
+  const [isBookmarked, setIsBookmarked] = useState(false)
+
+  const toggleBookmark = () => {
+    if (isBookmarked) {
+      unbookmarkPlan()
+    } else {
+      bookmarkPlan()
+    }
+    setIsBookmarked(!isBookmarked)
+  }
   return (
     <Box>
       <Box mt="6" display="flex">
         <Box mr="2">
-          <Button size="xs">수정</Button>
+          <Button size="xs" backgroundColor="#10bdd5" color="white" onClick={handleEditClick}>
+            수정
+          </Button>
         </Box>
         <Box mr="2">
-          <Button size="xs" onClick={handleDelete}>
+          <Button size="xs" onClick={handleDelete} backgroundColor="#10bdd5" color="white">
             삭제
           </Button>
         </Box>
         <Box mr="4">
-          <Buttons text="리뷰작성" size="xs" />
+          <Button
+            size="xs"
+            backgroundColor="#10bdd5"
+            color="white"
+            onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
+          >
+            리뷰작성
+          </Button>
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" mt="10px" mb="10px" mr="15px">
         <IconButton
-          mr="10px"
-          aria-label="good"
-          icon={<TiStarFullOutline />}
-          bg="#ffe351"
+          aria-label={isBookmarked ? "Unbookmark" : "Bookmark"}
+          icon={isBookmarked ? <TiStarFullOutline /> : <TiStarFullOutline />}
+          bg={isBookmarked ? "#ffe351" : "gray"}
           color="white"
           borderRadius="20px"
+          onClick={toggleBookmark}
+          marginRight="10px"
         />
-        <IconButton aria-label="favorite" icon={<FaRegThumbsUp />} bg="primary" color="white" borderRadius="20px" />
+        <IconButton
+          aria-label="Bookmark"
+          icon={<FaRegThumbsUp />}
+          bg="primary"
+          color="white"
+          borderRadius="20px"
+          onClick={likePlan}
+        />
       </Box>
     </Box>
   )
