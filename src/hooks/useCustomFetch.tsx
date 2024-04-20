@@ -18,7 +18,7 @@ const useCustomFetch = async (url: string, options: optionsType) => {
           "Content-Type": "application/json"
         },
 
-        body: JSON.stringify({ email: "1@1.com", password: "123123", accessToken, refreshToken })
+        body: JSON.stringify({ refreshToken })
       })
       if (!refreshedResponse.ok) {
         throw new Error("Failed to refresh access token")

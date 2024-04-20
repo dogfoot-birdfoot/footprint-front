@@ -5,8 +5,10 @@ import { MenuTitle, StyledMenuItem } from "@/components/DropDownButton/DropDown.
 
 import { DropDownButtonProps } from "./type"
 import { Link } from "react-router-dom"
+import getMemberId from "@/hooks/getMemberId"
 
 const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
+  const memberId = getMemberId()
   return (
     <Menu isLazy closeOnSelect={true}>
       {({ isOpen }) => (
@@ -22,7 +24,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ title, contents }) => {
 
             {contents.map((item, index) => (
               <Box key={index}>
-                <Link to={`/${item[1]}`}>
+                <Link to={memberId === -1 ? "/login" : `/${item[1]}`}>
                   <MenuItem margin="0" padding="0">
                     <StyledMenuItem href="#">{item[0]}</StyledMenuItem>
                   </MenuItem>

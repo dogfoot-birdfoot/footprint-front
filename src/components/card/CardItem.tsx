@@ -15,7 +15,7 @@ import {
   VStack
 } from "@chakra-ui/react"
 import { PositionedAvatar } from "@/components/Card/CardItem.style"
-import { Link, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"
 import { differenceInCalendarDays, parse } from "date-fns"
@@ -75,7 +75,7 @@ const CardItem: React.FC<CardItemProps> = ({
   }
 
   return (
-    <Card maxW="xs" marginLeft="10px">
+    <Card maxW="xs" marginLeft="10px" marginBottom="10px">
       <CardBody>
         <Box display="flex" justifyContent="center">
           <Box display="flex" justifyContent="space-between" height="200px" width="300px">

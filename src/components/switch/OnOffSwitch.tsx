@@ -7,6 +7,7 @@ const OnOffSwitch: React.FC<OnOffSwitchProps> = ({ onText, offText, booleanState
     setBooleanState(!booleanState)
   }
 
+  // toggle Switch
   return (
     <>
       <Switch

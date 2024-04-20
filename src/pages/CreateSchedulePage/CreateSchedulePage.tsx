@@ -9,9 +9,7 @@ const CreateSchedulePage: React.FC = () => {
       <Box mb="50px">
         <Box display="flex" justifyContent="space-between">
           <CreateScheduleForm />
-          <Box mt="30px">
-            <Buttons size="sm" text="임시저장" />
-          </Box>
+          <Box mt="30px">{/* <Buttons size="sm" text="임시저장" /> */}</Box>
         </Box>
       </Box>
     </>

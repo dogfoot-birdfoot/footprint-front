@@ -18,8 +18,10 @@ import { FiLogOut } from "react-icons/fi" // 로그아웃 아이콘 임포트
 import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
 import { useRecoilState } from "recoil"
+import getMemberId from "@/hooks/getMemberId"
 
 const NavBar: React.FC = () => {
+  const memberId = getMemberId()
   const [bellIsOpen, setBellIsOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -68,7 +70,7 @@ const NavBar: React.FC = () => {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to="/addreview">
+              <BreadcrumbLink as={Link} to={memberId === -1 ? "/login" : "/addreview"}>
                 리뷰작성
               </BreadcrumbLink>
             </BreadcrumbItem>
