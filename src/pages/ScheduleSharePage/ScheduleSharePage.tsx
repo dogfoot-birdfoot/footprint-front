@@ -17,6 +17,37 @@ import { CardListBox } from "../MainPage/MainPage.style"
 const ScheduleSharePage = () => {
   const memberId = getMemberId() // 예시입니다. 실제 값에 맞게 조정하세요.
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
+
+  const [plans, setPlans] = useState<TravelPlan[]>([])
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      const response = await fetch(
+        "https://ke4f765103c24a.user-app.krampoline.com/api/plans?page=0&size=10&sort=id,desc"
+      )
+      const data = await response.json()
+      setPlans(data.data.content)
+    }
+    fetchPlans()
+  }, [])
+
+  const handleCardClick = (id: number) => {
+    // id 타입을 number로 명시합니다.
+    if (id !== undefined) {
+      navigate(`/schedule_share_detail/${id}`)
+    }
+  }
+  // 카드에 대한 상태 저장
+  const [cardLists, setCardLists] = useState<string[][]>([
+    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
+    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
+    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
+  ])
+
+  const target = useRef(null)
+  const [observe, unobserve] = useIntersectionObserver(addCards)
+
   const [data, target, hasNextPage] = useIntersectionObserver()
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
@@ -32,7 +63,7 @@ const ScheduleSharePage = () => {
             현재지역 : {selectedItem}
           </MenuButton>
         </SortButton>
-        {/* 추후 메뉴 list를 동적으로 받아와야함 */}
+
 
         <MenuList
           id="menuList"
@@ -57,6 +88,7 @@ const ScheduleSharePage = () => {
           <MenuItem justifyContent={"center"} onClick={() => handleMenuItemClick("전국")}>
             전국
           </MenuItem>
+
           {koreanRegions.map(region => (
             <MenuItem justifyContent={"center"} key={region} onClick={() => handleMenuItemClick(region)}>
               {region}

@@ -30,6 +30,7 @@ import UserDetailPage from "./pages/UserDetailPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import ScrollToTop from "ScrollToTop"
+import ScheduleEditPage from "./pages/ScheduleEditPage/ScheduleEditPage"
 
 const queryClient = new QueryClient()
 
@@ -48,7 +49,8 @@ function App() {
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="schedule_share" element={<ScheduleSharePage />} />
                 <Route path="review_share" element={<ReviewSharePage />} />
-                <Route path="/schedule_share_detail/:id/member/:memberId" element={<ScheduleDetailPage />} />
+                <Route path="/schedule_share_detail/:id" element={<ScheduleDetailPage />} />
+                <Route path="/schedule/:id/edit" element={<ScheduleEditPage />} />
                 <Route path="/review/:id" element={<ReviewDetailPage />} />
                 <Route path="search" element={<SearchResultsPage />} />
                 <Route path="addreview" element={<AddReviewPage initialStep={1} />} />
