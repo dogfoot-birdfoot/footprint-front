@@ -18,11 +18,9 @@ import { FiLogOut } from "react-icons/fi" // 로그아웃 아이콘 임포트
 import SearchBar from "./SearchBar"
 import DropDownButton from "../DropDownButton/DropDownButton"
 import { useRecoilState } from "recoil"
-import { userState } from "@/hooks/atom"
 
 const NavBar: React.FC = () => {
   const [bellIsOpen, setBellIsOpen] = useState(false)
-  const [user, setUser] = useRecoilState(userState)
   const navigate = useNavigate()
 
   //로그인상태관리 (진짜로 로그인되면 아바타가 바뀌도록 수정해야함)
@@ -44,7 +42,7 @@ const NavBar: React.FC = () => {
   const handleLogout = () => {
     // 여기에 로그아웃 처리 로직을 추가하세요.
     // 예: 사용자 상태를 null로 설정하고 로그인 페이지로 리디렉션
-    setUser(null) // setUser는 useRecoilState(userState)로부터 얻은 setter 함수
+
     localStorage.removeItem("accessToken") // localStorage에서 토큰 제거
     localStorage.removeItem("refreshToken")
     navigate("/login") // 로그인 페이지로 리디렉션
@@ -88,7 +86,7 @@ const NavBar: React.FC = () => {
               {localStorage.getItem("accessToken") ? (
                 <>
                   <NavLink to="/mypage/profile">
-                    <Avatar name={user?.nickname} src={user?.profilePicture} size="sm" />
+                    <Avatar name={undefined} src={undefined} size="sm" />
                   </NavLink>
                   <FiLogOut
                     onClick={handleLogout}

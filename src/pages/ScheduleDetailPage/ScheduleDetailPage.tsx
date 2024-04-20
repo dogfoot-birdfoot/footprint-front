@@ -9,10 +9,12 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 import Loading from "../LoadingPage/Loading"
 import { ScheduleDetails } from "./type"
+import getMemberId from "@/hooks/getMemberId"
 
 // ScheduleDetailPage 컴포넌트 내부의 처리 예제
 const ScheduleDetailPage: React.FC = () => {
-  const { id, memberId } = useParams<{ id: string; memberId: string }>()
+  const { id } = useParams<{ id: string }>()
+  const memberId = getMemberId()
   const [scheduleDetails, setScheduleDetails] = useState<ScheduleDetails | null>(null)
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(true)

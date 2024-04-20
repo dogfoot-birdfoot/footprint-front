@@ -3,7 +3,15 @@ import { Avatar, Badge, Box, Card, CardBody, Flex, Heading, Image, Stack, Text }
 import { ImageContainer, PositionedAvatar } from "@/components/Card/ReviewCardItem.style"
 import { ReviewCardItemProps } from "./type"
 
-const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes, createdAt }) => {
+const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes, createdAt, previewImage }) => {
+  const formattedDate = createdAt
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    })
+    .replace(/\. /g, "-")
+    .replace(".", "")
   return (
     <>
       <Card maxW="xs" marginLeft="10px">
@@ -11,7 +19,11 @@ const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes,
           <Box display="flex" justifyContent="center">
             <ImageContainer>
               <Image
-                src="https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={
+                  previewImage
+                    ? previewImage
+                    : "https://images.unsplash.com/photo-1676705909846-2d6183d8bc1e?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                }
                 alt="강원도 산 사진"
                 borderRadius="lg"
                 width={"330px"}
@@ -44,7 +56,7 @@ const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes,
             <Heading size="sm">{title}</Heading>
             <Box textAlign="right">
               <Text color="gray.500" fontSize="9px">
-                작성일자 : {createdAt}
+                작성일자 : {formattedDate}
               </Text>
             </Box>
           </Stack>

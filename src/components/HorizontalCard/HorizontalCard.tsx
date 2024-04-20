@@ -63,7 +63,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, sch
 export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) => {
   // scheduleDetails가 undefined일 경우를 대비한 조기 반환
   if (!scheduleDetails) {
-    return <div>로딩 중...</div> // 또는 원하는 다른 플레이스홀더 표시
+    return <div></div> // 또는 원하는 다른 플레이스홀더 표시
   }
 
   const calculateTripDuration = (startDate: string, endDate: string): string => {
@@ -129,7 +129,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ createdAtDate }) => {
         </Text>
         {/* 변환된 날짜 형식을 표시 */}
         <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
-          작성일자 :
+          작성일자 : {formattedDate}
         </Text>
       </Box>
       <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />

@@ -18,6 +18,7 @@ import {
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import useCustomFetch from "@/hooks/useCustomFetch"
+import getMemberId from "@/hooks/getMemberId"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
@@ -37,6 +38,7 @@ const tagArray: string[] = [
 
 const AddPost: React.FC = () => {
   const navigate = useNavigate()
+  const memberId = getMemberId()
   const [title, setTitle] = useRecoilState(titleState)
   const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState)
   const toast = useToast()
@@ -133,7 +135,7 @@ const AddPost: React.FC = () => {
     console.log("Sending the following data to the server:", data) // 로그 출력
     try {
       // useCustomFetch를 사용하여 데이터를 서버에 전송
-      const response = await customFetch(`${process.env.REACT_APP_API_URL}/api/plans?memberId=6`, {
+      const response = await customFetch(`${process.env.REACT_APP_API_URL}/api/plans?memberId=${memberId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -11,3 +11,9 @@ export interface useCustomFetchType {
     body?: BodyInit | null
   }
 }
+
+export interface TokenType {
+  sub: string
+  memberId: number
+  exp: number
+}

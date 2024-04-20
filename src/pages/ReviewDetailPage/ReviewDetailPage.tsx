@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import DaySummary from "@/components/DaySummary/DaySummary"
 import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import KakaoButton from "@/components/KakaoButton/KakaoButton"
-import { Box, Divider, Flex, Heading, IconButton, Input, Text } from "@chakra-ui/react"
+import { Box, Divider, Flex, Heading, IconButton, Input, Text, useToast } from "@chakra-ui/react"
 
 import Buttons from "@/components/Buttons/Buttons"
 import { CardInfo, UserInfo } from "@/components/HorizontalCard/HorizontalCard"
@@ -11,8 +11,10 @@ import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import { DaySchedule } from "@/pages/MyPage/Schedule/DetailSchedule.style"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import useCustomFetch from "@/hooks/useCustomFetch"
 
 const ReviewDetailPage = () => {
+  const toast = useToast()
   const [modify, setModify] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
@@ -54,7 +56,7 @@ const ReviewDetailPage = () => {
   // 좋아요 기능
   async function likeReview() {
     try {
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/add-likes`, {
+      const result = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews/add-likes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -67,7 +69,14 @@ const ReviewDetailPage = () => {
 
       if (!result.ok) {
         if (result.status === 500) {
-          alert("이미 좋아요를 누른 게시글입니다.")
+          toast({
+            title: "좋아요를 누를 수 없습니다.",
+            description: "이미 좋아요를 누른 게시글입니다.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "top"
+          })
         }
         throw new Error("Like Error")
       }
@@ -79,7 +88,7 @@ const ReviewDetailPage = () => {
   // 리뷰 삭제 기능
   async function deleteCurrentPost() {
     try {
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${reviewId}`, {
+      const result = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews/${reviewId}`, {
         method: "DELETE"
       }).then(result => result)
 
@@ -95,7 +104,7 @@ const ReviewDetailPage = () => {
 
   async function modifyCurrentPost() {
     try {
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
+      const result = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
@@ -114,7 +123,14 @@ const ReviewDetailPage = () => {
       if (!result.ok) {
         throw new Error("POST MODIFY ERROR")
       } else {
-        alert("게시글이 수정되었습니다.")
+        toast({
+          title: "게시글이 수정되었습니다.",
+          description: "성공적으로 게시글이 수정되었습니다.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top"
+        })
       }
     } catch (error) {
       console.error("Failed to delete post", error)
@@ -149,11 +165,11 @@ const ReviewDetailPage = () => {
     <>
       <Box ml="80px" mb="40px">
         <Box display="flex">
-          <Box display="flex" width="100%" justifyContent="space-between">
+          <Box display="flex" width="85%" justifyContent="space-between">
             <CardInfo ml_size="50px" scheduleDetails={undefined} />
             <Box ml="20px" mt="30px">
               <Box display="flex" justifyContent="flex-end">
-                <Flex height="40px" width="30px" alignItems={"center"}>
+                <Flex userSelect="none" mr="5px" height="40px" width="30px" alignItems={"center"}>
                   <Text color="red" fontSize={"20px"} display="inline-block">
                     ♥
                   </Text>
@@ -173,7 +189,7 @@ const ReviewDetailPage = () => {
                 </Flex>
               </Box>
 
-              <UserInfo createdAtDate={new Date()} />
+              <UserInfo createdAtDate={new Date(query?.data?.createdAt)} />
             </Box>
           </Box>
         </Box>
@@ -186,7 +202,7 @@ const ReviewDetailPage = () => {
           ))}
         </DaySchedule>
 
-        <Box width="100%" display="flex" justifyContent="flex-end" mt="-10">
+        <Box width="85%" display="flex" justifyContent="flex-end" mt="-10">
           <Box>
             <Flex mt="3">
               {modify && (
