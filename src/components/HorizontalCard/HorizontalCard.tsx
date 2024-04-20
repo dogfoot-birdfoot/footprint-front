@@ -143,10 +143,14 @@ export const ScheduleButtons = () => {
   const { id } = useParams() // URL에서 id와 memberId 파라미터 추출
 
   const handleDelete = async () => {
+    const token = localStorage.getItem("accessToken") // 로컬 스토리지에서 토큰 가져오기
     try {
-      // 동적으로 추출된 id를 사용하여 API 요청을 보냅니다.
-      const response = await axios.delete(`https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}`)
-      // 요청이 성공적으로 완료되면 toast 알림을 표시
+      const response = await axios.delete(`https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}` // 요청 헤더에 인증 토큰 추가
+        }
+      })
+      // 성공적으로 요청 처리
       if (response.status === 200) {
         toast({
           title: "여행 일정이 삭제되었습니다.",
@@ -161,13 +165,14 @@ export const ScheduleButtons = () => {
       // 에러 처리
       toast({
         title: "오류 발생",
-        description: "일정 삭제에 실패했습니다.",
+        description: "일정 삭제에 실패했습니다. " + error.response.data.message,
         status: "error",
         duration: 9000,
         isClosable: true
       })
     }
   }
+
   return (
     <Box>
       <Box mt="6" display="flex">
