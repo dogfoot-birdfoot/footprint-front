@@ -1,33 +1,32 @@
 import React, { useState } from "react"
 import DaySummary from "@/components/DaySummary/DaySummary"
-import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import KakaoButton from "@/components/KakaoButton/KakaoButton"
-import { Box, Divider, Flex, Heading, IconButton, Input, Text, useToast } from "@chakra-ui/react"
+import { Box, Button, Divider, Flex, Heading, IconButton, Input, Text, Textarea, useToast } from "@chakra-ui/react"
 
 import Buttons from "@/components/Buttons/Buttons"
 import { CardInfo, UserInfo } from "@/components/HorizontalCard/HorizontalCard"
 import { FaRegThumbsUp } from "react-icons/fa"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
-import { DaySchedule } from "@/pages/MyPage/Schedule/DetailSchedule.style"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import useCustomFetch from "@/hooks/useCustomFetch"
+import OnOffSwitch from "@/components/Switch/OnOffSwitch"
+import { ScheduleDetails } from "@/components/HorizontalCard/type"
+import getMemberId from "@/hooks/getMemberId"
 
 const ReviewDetailPage = () => {
   const toast = useToast()
   const [modify, setModify] = useState<boolean>(false)
+  const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
+  const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetails | undefined>(undefined)
   const navigate = useNavigate()
 
-  // URL을 이용해서 reviewId를 불러옴
-  const { id: reviewId } = useParams()
-
-  const destinations = [
-    ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"],
-    ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"],
-    ["태종대", "해동용궁사", "감천문화마을", "부평깡통시장"]
-  ]
+  // URL, token을 이용해서 reviewId를 불러옴
+  const { id: reviewStringId } = useParams()
+  const reviewId = Number(reviewStringId)
+  const memberId = getMemberId()
 
   const shareScheduleWithKakao = () => {
     // 여기에 카카오톡 공유 로직을 구현합니다.
@@ -42,6 +41,17 @@ const ReviewDetailPage = () => {
         throw new Error("Data Loading Error")
       }
       const jsonData = await data.json()
+
+      // planId가 null이 아니라면 불러오기
+      if (jsonData["planId"]) {
+        const schedule = await fetch(`${process.env.REACT_APP_API_URL}/api/plans/${jsonData["planId"]}`)
+        if (!schedule.ok) {
+          throw new Error("Schedule Data Loading Error")
+        }
+        const scheduleJsonData = await schedule.json()
+
+        setScheduleDetail(scheduleJsonData?.data)
+      }
 
       setTitle(jsonData["title"])
       setContent(jsonData["content"])
@@ -63,7 +73,7 @@ const ReviewDetailPage = () => {
         },
         body: JSON.stringify({
           reviewId: reviewId,
-          memberId: 1
+          memberId: memberId
         })
       }).then(result => result)
 
@@ -88,6 +98,9 @@ const ReviewDetailPage = () => {
   // 리뷰 삭제 기능
   async function deleteCurrentPost() {
     try {
+      if (query.data.memberId !== memberId) {
+        throw new Error("MemberId is not consistent")
+      }
       const result = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews/${reviewId}`, {
         method: "DELETE"
       }).then(result => result)
@@ -102,8 +115,14 @@ const ReviewDetailPage = () => {
     }
   }
 
+  // 리뷰 수정 기능
   async function modifyCurrentPost() {
     try {
+      // 작성자와 현재 로그인한 멤버가 다르다면, 오류 발생시키기
+      if (query.data.memberId !== memberId) {
+        throw new Error("MemberId is not consistent")
+      }
+
       const result = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "PUT",
         headers: {
@@ -111,14 +130,14 @@ const ReviewDetailPage = () => {
         },
         body: JSON.stringify({
           reviewId: reviewId,
-          memberId: 1,
+          memberId: memberId,
           title: title,
           content: content,
+          region: "부산",
+          visible: visibleProfile,
           imageIds: []
         })
       }).then(result => result)
-
-      console.log(result)
 
       if (!result.ok) {
         throw new Error("POST MODIFY ERROR")
@@ -133,13 +152,22 @@ const ReviewDetailPage = () => {
         })
       }
     } catch (error) {
-      console.error("Failed to delete post", error)
+      console.error("Failed to modify post", error)
+      toast({
+        title: "게시글 수정에 실패했습니다.",
+        description: "다시 시도해주세요.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
     }
   }
 
   // React-Query
   const queryClient = useQueryClient()
   const query = useQuery({ queryKey: ["reviewDetail"], queryFn: getReviewDetail })
+
   const addLike = useMutation({
     mutationFn: likeReview,
     onSuccess: () => {
@@ -166,7 +194,7 @@ const ReviewDetailPage = () => {
       <Box ml="80px" mb="40px">
         <Box display="flex">
           <Box display="flex" width="85%" justifyContent="space-between">
-            <CardInfo ml_size="50px" scheduleDetails={undefined} />
+            {query?.data?.planId ? <CardInfo ml_size="50px" scheduleDetails={scheduleDetail} /> : <Box></Box>}
             <Box ml="20px" mt="30px">
               <Box display="flex" justifyContent="flex-end">
                 <Flex userSelect="none" mr="5px" height="40px" width="30px" alignItems={"center"}>
@@ -193,68 +221,88 @@ const ReviewDetailPage = () => {
             </Box>
           </Box>
         </Box>
-        <Buttons text="일정 상세보기" size="sm" />
-        <DaySchedule>
-          {destinations.map((destination, index) => (
-            <Box key={index}>
-              <DaySummary selectedDay={`Day ${index + 1}`} destinations={destination} size="sm" />
-            </Box>
-          ))}
-        </DaySchedule>
 
-        <Box width="85%" display="flex" justifyContent="flex-end" mt="-10">
-          <Box>
-            <Flex mt="3">
-              {modify && (
-                <>
-                  <Box ml="2">
-                    <Buttons
-                      text="수정 완료"
-                      onClick={() => {
-                        modifyPost.mutate(), setModify(false)
-                      }}
-                      size="sm"
-                    />
-                  </Box>
-                  <Box ml="2" mr="2">
-                    <Buttons text="취소" onClick={() => setModify(false)} size="sm" />
-                  </Box>
-                </>
-              )}
-              {!modify && (
-                <Box mr="2" ml="2">
-                  {" "}
-                  <Buttons text="수정" onClick={() => setModify(true)} size="sm" />
-                </Box>
-              )}
-              <Box mr="2">
-                <Buttons text="삭제" onClick={() => deletePost.mutate()} size="sm" />
+        {query?.data?.planId && (
+          <Flex
+            padding="20px 10px 20px 20px"
+            border="1px dashed lightgray"
+            borderRadius="10px"
+            width="600px"
+            direction="column"
+            justifyContent={"right"}
+          >
+            {scheduleDetail?.schedules.map((schedule, idx) => (
+              <Box width="550px" key={idx}>
+                <DaySummary
+                  selectedDay={`Day ${idx + 1}`}
+                  destinations={schedule["places"].map(place => place["placeName"])}
+                  size="lg"
+                />
               </Box>
-            </Flex>
+            ))}
+            <Link
+              style={{ display: "flex", width: "550px", justifyContent: "right", marginRight: "20px" }}
+              to={`/schedule_share_detail/${query.data.planId}/member/1`}
+            >
+              <Button backgroundColor="primary" color="white" mt="50px" size="sm" borderRadius="10px">
+                일정 상세보기
+              </Button>
+            </Link>
+          </Flex>
+        )}
+
+        {query.data?.memberId === memberId && (
+          <Box width="85%" display="flex" justifyContent="flex-end" mt="10">
+            <Box>
+              <Flex mt="3">
+                {modify && (
+                  <>
+                    <Box ml="2">
+                      <Buttons
+                        text="수정 완료"
+                        onClick={() => {
+                          modifyPost.mutate(), setModify(false)
+                        }}
+                        size="sm"
+                      />
+                    </Box>
+                    <Box ml="2" mr="2">
+                      <Buttons text="취소" onClick={() => setModify(false)} size="sm" />
+                    </Box>
+                  </>
+                )}
+                {!modify && (
+                  <Box mr="2" ml="2">
+                    {" "}
+                    <Buttons text="수정" onClick={() => setModify(true)} size="sm" />
+                  </Box>
+                )}
+                <Box mr="2">
+                  <Buttons text="삭제" onClick={() => deletePost.mutate()} size="sm" />
+                </Box>
+              </Flex>
+            </Box>
           </Box>
-        </Box>
+        )}
 
         <Divider mt="50px" />
         <Box mt="10" display="flex">
-          <ImageSlider
-            size="lg"
-            images={[
-              "https://images.unsplash.com/photo-1612977423916-8e4bb45b5233?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "https://images.unsplash.com/photo-1612977423916-8e4bb45b5233?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            ]}
-          />
+          <ImageSlider size="lg" images={query.data?.images} />
           <Box width="500px" ml="45px">
-            <Text color="gray.500" fontSize="13px" mt="15px">
-              2024.03.05
-            </Text>
-            <Box mt="10px">
-              <TagBox>
-                <TagStyle>커플여행</TagStyle>
-                <TagStyle>관광</TagStyle>
-                <TagStyle>휴식</TagStyle>
-                <TagStyle>바다여행</TagStyle>
-              </TagBox>
-            </Box>
+            <Flex justifyContent={"space-between"}>
+              <Text color="gray.500" fontSize="13px" mt="15px">
+                2024.03.05
+              </Text>
+              {modify && (
+                <OnOffSwitch
+                  onText="공개"
+                  offText="비공개"
+                  booleanState={visibleProfile}
+                  setBooleanState={setVisibleProfile}
+                />
+              )}
+            </Flex>
+            <Box mt="10px"></Box>
             {!modify && (
               <>
                 <Heading size="lg" mt="30px">
@@ -275,8 +323,10 @@ const ReviewDetailPage = () => {
                   onChange={event => setTitle(event.target.value)}
                   size="lg"
                 />
-                <Input
+                <Textarea
+                  resize="none"
                   mt="10px"
+                  height="290px"
                   placeholder={content}
                   value={content}
                   onChange={event => setContent(event.target.value)}
