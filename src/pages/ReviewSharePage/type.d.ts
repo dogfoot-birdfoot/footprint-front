@@ -10,3 +10,7 @@ type ReviewType = {
 interface getReviewsType {
   page: number
 }
+
+interface getSchedulesType {
+  page: number
+}
