@@ -45,9 +45,6 @@ const ScheduleSharePage = () => {
     ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
   ])
 
-  const target = useRef(null)
-  const [observe, unobserve] = useIntersectionObserver(addCards)
-
   const [data, target, hasNextPage] = useIntersectionObserver()
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {
@@ -63,7 +60,6 @@ const ScheduleSharePage = () => {
             현재지역 : {selectedItem}
           </MenuButton>
         </SortButton>
-
 
         <MenuList
           id="menuList"
