@@ -13,7 +13,7 @@ export interface placeObject {
   longitude: string
   latitude: string
   address: string
-  placeDetails?: {
+  placeDetails: {
     // 옵셔널로 변경
     memo?: string
     cost?: number

@@ -23,10 +23,13 @@ const ScheduleDetailPage: React.FC = () => {
   useEffect(() => {
     const fetchScheduleDetails = async () => {
       setIsLoading(true)
+      const token = localStorage.getItem("accessToken") // 토큰을 로컬 스토리지에서 가져옴
       try {
-        const response = await axios.get(
-          `https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}?memberId=${memberId}`
-        )
+        const response = await axios.get(`https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Authorization 헤더에 토큰 추가
+          }
+        })
         setScheduleDetails(response.data.data)
         setIsLoading(false)
       } catch (error) {
@@ -36,7 +39,7 @@ const ScheduleDetailPage: React.FC = () => {
     }
 
     fetchScheduleDetails()
-  }, [id, memberId])
+  }, [id])
 
   if (isLoading) {
     return <Loading />
