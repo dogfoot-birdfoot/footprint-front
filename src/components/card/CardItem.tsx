@@ -108,9 +108,9 @@ const CardItem: React.FC<CardItemProps> = ({
 
               {/* 엔드포인트가 'schedule_share', 'review_share', 또는 경로에 아무 것도 없을 때 '좋아요' 배지 표시 */}
               {(path.includes("schedule_share") || path.includes("review_share") || path === "/") && (
-                <Badge borderRadius="10px" colorScheme="yellow" minWidth="40px">
-                  좋아요 {likeCount}
-                </Badge>
+                <Text color="red" fontSize={"20px"} display="inline-block">
+                  ♥ {likeCount}
+                </Text>
               )}
             </Box>
           </Box>
