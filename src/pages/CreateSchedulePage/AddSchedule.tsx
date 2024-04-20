@@ -91,7 +91,10 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
   const handleTimeChange = (dateIndex: number, placeIndex: number, date: Date) => {
     const formattedTime = format(date, "HH:mm:ss") // 시간 형식 확인
     console.log("Formatted Time:", formattedTime) // 로그 출력
-
+    setFormTimes(prevTimes => ({
+      ...prevTimes,
+      [`${dateIndex}-${placeIndex}`]: date // 새로 선택한 시간 값으로 업데이트
+    }))
     // 상태 업데이트: placesByDate 내의 해당 장소의 placeDetails 내 visitTime 업데이트
     const updatedPlaces = [...placesByDate[dateIndex]]
     const updatedPlace = { ...updatedPlaces[placeIndex] }
