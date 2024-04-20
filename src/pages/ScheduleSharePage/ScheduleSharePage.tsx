@@ -46,13 +46,10 @@ const ScheduleSharePage = () => {
     fetchPlans()
   }, [])
 
-  // memberId가 필요한 경우 여기서 정의하거나 다른 방법으로 가져옵니다.
-  const memberId = "1" // 예시입니다. 실제 값에 맞게 조정하세요.
-
   const handleCardClick = (id: number) => {
     // id 타입을 number로 명시합니다.
     if (id !== undefined) {
-      navigate(`/schedule_share_detail/${id}/member/${memberId}`)
+      navigate(`/schedule_share_detail/${id}`)
     }
   }
   // 카드에 대한 상태 저장
