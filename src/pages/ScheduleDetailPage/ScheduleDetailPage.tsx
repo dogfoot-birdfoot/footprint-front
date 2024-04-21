@@ -6,7 +6,7 @@ import { Box, Text } from "@chakra-ui/react"
 import { IndexStyle, ScheduleDetailStyle } from "./ScheduleDetailPage.style"
 import RouteMap from "@/pages/CreateSchedulePage/RouteMap"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Loading from "../LoadingPage/Loading"
 import { ScheduleDetails } from "./type"
 import getMemberId from "@/hooks/getMemberId"
@@ -14,6 +14,7 @@ import getMemberId from "@/hooks/getMemberId"
 // ScheduleDetailPage 컴포넌트 내부의 처리 예제
 const ScheduleDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const memberId = getMemberId()
   const [scheduleDetails, setScheduleDetails] = useState<ScheduleDetails | null>(null)
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
@@ -22,6 +23,11 @@ const ScheduleDetailPage: React.FC = () => {
 
   useEffect(() => {
     const fetchScheduleDetails = async () => {
+      // 비회원이라면, login 화면으로 redirect
+      if (memberId === -1) {
+        navigate("/login")
+        return
+      }
       setIsLoading(true)
       const token = localStorage.getItem("accessToken") // 토큰을 로컬 스토리지에서 가져옴
       try {

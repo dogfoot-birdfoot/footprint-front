@@ -4,6 +4,7 @@ import { ErrorBox, LoginButton, LoginForm, LoginInput } from "@/pages/LoginPage/
 import { useNavigate } from "react-router-dom"
 import { error } from "console"
 import { useToast } from "@chakra-ui/react"
+import { durationTime } from "@/styles/config"
 
 export interface RegisterFormProps {
   title: string
@@ -57,7 +58,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
           title: "회원가입에 성공했습니다.",
           description: "회원가입을 정상적으로 성공했습니다.",
           status: "success",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })

@@ -107,9 +107,12 @@ const CardItem: React.FC<CardItemProps> = ({
             {/* path name에 따라 동적으로 노출 */}
             <Box display="flex" gap="2">
               {(path.includes("schedule_share") || path.includes("review_share") || path === "/") && (
-                <Text color="red" fontSize={"20px"} display="inline-block">
-                  ♥ {likeCount}
-                </Text>
+                <Flex alignItems={"center"} color="red" fontSize="14px" userSelect={"none"} marginRight="0px">
+                  ♥
+                  <Text color="black" fontSize="10px" display="inline-block">
+                    {likeCount}
+                  </Text>
+                </Flex>
               )}
             </Box>
           </Box>

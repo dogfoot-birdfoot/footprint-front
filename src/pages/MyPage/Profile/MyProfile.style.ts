@@ -13,6 +13,7 @@ export const Profile = styled.div`
 export const ProfileHeader = styled.div`
   display: flex;
   width: 80%;
+  margin-bottom: 2rem;
 `
 export const ProfileInformation = styled.div`
   width: 1024px;
@@ -39,6 +40,11 @@ export const RegisterDate = styled.div`
   font-size: 0.7rem;
 `
 export const ReviewNumber = styled.div`
+  & + & {
+    margin-left: 10px;
+  }
+  margin-left: 5px;
+  margin-top: 5px;
   font-size: 0.7rem;
   font-weight: bold;
 `

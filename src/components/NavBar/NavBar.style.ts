@@ -1,9 +1,5 @@
 import styled from "styled-components"
 
-export const Logo = styled.a`
-  margin-top: 10px;
-`
-
 export const NavBarStyle = styled.div`
   display: flex;
   align-items: center;

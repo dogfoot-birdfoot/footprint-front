@@ -17,3 +17,5 @@ export const koreanRegions = [
   "경남",
   "제주"
 ]
+
+export const durationTime = 1000

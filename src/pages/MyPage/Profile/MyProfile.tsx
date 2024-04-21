@@ -1,9 +1,7 @@
 import { useState } from "react"
 import {
-  ChangePasswordButton,
   ContentBody,
   ContentHeader,
-  NicknameEditButton,
   Profile,
   ProfileContent,
   ProfileHeader,
@@ -11,54 +9,48 @@ import {
   ProfileText,
   ProfileTitle,
   RegisterDate,
-  ReviewNumber,
-  UploadImageButton
+  ReviewNumber
 } from "@/pages/MyPage/Profile/MyProfile.style"
-import { Avatar } from "@chakra-ui/react"
-import { MdEdit } from "react-icons/md"
+import { Avatar, Flex } from "@chakra-ui/react"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
+import getEmail from "@/hooks/getEmail"
+import { useQuery } from "@tanstack/react-query"
 
 const MyProfile = () => {
   const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
+  const nickname: string | undefined = localStorage.getItem("nickname") ?? undefined
+  const { data: Reviews } = useQuery<any>({ queryKey: ["myReviews"] })
+  const { data: MyLikeReviews } = useQuery<any>({ queryKey: ["myLikeReviews"] })
 
   return (
     <Profile>
       {/* Profile Header */}
       <ProfileHeader>
-        <Avatar height="5rem" width="5rem" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+        <Avatar height="4rem" width="4rem" name={nickname} />
         <ProfileInformation>
           <ProfileTitle>
-            <ProfileText>anonymous님의 프로필</ProfileText>
-            <RegisterDate>가입일 23.03.06</RegisterDate>
+            <ProfileText>{nickname}님의 프로필</ProfileText>
           </ProfileTitle>
-          <ReviewNumber>리뷰 24</ReviewNumber>
-          <UploadImageButton>사진 업로드</UploadImageButton>
+          <Flex>
+            <ReviewNumber>작성한 리뷰 {Reviews?.totalElements}개</ReviewNumber>
+            <ReviewNumber>좋아요한 리뷰 {MyLikeReviews?.totalElements}개</ReviewNumber>
+          </Flex>
         </ProfileInformation>
-        <OnOffSwitch onText="공개" offText="비공개" booleanState={visibleProfile} setBooleanState={setVisibleProfile} />
+        {/* <OnOffSwitch onText="공개" offText="비공개" booleanState={visibleProfile} setBooleanState={setVisibleProfile} /> */}
       </ProfileHeader>
 
       {/* Profile Body */}
       <ProfileContent>
-        <ContentHeader>아이디</ContentHeader>
-        <ContentBody>anonymous</ContentBody>
-      </ProfileContent>
-      <ProfileContent>
-        <ContentHeader>
-          닉네임
-          <NicknameEditButton>
-            <MdEdit />
-          </NicknameEditButton>
-        </ContentHeader>
-        <ContentBody>anonymous</ContentBody>
-      </ProfileContent>
-      <ProfileContent>
         <ContentHeader>이메일</ContentHeader>
-        <ContentBody>anonymous@gmail.com</ContentBody>
+        <ContentBody>{getEmail()}</ContentBody>
+      </ProfileContent>
+      <ProfileContent>
+        <ContentHeader>닉네임</ContentHeader>
+        <ContentBody>{nickname}</ContentBody>
       </ProfileContent>
 
       <ProfileContent>
         <ContentHeader>비밀번호</ContentHeader>
-        <ChangePasswordButton>비밀번호 변경</ChangePasswordButton>
         <ContentBody>**********</ContentBody>
       </ProfileContent>
     </Profile>

@@ -11,7 +11,7 @@ import {
   WrapItem
 } from "@chakra-ui/react"
 import { AiOutlineBell } from "react-icons/ai"
-import { Logo, NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
+import { NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import { FiLogOut } from "react-icons/fi" // 로그아웃 아이콘 임포트
@@ -22,6 +22,7 @@ import getMemberId from "@/hooks/getMemberId"
 
 const NavBar: React.FC = () => {
   const memberId = getMemberId()
+  const nickname: string | undefined = localStorage.getItem("nickname") ?? undefined
   const [bellIsOpen, setBellIsOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -42,20 +43,21 @@ const NavBar: React.FC = () => {
   ]
 
   const handleLogout = () => {
-    // 여기에 로그아웃 처리 로직을 추가하세요.
-    // 예: 사용자 상태를 null로 설정하고 로그인 페이지로 리디렉션
+    // 사용자 상태를 null로 설정하고 로그인 페이지로 리디렉션
 
-    localStorage.removeItem("accessToken") // localStorage에서 토큰 제거
+    // localStorage에서 사용자 정보 제거
+    localStorage.removeItem("accessToken")
     localStorage.removeItem("refreshToken")
+    localStorage.removeItem("nickname")
     navigate("/login") // 로그인 페이지로 리디렉션
   }
 
   return (
     <>
       <NavBarStyle>
-        <Logo href="/">
+        <Link to="/">
           <img src={`${process.env.PUBLIC_URL}/footprintlogo2.png`} width="180px" />
-        </Logo>
+        </Link>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>
@@ -88,7 +90,7 @@ const NavBar: React.FC = () => {
               {localStorage.getItem("accessToken") ? (
                 <>
                   <NavLink to="/mypage/profile">
-                    <Avatar name={undefined} src={undefined} size="sm" />
+                    <Avatar name={nickname} size="sm" />
                   </NavLink>
                   <FiLogOut
                     onClick={handleLogout}
