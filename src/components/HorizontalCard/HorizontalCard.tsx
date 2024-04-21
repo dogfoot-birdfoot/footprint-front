@@ -144,7 +144,7 @@ interface ScheduleButtonsProps {
   memberId: number
 }
 
-const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({ writerId, memberId }) => {
+export const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({ writerId, memberId }) => {
   const toast = useToast()
   const navigate = useNavigate()
   const { id } = useParams()
