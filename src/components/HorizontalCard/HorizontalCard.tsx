@@ -4,10 +4,9 @@ import { Box, Text } from "@chakra-ui/layout"
 import KakaoButton from "../KakaoButton/KakaoButton"
 import { TagBox, TagStyle } from "@/components/HorizontalCard/HorizontalCard.style"
 import { Avatar } from "@chakra-ui/avatar"
-import Buttons from "@/components/Buttons/Buttons"
 import { Badge, Button, IconButton, useToast } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
-import { CardInfoProps, HorizontalCardProps, ScheduleDay, ScheduleDetails, UserInfoProps } from "./type"
+import { CardInfoProps, HorizontalCardProps, ScheduleDay, UserInfoProps } from "./type"
 import { TiStarFullOutline } from "react-icons/ti"
 import { FaRegThumbsUp } from "react-icons/fa"
 import axios from "axios"
@@ -111,17 +110,19 @@ export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) 
     </>
   )
 }
-export const UserInfo: React.FC<UserInfoProps> = ({ createdAtDate }) => {
-  // 'createdAtDate'를 'yyyy-MM-dd' 형식의 문자열로 변환
-  const formattedDate = createdAtDate
-    .toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit"
-    })
-    .replace(/\. /g, "-")
-    .replace(".", "")
+export const UserInfo: React.FC<UserInfoProps> = () => {
+  const formatDate = (date: string | number | Date) => {
+    return new Date(date)
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      })
+      .replace(/\. /g, "-")
+      .replace(/\./, "") // 점과 공백을 대시로 대체
+  }
 
+  const currentDateString = formatDate(new Date()) // 현재 날짜를 문자열로 포맷
   return (
     <Box display="flex" justifyContent="flex-end">
       <Box mt="5">
@@ -131,7 +132,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ createdAtDate }) => {
         </Text>
         {/* 변환된 날짜 형식을 표시 */}
         <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
-          작성일자 : {formattedDate}
+          작성일자 : {formatDate(currentDateString)}
         </Text>
       </Box>
       <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />
