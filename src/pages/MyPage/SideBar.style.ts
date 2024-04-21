@@ -51,10 +51,10 @@ export const SubMenuNumber = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f01f1f;
+  margin-left: auto;
+  margin-right: 30px;
+  background-color: #d61f6f;
   color: white;
-
-  margin-left: 3rem;
   font-size: 0.5rem;
   width: 1rem;
   height: 1rem;

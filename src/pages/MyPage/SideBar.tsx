@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"
+import { Box, Divider, Flex, Heading } from "@chakra-ui/react"
 import { CgProfile } from "react-icons/cg"
 import { CiStar } from "react-icons/ci"
 import { GrFormSchedule } from "react-icons/gr"
@@ -11,8 +11,13 @@ import {
   SideBarMenus,
   SubMenuNumber
 } from "@/pages/MyPage/SideBar.style"
+import { MdOutlineRateReview } from "react-icons/md"
+import { useQuery } from "@tanstack/react-query"
 
 const SideBar = () => {
+  const { data: Reviews } = useQuery<any>({ queryKey: ["myReviews"] })
+  const { data: MyLikeReviews } = useQuery<any>({ queryKey: ["myLikeReviews"] })
+
   return (
     <SideBarWrapper>
       <SideBarMenus>
@@ -24,18 +29,40 @@ const SideBar = () => {
               <SideBarText>내 프로필</SideBarText>
             </SideBarMenu>
           </StyledNav>
+          <Divider />
+          <Heading fontFamily={"Noto Sans"} color="gray" size="sm" ml="20px" mt="30px" mb="10px" width="100%">
+            Schedule
+          </Heading>
           <StyledNav to="/mypage/schedule">
             <SideBarMenu>
               <GrFormSchedule />
               <SideBarText>내 여행일정</SideBarText>
-              <SubMenuNumber>3</SubMenuNumber>
+              <SubMenuNumber>0</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
           <StyledNav to="/mypage/favorite">
             <SideBarMenu>
               <CiStar />
               <SideBarText>내 즐겨찾기</SideBarText>
-              <SubMenuNumber>10</SubMenuNumber>
+              <SubMenuNumber>0</SubMenuNumber>
+            </SideBarMenu>
+          </StyledNav>
+          <Divider />
+          <Heading color="gray" size="sm" ml="20px" mt="30px" mb="10px" width="100%">
+            Review
+          </Heading>
+          <StyledNav to="/mypage/review">
+            <SideBarMenu>
+              <MdOutlineRateReview />
+              <SideBarText>내 리뷰보기</SideBarText>
+              <SubMenuNumber>{Reviews?.totalElements}</SubMenuNumber>
+            </SideBarMenu>
+          </StyledNav>
+          <StyledNav to="/mypage/likeReviews">
+            <SideBarMenu>
+              <MdOutlineRateReview />
+              <SideBarText>좋아요한 리뷰</SideBarText>
+              <SubMenuNumber>{MyLikeReviews?.totalElements}</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
         </Flex>

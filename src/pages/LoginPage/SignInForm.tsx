@@ -38,6 +38,7 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
         // localStorage에 사용자 정보 저장
         localStorage.setItem("accessToken", userData["accessToken"])
         localStorage.setItem("refreshToken", userData["refreshToken"])
+        localStorage.setItem("nickname", userData["nickname"])
 
         navigate("/") // 로그인 성공 후 홈 페이지로 리디렉션
       })

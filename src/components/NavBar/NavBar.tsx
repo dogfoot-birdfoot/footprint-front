@@ -42,11 +42,12 @@ const NavBar: React.FC = () => {
   ]
 
   const handleLogout = () => {
-    // 여기에 로그아웃 처리 로직을 추가하세요.
-    // 예: 사용자 상태를 null로 설정하고 로그인 페이지로 리디렉션
+    // 사용자 상태를 null로 설정하고 로그인 페이지로 리디렉션
 
-    localStorage.removeItem("accessToken") // localStorage에서 토큰 제거
+    // localStorage에서 사용자 정보 제거
+    localStorage.removeItem("accessToken")
     localStorage.removeItem("refreshToken")
+    localStorage.removeItem("nickname")
     navigate("/login") // 로그인 페이지로 리디렉션
   }
 
