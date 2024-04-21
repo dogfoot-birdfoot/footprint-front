@@ -2,6 +2,13 @@ export interface Amounts {
   [key: string]: string
 }
 
+export interface bookmarkObject {
+  startDate: string
+  endDate: string
+  planId: number
+  planTitle: string
+  region: string
+}
 export interface scheduleObject {
   day: number
   places: placeObject[]
