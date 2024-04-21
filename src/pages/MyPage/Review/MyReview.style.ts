@@ -12,25 +12,16 @@ export const Favorite = styled.div`
 export const FavoriteTitle = styled.div`
   display: flex;
   width: 90%;
+  align-items: center;
   text-align: left;
   font-family: "Noto Sans";
   font-size: 1.3rem;
   font-weight: bold;
 `
-export const FavoriteList = styled.div``
-
-export const ListBox = styled.div`
+export const FavoriteList = styled.div`
   margin-top: 25px;
   margin-bottom: 25px;
-  display: flex;
-`
-
-export const ViewAllButton = styled.button`
-  margin-left: auto;
-  margin-right: 2rem;
-  bottom: 0px;
-  width: 4rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: "Noto Sans";
-  font-size: 0.7rem;
+  margin-left: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 4개의 열을 동일한 크기로 설정
 `

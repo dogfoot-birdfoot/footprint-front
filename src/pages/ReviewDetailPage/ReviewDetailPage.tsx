@@ -13,9 +13,12 @@ import useCustomFetch from "@/hooks/useCustomFetch"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import { ScheduleDetails } from "@/components/HorizontalCard/type"
 import getMemberId from "@/hooks/getMemberId"
+import Loading from "../LoadingPage/Loading"
+import { durationTime } from "@/styles/config"
 
 const ReviewDetailPage = () => {
   const toast = useToast()
+  const [isLoading, setIsLoading] = useState(true)
   const [modify, setModify] = useState<boolean>(false)
   const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("")
@@ -36,15 +39,23 @@ const ReviewDetailPage = () => {
   // 상세 리뷰 페이지 받아오기
   async function getReviewDetail() {
     try {
-      const data = await fetch(`${process.env.REACT_APP_API_URL}/api/review/${reviewId}`).then(response => response)
+      // 비회원이라면, login 화면으로 redirect
+      if (memberId === -1) {
+        navigate("/login")
+        return
+      }
+      const data = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/review/${reviewId}`, {}).then(
+        response => response
+      )
       if (!data.ok) {
         throw new Error("Data Loading Error")
       }
+
       const jsonData = await data.json()
 
       // planId가 null이 아니라면 불러오기
       if (jsonData["planId"]) {
-        const schedule = await fetch(`${process.env.REACT_APP_API_URL}/api/plans/${jsonData["planId"]}`)
+        const schedule = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/plans/${jsonData["planId"]}`, {})
         if (!schedule.ok) {
           throw new Error("Schedule Data Loading Error")
         }
@@ -55,10 +66,11 @@ const ReviewDetailPage = () => {
 
       setTitle(jsonData["title"])
       setContent(jsonData["content"])
+      setVisibleProfile(jsonData["visible"])
+      setIsLoading(false)
 
       return jsonData
     } catch (error) {
-      alert("잘못된 접근입니다. 메인페이지로 이동합니다.")
       navigate("/")
     }
   }
@@ -83,12 +95,21 @@ const ReviewDetailPage = () => {
             title: "좋아요를 누를 수 없습니다.",
             description: "이미 좋아요를 누른 게시글입니다.",
             status: "error",
-            duration: 5000,
+            duration: durationTime,
             isClosable: true,
             position: "top"
           })
         }
         throw new Error("Like Error")
+      } else {
+        toast({
+          title: "좋아요를 눌렀습니다.",
+          description: "해당 게시글에 좋아요를 눌렀습니다.",
+          status: "success",
+          duration: durationTime,
+          isClosable: true,
+          position: "top"
+        })
       }
     } catch (error) {
       console.error("Failed to add likes", error)
@@ -108,7 +129,15 @@ const ReviewDetailPage = () => {
       if (!result.ok) {
         throw new Error("POST DELETE ERROR")
       } else {
-        alert("게시글이 삭제되었습니다.")
+        navigate("/schedule_share")
+        toast({
+          title: "리뷰 삭제",
+          description: "리뷰가 삭제되었습니다.",
+          status: "success",
+          duration: durationTime,
+          isClosable: true,
+          position: "top"
+        })
       }
     } catch (error) {
       console.error("Failed to delete post", error)
@@ -135,7 +164,7 @@ const ReviewDetailPage = () => {
           content: content,
           region: "부산",
           visible: visibleProfile,
-          imageIds: []
+          imageIds: query?.data?.imageIds ? query.data.imageIds : []
         })
       }).then(result => result)
 
@@ -146,7 +175,7 @@ const ReviewDetailPage = () => {
           title: "게시글이 수정되었습니다.",
           description: "성공적으로 게시글이 수정되었습니다.",
           status: "success",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -157,7 +186,7 @@ const ReviewDetailPage = () => {
         title: "게시글 수정에 실패했습니다.",
         description: "다시 시도해주세요.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -189,12 +218,20 @@ const ReviewDetailPage = () => {
     }
   })
 
+  if (query?.data === undefined) {
+    return <Loading />
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <>
       <Box ml="80px" mb="40px">
         <Box display="flex">
           <Box display="flex" width="85%" justifyContent="space-between">
-            {query?.data?.planId ? <CardInfo ml_size="50px" scheduleDetails={scheduleDetail} /> : <Box></Box>}
+            {query?.data?.planId ? <CardInfo ml_size="20px" scheduleDetails={scheduleDetail} /> : <Box></Box>}
             <Box ml="20px" mt="30px">
               <Box display="flex" justifyContent="flex-end">
                 <Flex userSelect="none" mr="5px" height="40px" width="30px" alignItems={"center"}>
@@ -242,7 +279,7 @@ const ReviewDetailPage = () => {
             ))}
             <Link
               style={{ display: "flex", width: "550px", justifyContent: "right", marginRight: "20px" }}
-              to={`/schedule_share_detail/${query.data.planId}/member/1`}
+              to={`/schedule_share_detail/${query.data.planId}`}
             >
               <Button backgroundColor="primary" color="white" mt="50px" size="sm" borderRadius="10px">
                 일정 상세보기

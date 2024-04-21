@@ -31,6 +31,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import ScrollToTop from "ScrollToTop"
 import ScheduleEditPage from "./pages/ScheduleEditPage/ScheduleEditPage"
+import MyReview from "./pages/MyPage/Review/MyReview"
+import MyLikeReviews from "./pages/MyPage/Review/MyLikeReviews"
 
 const queryClient = new QueryClient()
 
@@ -61,6 +63,8 @@ function App() {
                   <Route path="profile" element={<MyProfile />} />
                   <Route path="schedule" element={<MySchedule />} />
                   <Route path="favorite" element={<MyFavorite />} />
+                  <Route path="review" element={<MyReview />} />
+                  <Route path="likeReviews" element={<MyLikeReviews />} />
                 </Route>
               </Route>
             </Routes>

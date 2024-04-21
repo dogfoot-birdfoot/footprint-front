@@ -14,5 +14,5 @@ export const ImageContainer = styled.div`
 export const PositionedAvatar = styled.div`
   position: absolute;
   right: 8px;
-  bottom: 15px;
+  bottom: 25px;
 `

@@ -4,6 +4,7 @@ import KakaoButton from "@/components/KakaoButton/KakaoButton"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useToast } from "@chakra-ui/react"
+import { durationTime } from "@/styles/config"
 
 interface SignInFormProps {
   title: string
@@ -38,6 +39,7 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
         // localStorage에 사용자 정보 저장
         localStorage.setItem("accessToken", userData["accessToken"])
         localStorage.setItem("refreshToken", userData["refreshToken"])
+        localStorage.setItem("nickname", userData["nickname"])
 
         navigate("/") // 로그인 성공 후 홈 페이지로 리디렉션
       })
@@ -47,7 +49,7 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
           title: "로그인에 실패했습니다.",
           description: "다시 시도해주세요.",
           status: "error",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })

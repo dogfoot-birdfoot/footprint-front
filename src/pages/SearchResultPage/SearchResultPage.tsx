@@ -68,7 +68,7 @@ const SearchResultsPage: React.FC = () => {
   }, [query])
 
   return (
-    <Box mb="30px">
+    <Box ml="20px" mb="30px">
       {/* 일정 검색결과 노출 */}
       <Box>
         <Heading size="sm" mt="30px" mb="30px">
@@ -78,7 +78,7 @@ const SearchResultsPage: React.FC = () => {
           {searchedSchedule &&
             searchedSchedule.map((schedule: TravelPlan, itemIndex: number) => {
               return (
-                <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}/member/${memberId}`}>
+                <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}`}>
                   <CardItem
                     id={schedule.id}
                     title={schedule.title}
@@ -94,14 +94,14 @@ const SearchResultsPage: React.FC = () => {
             })}
         </CardListBox>
         {searchedSchedule?.length === 0 && (
-          <Heading ml="40px" size="sm">
-            {query}에 대한 검색결과가 없습니다.
+          <Heading ml="10px" size="sm">
+            검색결과가 없습니다.
           </Heading>
         )}
       </Box>
       {/* 리뷰 검색결과 노출 */}
       <Box>
-        <Heading size="sm" mt="30px" mb="30px">
+        <Heading size="sm" mt="60px" mb="30px">
           {`"${query}"에 대한 리뷰 검색결과입니다.`}
         </Heading>
 
@@ -123,8 +123,8 @@ const SearchResultsPage: React.FC = () => {
         </CardListBox>
 
         {searchedReview?.content.length === 0 && (
-          <Heading ml="40px" size="sm">
-            {query}에 대한 검색결과가 없습니다.
+          <Heading ml="10px" size="sm">
+            검색결과가 없습니다.
           </Heading>
         )}
       </Box>
