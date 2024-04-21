@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import HorizontalCard from "@/components/HorizontalCard/HorizontalCard"
+
 import DayTab from "@/components/DayTab/DayTab"
 import { Card, CardHeader, CardBody } from "@chakra-ui/card"
 import { Box, Text } from "@chakra-ui/react"
@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import Loading from "../LoadingPage/Loading"
 import { ScheduleDetails } from "./type"
 import getMemberId from "@/hooks/getMemberId"
+import { HorizontalCard } from "@/components/HorizontalCard/HorizontalCard"
 
 // ScheduleDetailPage 컴포넌트 내부의 처리 예제
 const ScheduleDetailPage: React.FC = () => {

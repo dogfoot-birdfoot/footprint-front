@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Card } from "@chakra-ui/card"
 import { Box, Text } from "@chakra-ui/layout"
 import KakaoButton from "../KakaoButton/KakaoButton"
@@ -139,12 +139,15 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
     </Box>
   )
 }
+interface ScheduleButtonsProps {
+  writerId: number | null // writerId가 문자열 또는 null일 수 있다고 가정합니다.
+  memberId: number
+}
 
-export const ScheduleButtons = () => {
+const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({ writerId, memberId }) => {
   const toast = useToast()
   const navigate = useNavigate()
   const { id } = useParams()
-  const memberId = getMemberId()
 
   const likePlan = async () => {
     const response = await useCustomFetch(
@@ -297,70 +300,97 @@ export const ScheduleButtons = () => {
     }
     setIsBookmarked(!isBookmarked)
   }
-  return (
-    <Box>
-      <Box mt="6" display="flex">
-        <Box mr="2">
-          <Button size="xs" backgroundColor="#10bdd5" color="white" onClick={handleEditClick}>
-            수정
-          </Button>
+  if (writerId && writerId === memberId) {
+    return (
+      <Box>
+        <Box mt="6" display="flex">
+          <Box mr="2">
+            <Button size="xs" backgroundColor="#10bdd5" color="white" onClick={handleEditClick}>
+              수정
+            </Button>
+          </Box>
+          <Box mr="2">
+            <Button size="xs" onClick={handleDelete} backgroundColor="#10bdd5" color="white">
+              삭제
+            </Button>
+          </Box>
+          <Box mr="4">
+            <Button
+              size="xs"
+              backgroundColor="#10bdd5"
+              color="white"
+              onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
+            >
+              리뷰작성
+            </Button>
+          </Box>
         </Box>
-        <Box mr="2">
-          <Button size="xs" onClick={handleDelete} backgroundColor="#10bdd5" color="white">
-            삭제
-          </Button>
-        </Box>
-        <Box mr="4">
-          <Button
-            size="xs"
-            backgroundColor="#10bdd5"
+        <Box display="flex" justifyContent="flex-end" mt="10px" mb="10px" mr="15px">
+          <IconButton
+            aria-label={isBookmarked ? "Unbookmark" : "Bookmark"}
+            icon={isBookmarked ? <TiStarFullOutline /> : <TiStarFullOutline />}
+            bg={isBookmarked ? "#ffe351" : "gray"}
             color="white"
-            onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
-          >
-            리뷰작성
-          </Button>
+            borderRadius="20px"
+            onClick={toggleBookmark}
+            marginRight="10px"
+          />
+          <IconButton
+            aria-label="Bookmark"
+            icon={<FaRegThumbsUp />}
+            bg="primary"
+            color="white"
+            borderRadius="20px"
+            onClick={likePlan}
+          />
         </Box>
       </Box>
-      <Box display="flex" justifyContent="flex-end" mt="10px" mb="10px" mr="15px">
-        <IconButton
-          aria-label={isBookmarked ? "Unbookmark" : "Bookmark"}
-          icon={isBookmarked ? <TiStarFullOutline /> : <TiStarFullOutline />}
-          bg={isBookmarked ? "#ffe351" : "gray"}
-          color="white"
-          borderRadius="20px"
-          onClick={toggleBookmark}
-          marginRight="10px"
-        />
-        <IconButton
-          aria-label="Bookmark"
-          icon={<FaRegThumbsUp />}
-          bg="primary"
-          color="white"
-          borderRadius="20px"
-          onClick={likePlan}
-        />
-      </Box>
-    </Box>
-  )
+    )
+  }
+  return null
 }
 
 export const HorizontalCard: React.FC<HorizontalCardProps> = ({ scheduleDetails }) => {
+  const memberId = getMemberId()
+  const [writerId, setWriterId] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const { id } = useParams()
+
+  useEffect(() => {
+    const fetchWriterId = async () => {
+      try {
+        // useCustomFetch 함수를 사용하여 요청을 보냅니다.
+        const response = await useCustomFetch(
+          `https://ke4f765103c24a.user-app.krampoline.com/api/plans/${id}?memberId=${memberId}`,
+          { method: "GET" }
+        )
+        const responseData = await response.json()
+        const writerId = responseData.data.writerId
+        setWriterId(writerId)
+        console.log(responseData.data.writerId)
+      } catch (error) {
+        console.error("Failed to fetch writer ID:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchWriterId()
+  }, [])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
-    <>
-      <Card
-        justifyContent="space-between"
-        width="1040px"
-        direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
-        variant="outline"
-      >
-        {/* HorizontalCardContent 컴포넌트에 scheduleDetails를 props로 전달 */}
-        <HorizontalCardContent size="lg" scheduleDetails={scheduleDetails} />
-        {/* 게시자에게만 보이도록 로직 수정 */}
-        <ScheduleButtons />
-      </Card>
-    </>
+    <Card
+      justifyContent="space-between"
+      width="1040px"
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="outline"
+    >
+      <HorizontalCardContent size="lg" scheduleDetails={scheduleDetails} />
+      <ScheduleButtons writerId={writerId} memberId={memberId} />
+    </Card>
   )
 }
-
-export default HorizontalCard
