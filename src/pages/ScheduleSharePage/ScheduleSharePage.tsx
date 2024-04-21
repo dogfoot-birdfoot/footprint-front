@@ -98,7 +98,7 @@ const ScheduleSharePage = () => {
           data.pages.map((page, pageIndex) => {
             return page?.map((schedule: TravelPlan, itemIndex: number) => {
               return selectedItem === "전국" || selectedItem === schedule.region ? (
-                <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}/member/${memberId}`}>
+                <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}`}>
                   <CardItem
                     id={schedule.id}
                     title={schedule.title}
