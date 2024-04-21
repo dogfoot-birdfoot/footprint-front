@@ -14,7 +14,7 @@ import {
   InputLeftElement,
   Button
 } from "@chakra-ui/react"
-import { IconStyle } from "@/components/navBar/SearchBar.style"
+import { IconStyle } from "@/components/NavBar/SearchBar.style"
 
 // Recoil
 import { useRecoilState, useSetRecoilState } from "recoil"
