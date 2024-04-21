@@ -10,7 +10,8 @@ import theme from "@/styles/theme"
 // 기본 페이지
 import MainPage from "@/pages/MainPage/MainPage"
 import LoginPage from "@/pages/LoginPage/LoginPage"
-import Layout from "@/components/Layout/Layout"
+import KakaoAuth from "@/components/kakao/kakaoAuth"
+import Layout from "@/components/layout/Layout"
 import RegisterPage from "@/pages/RegisterPage/RegisterPage"
 import ScheduleSharePage from "@/pages/ScheduleSharePage/ScheduleSharePage"
 import ScheduleDetailPage from "@/pages/ScheduleDetailPage/ScheduleDetailPage"
@@ -47,6 +48,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<MainPage />} />
+                <Route path="kakao/callback" element={<KakaoAuth />} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="schedule_share" element={<ScheduleSharePage />} />

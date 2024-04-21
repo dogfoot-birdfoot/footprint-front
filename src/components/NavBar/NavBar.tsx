@@ -11,11 +11,11 @@ import {
   WrapItem
 } from "@chakra-ui/react"
 import { AiOutlineBell } from "react-icons/ai"
-import { NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/navBar/NavBar.style"
+import { NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import { FiLogOut } from "react-icons/fi" // 로그아웃 아이콘 임포트
-import SearchBar from "./SearchBar"
+import SearchBar from "./SearchBa"
 import DropDownButton from "../DropDownButton/DropDownButton"
 import { useRecoilState } from "recoil"
 import getMemberId from "@/hooks/getMemberId"

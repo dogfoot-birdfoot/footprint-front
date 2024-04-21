@@ -59,42 +59,45 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
   const handleKakaoLogin = () => {
     // 카카오톡 로그인 처리 로직
     console.log("카카오톡 로그인 처리")
+    window.location.href =
+      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=27237f359df22ee2ab5550853bc190aa&redirect_uri=https://ke4f765103c24a.user-app.krampoline.com/kakao/callback"
   }
 
   return (
-    <LoginForm onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <LoginInput
-          type="email"
-          placeholder="Email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: "Entered value does not match email format"
-            }
-          })}
-        />
-        {errors.email && <p>{errors.email.message}</p>}
-      </div>
-      <div>
-        <LoginInput
-          type="password"
-          placeholder="Password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 6,
-              message: "Password must have at least 6 characters"
-            }
-          })}
-        />
-        {errors.password && <p>{errors.password.message}</p>}
-      </div>
-      <LoginButton type="submit">{title}</LoginButton>
-
-      <KakaoButton onClick={() => handleKakaoLogin}>Login for Kakao</KakaoButton>
-    </LoginForm>
+    <>
+      <LoginForm onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <LoginInput
+            type="email"
+            placeholder="Email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Entered value does not match email format"
+              }
+            })}
+          />
+          {errors.email && <p>{errors.email.message}</p>}
+        </div>
+        <div>
+          <LoginInput
+            type="password"
+            placeholder="Password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must have at least 6 characters"
+              }
+            })}
+          />
+          {errors.password && <p>{errors.password.message}</p>}
+        </div>
+        <LoginButton type="submit">{title}</LoginButton>
+      </LoginForm>
+      <KakaoButton onClick={() => handleKakaoLogin()}>Login for Kakao</KakaoButton>
+    </>
   )
 }
 
