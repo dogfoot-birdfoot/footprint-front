@@ -31,13 +31,6 @@ const ScheduleSharePage = () => {
     fetchPlans()
   }, [])
 
-  // // 카드에 대한 상태 저장
-  // const [cardLists, setCardLists] = useState<string[][]>([
-  //   ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
-  //   ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
-  //   ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
-  // ])
-
   const [data, target, hasNextPage] = useIntersectionObserver()
 
   const handleMenuItemClick = (itemName: React.SetStateAction<string>) => {

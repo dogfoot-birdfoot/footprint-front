@@ -39,6 +39,11 @@ export const RegisterDate = styled.div`
   font-size: 0.7rem;
 `
 export const ReviewNumber = styled.div`
+  & + & {
+    margin-left: 10px;
+  }
+  margin-left: 5px;
+  margin-top: 5px;
   font-size: 0.7rem;
   font-weight: bold;
 `

@@ -8,6 +8,7 @@ import { AddPostProps } from "./type"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
+import { useNavigate } from "react-router-dom"
 
 const editableProps = {
   width: "320px",
@@ -20,6 +21,7 @@ const editableProps = {
 const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const toast = useToast()
   const memberId = getMemberId()
+  const navigate = useNavigate()
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
   const [visiblePost, setVisiblePost] = useState<boolean>(true)
@@ -83,8 +85,6 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         })
       })
 
-      console.log(response)
-
       if (!response.ok) {
         throw new Error("Review not Registered.")
       }
@@ -96,6 +96,8 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         isClosable: true,
         position: "top"
       })
+
+      navigate("/review_share")
     } catch (error) {
       console.error("Failed to create review", error)
       toast({

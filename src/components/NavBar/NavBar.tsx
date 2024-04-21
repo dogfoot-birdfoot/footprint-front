@@ -54,9 +54,9 @@ const NavBar: React.FC = () => {
   return (
     <>
       <NavBarStyle>
-        <Logo href="/">
+        <Link to="/">
           <img src={`${process.env.PUBLIC_URL}/footprintlogo2.png`} width="180px" />
-        </Logo>
+        </Link>
         <NavBarItems>
           <Breadcrumb spacing="20px" separator={"|"}>
             <BreadcrumbItem>

@@ -67,7 +67,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({ activeIndex }) => {
       // 정상적으로 검색이 완료됐으면, 검색에 대한 결과인 results를 업데이트
 
       const resultData = []
-      console.log(data)
       for (const index in data) {
         resultData.push({
           kakaoPlaceId: data[index]["id"],

@@ -30,7 +30,7 @@ const SideBar = () => {
             </SideBarMenu>
           </StyledNav>
           <Divider />
-          <Heading fontFamily={"Noto Sans"} color="gray" size="sm" ml="20px" mt="30px" mb="10px" width="100%">
+          <Heading userSelect={"none"} color="gray" size="sm" ml="20px" mt="30px" mb="10px" width="100%">
             Schedule
           </Heading>
           <StyledNav to="/mypage/schedule">
@@ -48,7 +48,7 @@ const SideBar = () => {
             </SideBarMenu>
           </StyledNav>
           <Divider />
-          <Heading color="gray" size="sm" ml="20px" mt="30px" mb="10px" width="100%">
+          <Heading userSelect={"none"} color="gray" size="sm" ml="20px" mt="30px" mb="10px" width="100%">
             Review
           </Heading>
           <StyledNav to="/mypage/review">
