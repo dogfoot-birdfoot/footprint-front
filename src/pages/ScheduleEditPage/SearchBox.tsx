@@ -15,11 +15,11 @@ import {
   Button
 } from "@chakra-ui/react"
 import { IconStyle } from "@/components/NavBar/SearchBar.style"
-import { SearchBoxProps, placeObject } from "./type"
 
 // Recoil
 import { useRecoilState, useSetRecoilState } from "recoil"
 import { currentKeywords, placesByDateState } from "../../hooks/atom"
+import { SearchBoxProps, placeObject } from "../CreateSchedulePage/type"
 
 const SearchBox: React.FC<SearchBoxProps> = ({ activeIndex }) => {
   // query : 검색어, queryResults : 검색어에 해당 되는 결과, selectedKeywords : 선택된 키워드
@@ -46,6 +46,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ activeIndex }) => {
       // 정상적으로 검색이 완료됐으면, 검색에 대한 결과인 results를 업데이트
 
       const resultData = []
+      console.log(data)
       for (const index in data) {
         resultData.push({
           kakaoPlaceId: data[index]["id"],

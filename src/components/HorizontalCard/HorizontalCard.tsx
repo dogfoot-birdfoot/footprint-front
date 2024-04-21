@@ -13,7 +13,6 @@ import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import getMemberId from "@/hooks/getMemberId"
 import useCustomFetch from "@/hooks/useCustomFetch"
-import { durationTime } from "@/styles/config"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -152,21 +151,43 @@ export const ScheduleButtons = () => {
       `https://ke4f765103c24a.user-app.krampoline.com/api/plans/like/${id}?memberId=${memberId}`,
       { method: "POST" }
     )
+
     if (response.ok) {
-      toast({
-        title: "좋아요!",
-        description: "이 여행계획을 좋아합니다.",
-        status: "success",
-        duration: durationTime,
-        isClosable: true,
-        position: "top"
-      })
+      // 응답을 JSON 형식으로 변환
+      const responseData = await response.json()
+      const liked = responseData.data.liked
+
+      // 이전에 좋아요가 true였고, 새로운 상태가 false인 경우
+      if (!liked) {
+        toast({
+          title: "좋아요 취소",
+          description: "이 여행계획의 좋아요를 취소합니다.",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+          position: "top"
+        })
+      } else {
+        // 이전에 좋아요가 false였고, 새로운 상태가 true인 경우
+        toast({
+          title: "좋아요!",
+          description: "이 여행계획을 좋아합니다.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top"
+        })
+      }
     } else {
+      // 에러 응답을 처리
+      const errorResponse = await response.text()
+      console.error("에러 응답:", errorResponse)
+
       toast({
         title: "Error",
         description: "Failed to like the plan.",
         status: "error",
-        duration: durationTime,
+        duration: 5000,
         isClosable: true,
         position: "top"
       })
@@ -183,7 +204,7 @@ export const ScheduleButtons = () => {
         title: "즐겨찾기",
         description: "여행계획이 즐겨찾기 되었습니다.",
         status: "success",
-        duration: durationTime,
+        duration: 5000,
         isClosable: true,
         position: "top"
       })
@@ -192,7 +213,7 @@ export const ScheduleButtons = () => {
         title: "Error",
         description: "Failed to bookmark the plan.",
         status: "error",
-        duration: durationTime,
+        duration: 5000,
         isClosable: true,
         position: "top"
       })
@@ -210,7 +231,7 @@ export const ScheduleButtons = () => {
           title: "즐겨찾기 취소",
           description: "여행계획의 즐겨찾기가 취소되었습니다.",
           status: "success",
-          duration: durationTime,
+          duration: 5000,
           isClosable: true,
           position: "top"
         })
@@ -219,7 +240,7 @@ export const ScheduleButtons = () => {
           title: "Error",
           description: "즐겨찾기 취소에 실패했습니다.",
           status: "error",
-          duration: durationTime,
+          duration: 5000,
           isClosable: true,
           position: "top"
         })
@@ -229,7 +250,7 @@ export const ScheduleButtons = () => {
         title: "Error Occurred",
         description: "Network error or server issue.",
         status: "error",
-        duration: durationTime,
+        duration: 5000,
         isClosable: true,
         position: "top"
       })
@@ -245,7 +266,7 @@ export const ScheduleButtons = () => {
           title: "여행계획 삭제",
           description: "여행계획이 삭제되었습니다.",
           status: "success",
-          duration: durationTime,
+          duration: 9000,
           isClosable: true,
           position: "top"
         })
@@ -256,7 +277,7 @@ export const ScheduleButtons = () => {
         title: "Error Occurred",
         description: "Failed to delete the travel plan.",
         status: "error",
-        duration: durationTime,
+        duration: 9000,
         isClosable: true
       })
     }
@@ -294,9 +315,7 @@ export const ScheduleButtons = () => {
             size="xs"
             backgroundColor="#10bdd5"
             color="white"
-            onClick={() =>
-              toast({ title: "리뷰 작성 준비중!", status: "info", duration: durationTime, isClosable: true })
-            }
+            onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
           >
             리뷰작성
           </Button>

@@ -1,6 +1,5 @@
 import { atom } from "recoil"
 import { SelectedTags, placeObject, scheduleObject } from "../pages/CreateSchedulePage/type"
-import { User } from "./type"
 
 // 일정별 방문 장소에 대한 정보
 export const placesByDateState = atom<Record<number, placeObject[]>>({

@@ -18,7 +18,6 @@ const ScheduleSharePage = () => {
   const [selectedItem, setSelectedItem] = useState("전국") // 초기 상태를 '전국'으로 설정
 
   const [plans, setPlans] = useState<TravelPlan[]>([])
-  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchPlans = async () => {
