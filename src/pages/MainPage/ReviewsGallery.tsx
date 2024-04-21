@@ -13,7 +13,7 @@ import { Link } from "react-router-dom"
 
 async function getPopularReview() {
   try {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews?sort=like?page=0&size=8`).then(
+    const data = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews?sort=likes&page=0&size=8`).then(
       response => response
     )
     if (!data.ok) {
@@ -21,6 +21,7 @@ async function getPopularReview() {
     }
     const jsonData = await data.json()
 
+    console.log(jsonData)
     return jsonData
   } catch (error) {
     console.log(error)

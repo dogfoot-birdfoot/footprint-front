@@ -27,7 +27,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const [visiblePost, setVisiblePost] = useState<boolean>(true)
   const [planId, setPlanId] = useState<number>(-1)
 
-  async function getBookmarkSchedule() {
+  async function getMySchedule() {
     try {
       const data = await useCustomFetch(
         `${process.env.REACT_APP_API_URL}/api/my/plans?page=0&size=10&sort=id,desc`,
@@ -37,7 +37,6 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         throw new Error("Data Loading Error")
       }
       const jsonData = await data.json()
-      console.log(jsonData.data)
       return jsonData.data
     } catch (error) {
       alert("잘못된 접근입니다. 메인페이지로 이동합니다.")
@@ -134,7 +133,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   // React-Query
   const queryClient = useQueryClient()
 
-  const bookmarkSchedule = useQuery({ queryKey: ["bookmarkSchedule"], queryFn: getBookmarkSchedule })
+  const bookmarkSchedule = useQuery({ queryKey: ["bookmarkSchedule"], queryFn: getMySchedule })
   const mutation = useMutation({
     mutationFn: ReviewPost,
     onSuccess: () => {
@@ -143,8 +142,6 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
       setContent("")
     }
   })
-
-  console.log(bookmarkSchedule?.data?.content)
 
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
