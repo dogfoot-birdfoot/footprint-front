@@ -5,7 +5,7 @@ import { BannerStyle, CardListBox, Title, TitleBox, TypingText } from "./MainPag
 import ReviewsGallery from "./ReviewsGallery"
 import { ReviewTitle } from "./ReviewGallery.style"
 import CardItem from "@/components/card/CardItem"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Schedule } from "./type"
 
 const MainPage: React.FC = () => {
@@ -54,17 +54,19 @@ const MainPage: React.FC = () => {
       </TitleBox>
       <CardListBox>
         {latestPlans.map(schedule => (
-          <CardItem
-            key={schedule.id}
-            id={schedule.id}
-            title={schedule.title}
-            dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-            bookMarkCount={schedule.bookMarkCount}
-            likeCount={schedule.likeCount}
-            author={schedule.author}
-            daySchedules={schedule.schedules}
-            createdAt={schedule.createdAt}
-          />
+          <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}`}>
+            <CardItem
+              key={schedule.id}
+              id={schedule.id}
+              title={schedule.title}
+              dates={`${schedule.startDate} ~ ${schedule.endDate}`}
+              bookMarkCount={schedule.bookMarkCount}
+              likeCount={schedule.likeCount}
+              author={schedule.author}
+              daySchedules={schedule.schedules}
+              createdAt={schedule.createdAt}
+            />
+          </Link>
         ))}
       </CardListBox>
 
@@ -76,17 +78,18 @@ const MainPage: React.FC = () => {
       </TitleBox>
       <CardListBox>
         {bestPlans.map(schedule => (
-          <CardItem
-            key={schedule.id}
-            id={schedule.id}
-            title={schedule.title}
-            dates={`${schedule.startDate} ~ ${schedule.endDate}`}
-            bookMarkCount={schedule.bookMarkCount}
-            likeCount={schedule.likeCount}
-            author={schedule.author}
-            daySchedules={schedule.schedules}
-            createdAt={schedule.createdAt}
-          />
+          <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}`}>
+            <CardItem
+              id={schedule.id}
+              title={schedule.title}
+              dates={`${schedule.startDate} ~ ${schedule.endDate}`}
+              bookMarkCount={schedule.bookMarkCount}
+              likeCount={schedule.likeCount}
+              author={schedule.author}
+              daySchedules={schedule.schedules}
+              createdAt={schedule.createdAt}
+            />
+          </Link>
         ))}
       </CardListBox>
 
