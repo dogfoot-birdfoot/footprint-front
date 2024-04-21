@@ -15,7 +15,6 @@ import {
   selectedTagsState,
   placesByDateState
 } from "@/hooks/atom"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"

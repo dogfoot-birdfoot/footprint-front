@@ -1,7 +1,6 @@
 import React from "react"
 import CreateScheduleForm from "@/pages/CreateSchedulePage/CreateScheduleForm"
 import { Box } from "@chakra-ui/react"
-import Buttons from "@/components/Buttons/Buttons"
 
 const CreateSchedulePage: React.FC = () => {
   return (
