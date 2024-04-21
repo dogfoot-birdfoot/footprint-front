@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query"
 
 const MyProfile = () => {
   const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
+  const nickname: string | undefined = localStorage.getItem("nickname") ?? undefined
   const { data: Reviews } = useQuery<any>({ queryKey: ["myReviews"] })
   const { data: MyLikeReviews } = useQuery<any>({ queryKey: ["myLikeReviews"] })
 
@@ -25,18 +26,17 @@ const MyProfile = () => {
     <Profile>
       {/* Profile Header */}
       <ProfileHeader>
-        <Avatar height="5rem" width="5rem" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+        <Avatar height="4rem" width="4rem" name={nickname} />
         <ProfileInformation>
           <ProfileTitle>
-            <ProfileText>anonymous님의 프로필</ProfileText>
-            <RegisterDate>가입일 23.03.06</RegisterDate>
+            <ProfileText>{nickname}님의 프로필</ProfileText>
           </ProfileTitle>
           <Flex>
             <ReviewNumber>작성한 리뷰 {Reviews?.totalElements}개</ReviewNumber>
             <ReviewNumber>좋아요한 리뷰 {MyLikeReviews?.totalElements}개</ReviewNumber>
           </Flex>
         </ProfileInformation>
-        <OnOffSwitch onText="공개" offText="비공개" booleanState={visibleProfile} setBooleanState={setVisibleProfile} />
+        {/* <OnOffSwitch onText="공개" offText="비공개" booleanState={visibleProfile} setBooleanState={setVisibleProfile} /> */}
       </ProfileHeader>
 
       {/* Profile Body */}
@@ -46,7 +46,7 @@ const MyProfile = () => {
       </ProfileContent>
       <ProfileContent>
         <ContentHeader>닉네임</ContentHeader>
-        <ContentBody>{localStorage.getItem("nickname")}</ContentBody>
+        <ContentBody>{nickname}</ContentBody>
       </ProfileContent>
 
       <ProfileContent>

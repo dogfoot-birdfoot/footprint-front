@@ -13,6 +13,7 @@ export const Profile = styled.div`
 export const ProfileHeader = styled.div`
   display: flex;
   width: 80%;
+  margin-bottom: 2rem;
 `
 export const ProfileInformation = styled.div`
   width: 1024px;

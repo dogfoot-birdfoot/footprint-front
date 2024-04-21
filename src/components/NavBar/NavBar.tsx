@@ -11,7 +11,7 @@ import {
   WrapItem
 } from "@chakra-ui/react"
 import { AiOutlineBell } from "react-icons/ai"
-import { Logo, NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
+import { NavBarItems, NavBarStyle, StyledButton, StyledMenuItem } from "@/components/NavBar/NavBar.style"
 import { useNavigate } from "react-router"
 import { Link, NavLink } from "react-router-dom"
 import { FiLogOut } from "react-icons/fi" // 로그아웃 아이콘 임포트
@@ -22,6 +22,7 @@ import getMemberId from "@/hooks/getMemberId"
 
 const NavBar: React.FC = () => {
   const memberId = getMemberId()
+  const nickname: string | undefined = localStorage.getItem("nickname") ?? undefined
   const [bellIsOpen, setBellIsOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -89,7 +90,7 @@ const NavBar: React.FC = () => {
               {localStorage.getItem("accessToken") ? (
                 <>
                   <NavLink to="/mypage/profile">
-                    <Avatar name={undefined} src={undefined} size="sm" />
+                    <Avatar name={nickname} size="sm" />
                   </NavLink>
                   <FiLogOut
                     onClick={handleLogout}
