@@ -70,7 +70,6 @@ const ReviewDetailPage = () => {
 
       return jsonData
     } catch (error) {
-      alert("잘못된 접근입니다. 메인페이지로 이동합니다.")
       navigate("/")
     }
   }
@@ -129,7 +128,15 @@ const ReviewDetailPage = () => {
       if (!result.ok) {
         throw new Error("POST DELETE ERROR")
       } else {
-        alert("게시글이 삭제되었습니다.")
+        navigate("/schedule_share")
+        toast({
+          title: "리뷰 삭제",
+          description: "리뷰가 삭제되었습니다.",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+          position: "top"
+        })
       }
     } catch (error) {
       console.error("Failed to delete post", error)

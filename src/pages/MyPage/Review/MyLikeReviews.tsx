@@ -20,8 +20,10 @@ const MyLikeReviews = () => {
   return (
     <Favorite>
       <FavoriteTitle>
-        <BsHeartFill size="1.3rem" />
-        <Text ml="5px">좋아요한 리뷰 목록</Text>
+        <BsHeartFill size="1rem" />
+        <Text fontSize={"14px"} ml="5px">
+          좋아요한 리뷰 목록
+        </Text>
       </FavoriteTitle>
       {myLikeReviews?.content.length !== 0 ? (
         <FavoriteList>

@@ -4,7 +4,7 @@ import { MdOutlineRateReview } from "react-icons/md"
 import { Link } from "react-router-dom"
 import { Favorite, FavoriteList, FavoriteTitle } from "./MyReview.style"
 import Loading from "@/pages/LoadingPage/Loading"
-import { Box } from "@chakra-ui/react"
+import { Box, Text } from "@chakra-ui/react"
 
 const MyReview = () => {
   const { data: myReviews } = useQuery<any>({ queryKey: ["myReviews"] })
@@ -20,8 +20,10 @@ const MyReview = () => {
   return (
     <Favorite>
       <FavoriteTitle>
-        <MdOutlineRateReview size="1.8rem" />
-        작성한 리뷰 목록
+        <MdOutlineRateReview size="1rem" />
+        <Text fontSize={"14px"} ml="5px">
+          작성한 리뷰 목록
+        </Text>
       </FavoriteTitle>
       {myReviews?.content.length !== 0 ? (
         <FavoriteList>
