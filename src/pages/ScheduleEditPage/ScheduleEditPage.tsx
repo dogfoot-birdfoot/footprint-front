@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useToast } from "@chakra-ui/react"
+import { durationTime } from "@/styles/config"
 
 const ScheduleEditPage = () => {
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ const ScheduleEditPage = () => {
           title: "일정 수정 성공",
           description: "일정이 성공적으로 수정되었습니다.",
           status: "success",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -33,7 +34,7 @@ const ScheduleEditPage = () => {
         title: "일정 수정 실패",
         description: `일정 수정 중 오류가 발생했습니다: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })

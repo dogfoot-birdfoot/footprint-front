@@ -14,6 +14,7 @@ import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import { ScheduleDetails } from "@/components/HorizontalCard/type"
 import getMemberId from "@/hooks/getMemberId"
 import Loading from "../LoadingPage/Loading"
+import { durationTime } from "@/styles/config"
 
 const ReviewDetailPage = () => {
   const toast = useToast()
@@ -94,7 +95,7 @@ const ReviewDetailPage = () => {
             title: "좋아요를 누를 수 없습니다.",
             description: "이미 좋아요를 누른 게시글입니다.",
             status: "error",
-            duration: 5000,
+            duration: durationTime,
             isClosable: true,
             position: "top"
           })
@@ -105,7 +106,7 @@ const ReviewDetailPage = () => {
           title: "좋아요를 눌렀습니다.",
           description: "해당 게시글에 좋아요를 눌렀습니다.",
           status: "success",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -133,7 +134,7 @@ const ReviewDetailPage = () => {
           title: "리뷰 삭제",
           description: "리뷰가 삭제되었습니다.",
           status: "success",
-          duration: 4000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -174,7 +175,7 @@ const ReviewDetailPage = () => {
           title: "게시글이 수정되었습니다.",
           description: "성공적으로 게시글이 수정되었습니다.",
           status: "success",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -185,7 +186,7 @@ const ReviewDetailPage = () => {
         title: "게시글 수정에 실패했습니다.",
         description: "다시 시도해주세요.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })

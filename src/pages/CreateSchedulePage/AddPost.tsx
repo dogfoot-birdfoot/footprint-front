@@ -19,6 +19,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
+import { durationTime } from "@/styles/config"
 
 // 태그 배열의 타입 정의
 const tagArray: string[] = [
@@ -124,7 +125,7 @@ const AddPost: React.FC = () => {
         title: "여행 일정 생성 성공",
         description: "여행 일정이 성공적으로 생성되었습니다.",
         status: "success",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -136,7 +137,7 @@ const AddPost: React.FC = () => {
         title: "여행 일정 생성 실패",
         description: "일정 생성 중 오류가 발생했습니다.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })

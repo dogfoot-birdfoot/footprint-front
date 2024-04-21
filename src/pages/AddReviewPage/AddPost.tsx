@@ -8,6 +8,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
 import { useNavigate } from "react-router-dom"
+import { durationTime } from "@/styles/config"
 
 const editableProps = {
   width: "320px",
@@ -111,7 +112,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         title: "리뷰가 등록되었습니다.",
         description: "리뷰가 정상적으로 등록되었습니다.",
         status: "success",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -123,7 +124,7 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
         title: "리뷰 생성에 실패했습니다.",
         description: "리뷰 생성에 실패했습니다. 다시 시도해주세요.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })

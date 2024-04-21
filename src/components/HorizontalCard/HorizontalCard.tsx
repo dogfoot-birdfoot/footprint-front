@@ -13,6 +13,7 @@ import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import getMemberId from "@/hooks/getMemberId"
 import useCustomFetch from "@/hooks/useCustomFetch"
+import { durationTime } from "@/styles/config"
 
 // 카카오톡으로 일정을 공유하는 함수
 const shareScheduleWithKakao = () => {
@@ -156,7 +157,7 @@ export const ScheduleButtons = () => {
         title: "좋아요!",
         description: "이 여행계획을 좋아합니다.",
         status: "success",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -165,7 +166,7 @@ export const ScheduleButtons = () => {
         title: "Error",
         description: "Failed to like the plan.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -182,7 +183,7 @@ export const ScheduleButtons = () => {
         title: "즐겨찾기",
         description: "여행계획이 즐겨찾기 되었습니다.",
         status: "success",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -191,7 +192,7 @@ export const ScheduleButtons = () => {
         title: "Error",
         description: "Failed to bookmark the plan.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -209,7 +210,7 @@ export const ScheduleButtons = () => {
           title: "즐겨찾기 취소",
           description: "여행계획의 즐겨찾기가 취소되었습니다.",
           status: "success",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -218,7 +219,7 @@ export const ScheduleButtons = () => {
           title: "Error",
           description: "즐겨찾기 취소에 실패했습니다.",
           status: "error",
-          duration: 5000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -228,7 +229,7 @@ export const ScheduleButtons = () => {
         title: "Error Occurred",
         description: "Network error or server issue.",
         status: "error",
-        duration: 5000,
+        duration: durationTime,
         isClosable: true,
         position: "top"
       })
@@ -244,7 +245,7 @@ export const ScheduleButtons = () => {
           title: "여행계획 삭제",
           description: "여행계획이 삭제되었습니다.",
           status: "success",
-          duration: 9000,
+          duration: durationTime,
           isClosable: true,
           position: "top"
         })
@@ -255,7 +256,7 @@ export const ScheduleButtons = () => {
         title: "Error Occurred",
         description: "Failed to delete the travel plan.",
         status: "error",
-        duration: 9000,
+        duration: durationTime,
         isClosable: true
       })
     }
@@ -293,7 +294,9 @@ export const ScheduleButtons = () => {
             size="xs"
             backgroundColor="#10bdd5"
             color="white"
-            onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
+            onClick={() =>
+              toast({ title: "리뷰 작성 준비중!", status: "info", duration: durationTime, isClosable: true })
+            }
           >
             리뷰작성
           </Button>
