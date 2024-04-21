@@ -37,14 +37,14 @@ const SideBar = () => {
             <SideBarMenu>
               <GrFormSchedule />
               <SideBarText>내 여행일정</SideBarText>
-              <SubMenuNumber>0</SubMenuNumber>
+              <SubMenuNumber>2</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
           <StyledNav to="/mypage/favorite">
             <SideBarMenu>
               <CiStar />
               <SideBarText>내 즐겨찾기</SideBarText>
-              <SubMenuNumber>0</SubMenuNumber>
+              <SubMenuNumber>1</SubMenuNumber>
             </SideBarMenu>
           </StyledNav>
           <Divider />

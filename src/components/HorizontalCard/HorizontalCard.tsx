@@ -302,34 +302,30 @@ export const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({ writerId, memb
   }
   return (
     <Box>
-      {/* 관리자(작성자)가 보는 버튼 */}
       {writerId && writerId === memberId && (
         <Box mt="6" display="flex">
-          <Button size="xs" onClick={() => navigate(`/schedule/${id}/edit`)} backgroundColor="#10bdd5" color="white">
-            수정
-          </Button>
-          <Button
-            size="xs"
-            onClick={() => {
-              /* 삭제 로직 */
-            }}
-            backgroundColor="#10bdd5"
-            color="white"
-          >
-            삭제
-          </Button>
-          <Button
-            size="xs"
-            onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
-            backgroundColor="#10bdd5"
-            color="white"
-          >
-            리뷰작성
-          </Button>
+          <Box mr="2">
+            <Button size="xs" backgroundColor="#10bdd5" color="white" onClick={handleEditClick}>
+              수정
+            </Button>
+          </Box>
+          <Box mr="2">
+            <Button size="xs" onClick={handleDelete} backgroundColor="#10bdd5" color="white">
+              삭제
+            </Button>
+          </Box>
+          <Box mr="4">
+            <Button
+              size="xs"
+              backgroundColor="#10bdd5"
+              color="white"
+              onClick={() => toast({ title: "리뷰 작성 준비중!", status: "info", duration: 3000, isClosable: true })}
+            >
+              리뷰작성
+            </Button>
+          </Box>
         </Box>
       )}
-
-      {/* 좋아요 및 즐겨찾기 버튼 (모든 사용자에게 보임) */}
       <Box display="flex" justifyContent="flex-end" mt="10px" mb="10px" mr="15px">
         <IconButton
           aria-label={isBookmarked ? "Unbookmark" : "Bookmark"}
@@ -341,7 +337,7 @@ export const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({ writerId, memb
           marginRight="10px"
         />
         <IconButton
-          aria-label="Bookmark"
+          aria-label="Like"
           icon={<FaRegThumbsUp />}
           bg="primary"
           color="white"
