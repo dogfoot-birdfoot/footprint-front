@@ -1,4 +1,4 @@
-import OnOffSwitch from "@/components/switch/OnOffSwitch"
+import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 import React, { useState } from "react"
 import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button, useToast } from "@chakra-ui/react"
 

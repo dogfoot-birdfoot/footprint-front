@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar/NavBar"
 import Footer from "@/components/Footer/Footer"
 import { Divider } from "@chakra-ui/react"
 
-import { Content, LayoutWrapper } from "@/components/layout/Layout.style"
+import { Content, LayoutWrapper } from "@/components/Layout/Layout.style"
 
 import { Outlet } from "react-router"
 

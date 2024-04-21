@@ -7,7 +7,7 @@ import { Button } from "@chakra-ui/button"
 // component
 import { CardListBox } from "@/pages/MainPage/MainPage.style"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
-import ReviewCardItem from "@/components/card/ReviewCardItem"
+import ReviewCardItem from "@/components/Card/ReviewCardItem"
 import { Box, Heading, Text } from "@chakra-ui/react"
 
 // custom hook
