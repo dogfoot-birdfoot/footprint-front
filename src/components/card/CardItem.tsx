@@ -50,7 +50,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
 
 const CardItem: React.FC<CardItemProps> = ({
   title,
-  id,
+
   createdAt,
   dates,
   bookMarkCount,
@@ -69,11 +69,18 @@ const CardItem: React.FC<CardItemProps> = ({
   const days = nights + 1
   const stayDuration = `${nights}박 ${days}일`
 
-  const formatDate = (dateString: string | number | Date) => {
-    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "2-digit", day: "2-digit" }
-    return new Date(dateString).toLocaleDateString("ko-KR", options)
+  const formatDate = (date: string | number | Date) => {
+    return new Date(date)
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      })
+      .replace(/\. /g, "-")
+      .replace(/\./, "") // 점과 공백을 대시로 대체
   }
 
+  const currentDateString = formatDate(new Date()) // 현재 날짜를 문자열로 포맷
   return (
     <Card maxW="xs" marginLeft="10px" marginBottom="10px">
       <CardBody>
@@ -99,14 +106,6 @@ const CardItem: React.FC<CardItemProps> = ({
             </Box>
             {/* path name에 따라 동적으로 노출 */}
             <Box display="flex" gap="2">
-              {/* 엔드포인트가 'schedule_share' 이거나 경로에 아무 것도 없을 때 '즐겨찾기' 배지 표시 */}
-              {(path.includes("schedule_share") || path === "/") && (
-                <Badge borderRadius="10px" colorScheme="red" minWidth="50px">
-                  즐겨찾기 {bookMarkCount}
-                </Badge>
-              )}
-
-              {/* 엔드포인트가 'schedule_share', 'review_share', 또는 경로에 아무 것도 없을 때 '좋아요' 배지 표시 */}
               {(path.includes("schedule_share") || path.includes("review_share") || path === "/") && (
                 <Text color="red" fontSize={"20px"} display="inline-block">
                   ♥ {likeCount}
@@ -123,7 +122,7 @@ const CardItem: React.FC<CardItemProps> = ({
           </Heading>
           <Box textAlign="left">
             <Text color="gray.500" fontSize="9px" mb="-2" mt="-1">
-              작성일자 : {formatDate(createdAt)}
+              작성일자 : {formatDate(currentDateString)}
             </Text>
           </Box>
         </Stack>

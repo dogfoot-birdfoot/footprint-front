@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import CardItem from "@/components/Card/CardItem"
-import { Menu, MenuButton, MenuItem, MenuList, MenuGroup } from "@chakra-ui/menu"
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"
 import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
-import { SimpleGrid } from "@chakra-ui/react"
 import { Box } from "@chakra-ui/react"
 import useIntersectionObserver from "./useIntersectionObserver"
-import { Schedule, TravelPlan } from "./type"
+import { TravelPlan } from "./type"
 import { Link, useNavigate } from "react-router-dom"
 import { TbLoader } from "react-icons/tb"
 import getMemberId from "@/hooks/getMemberId"
@@ -32,18 +31,12 @@ const ScheduleSharePage = () => {
     fetchPlans()
   }, [])
 
-  const handleCardClick = (id: number) => {
-    // id 타입을 number로 명시합니다.
-    if (id !== undefined) {
-      navigate(`/schedule_share_detail/${id}`)
-    }
-  }
-  // 카드에 대한 상태 저장
-  const [cardLists, setCardLists] = useState<string[][]>([
-    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
-    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
-    ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
-  ])
+  // // 카드에 대한 상태 저장
+  // const [cardLists, setCardLists] = useState<string[][]>([
+  //   ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
+  //   ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"],
+  //   ["/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail", "/schedule_share_detail"]
+  // ])
 
   const [data, target, hasNextPage] = useIntersectionObserver()
 
@@ -95,8 +88,8 @@ const ScheduleSharePage = () => {
 
       <CardListBox>
         {data &&
-          data.pages.map((page, pageIndex) => {
-            return page?.map((schedule: TravelPlan, itemIndex: number) => {
+          data.pages.map(page => {
+            return page?.map((schedule: TravelPlan) => {
               return selectedItem === "전국" || selectedItem === schedule.region ? (
                 <Link key={schedule.id} to={`/schedule_share_detail/${schedule.id}`}>
                   <CardItem
