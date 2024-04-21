@@ -1,6 +1,6 @@
 import { CiStar } from "react-icons/ci"
 import { Favorite, FavoriteList, FavoriteTitle, ListBox, ViewAllButton } from "@/pages/MyPage/Favorite/MyFavorite.style"
-import CardItem from "@/components/Card/CardItem"
+import CardItem from "@/components/card/CardItem"
 
 const MyFavorite = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { OnOffSwitchProps } from "@/components/Switch/type"
+import { OnOffSwitchProps } from "@/components/switch/type"
 import { Switch } from "@chakra-ui/react"
 
 const OnOffSwitch: React.FC<OnOffSwitchProps> = ({ onText, offText, booleanState, setBooleanState }) => {

@@ -1,4 +1,4 @@
-import ReviewCardItem from "@/components/Card/ReviewCardItem"
+import ReviewCardItem from "@/components/card/ReviewCardItem"
 import { useQuery } from "@tanstack/react-query"
 import { MdOutlineRateReview } from "react-icons/md"
 import { Link } from "react-router-dom"

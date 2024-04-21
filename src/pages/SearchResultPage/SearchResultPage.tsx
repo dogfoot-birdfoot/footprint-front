@@ -1,13 +1,13 @@
 import { Avatar, Badge, Box, Card, CardBody, Heading, Image, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import React, { useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { ImageContainer, PositionedAvatar } from "@/components/Card/CardItem.style"
+import { ImageContainer, PositionedAvatar } from "@/components/card/CardItem.style"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import { CardListBox } from "../MainPage/MainPage.style"
-import ReviewCardItem from "@/components/Card/ReviewCardItem"
+import ReviewCardItem from "@/components/card/ReviewCardItem"
 import { TravelPlan } from "../ScheduleSharePage/type"
-import CardItem from "@/components/Card/CardItem"
+import CardItem from "@/components/card/CardItem"
 import getMemberId from "@/hooks/getMemberId"
 
 const SearchResultsPage: React.FC = () => {

@@ -4,7 +4,7 @@ import { Box, Divider, Text } from "@chakra-ui/react"
 import { BannerStyle, CardListBox, Title, TitleBox, TypingText } from "./MainPage.style"
 import ReviewsGallery from "./ReviewsGallery"
 import { ReviewTitle } from "./ReviewGallery.style"
-import CardItem from "@/components/Card/CardItem"
+import CardItem from "@/components/card/CardItem"
 import { useNavigate } from "react-router-dom"
 import { Schedule } from "./type"
 

@@ -1,7 +1,7 @@
 import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
-import OnOffSwitch from "@/components/Switch/OnOffSwitch"
+import OnOffSwitch from "@/components/switch/OnOffSwitch"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 import { AddPostProps } from "./type"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
