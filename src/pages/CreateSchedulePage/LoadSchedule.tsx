@@ -24,8 +24,8 @@ const LoadSchedule: React.FC<LoadScheduleProps> = ({ activeIndex }) => {
   const sampleObject: placeObject = {
     kakaoPlaceId: "sampleId",
     placeName: "Sample Place",
-    latitude: 123.456,
-    longitude: 789.123,
+    latitude: "123.456",
+    longitude: "789.123",
     address: "Sample Address",
     placeDetails: {
       memo: "Sample Memo",

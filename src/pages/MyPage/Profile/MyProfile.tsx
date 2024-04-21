@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query"
 
 const MyProfile = () => {
   const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
+  const email = getEmail()
   const nickname: string | undefined = localStorage.getItem("nickname") ?? undefined
   const { data: Reviews } = useQuery<any>({ queryKey: ["myReviews"] })
   const { data: MyLikeReviews } = useQuery<any>({ queryKey: ["myLikeReviews"] })
@@ -42,7 +43,7 @@ const MyProfile = () => {
       {/* Profile Body */}
       <ProfileContent>
         <ContentHeader>이메일</ContentHeader>
-        <ContentBody>{getEmail()}</ContentBody>
+        <ContentBody>{email}</ContentBody>
       </ProfileContent>
       <ProfileContent>
         <ContentHeader>닉네임</ContentHeader>
