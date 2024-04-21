@@ -122,6 +122,7 @@ const CardItem: React.FC<CardItemProps> = ({
           </Heading>
           <Box textAlign="left">
             <Text color="gray.500" fontSize="9px" mb="-2" mt="-1">
+              {/* 현재시점으로 생성 */}
               작성일자 : {formatDate(currentDateString)}
             </Text>
           </Box>
