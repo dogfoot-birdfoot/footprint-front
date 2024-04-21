@@ -1,11 +1,10 @@
-import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useQuery, useToast } from "@chakra-ui/react"
+import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
-import DropDownCheckBox from "@/components/DropDownButton/DropDownCheckBox"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 import { AddPostProps } from "./type"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
 import { useNavigate } from "react-router-dom"
@@ -25,19 +24,25 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
   const [title, setTitle] = useState<string>("")
   const [content, setContent] = useState<string>("")
   const [visiblePost, setVisiblePost] = useState<boolean>(true)
+  const [planId, setPlanId] = useState<number>(-1)
 
-  const scheduleContents = ["일정 1", "일정 2", "일정 3", "일정 4", "일정 5", "일정 6"]
-
-  // React-Query
-  const queryClient = useQueryClient()
-  const mutation = useMutation({
-    mutationFn: ReviewPost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews"] })
-      setTitle("")
-      setContent("")
+  async function getBookmarkSchedule() {
+    try {
+      const data = await useCustomFetch(
+        `${process.env.REACT_APP_API_URL}/api/my/plans?page=0&size=10&sort=id,desc`,
+        {}
+      ).then(response => response)
+      if (!data.ok) {
+        throw new Error("Data Loading Error")
+      }
+      const jsonData = await data.json()
+      console.log(jsonData.data)
+      return jsonData.data
+    } catch (error) {
+      alert("잘못된 접근입니다. 메인페이지로 이동합니다.")
+      navigate("/")
     }
-  })
+  }
 
   async function ReviewPost() {
     try {
@@ -68,26 +73,40 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           })
       }
 
+      // 일정을 선택했다면 body 바꾸기
+      const requestBody =
+        planId !== -1
+          ? {
+              memberId: memberId,
+              planId: planId,
+              title: title,
+              content: content,
+              region: "서울",
+              visible: visiblePost,
+              imageIds: imageIds
+            }
+          : {
+              memberId: memberId,
+              title: title,
+              content: content,
+              region: "서울",
+              visible: visiblePost,
+              imageIds: imageIds
+            }
+
       // 반환된 imageIds를 이용해 POST
       const response = await useCustomFetch(`${process.env.REACT_APP_API_URL}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          memberId: memberId,
-          planId: 2,
-          title: title,
-          content: content,
-          region: "서울",
-          visible: visiblePost,
-          imageIds: imageIds
-        })
+        body: JSON.stringify(requestBody)
       })
 
       if (!response.ok) {
         throw new Error("Review not Registered.")
       }
+
       toast({
         title: "리뷰가 등록되었습니다.",
         description: "리뷰가 정상적으로 등록되었습니다.",
@@ -110,6 +129,21 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
       })
     }
   }
+
+  // React-Query
+  const queryClient = useQueryClient()
+
+  const bookmarkSchedule = useQuery({ queryKey: ["bookmarkSchedule"], queryFn: getBookmarkSchedule })
+  const mutation = useMutation({
+    mutationFn: ReviewPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      setTitle("")
+      setContent("")
+    }
+  })
+
+  console.log(bookmarkSchedule?.data?.content)
 
   return (
     <Box display="flex" flexWrap="wrap" justifyContent="center">
@@ -148,7 +182,16 @@ const AddPost: React.FC<AddPostProps> = ({ sources, previewImages }) => {
           <Box mr="20px">
             <OnOffSwitch onText="공개" offText="" booleanState={visiblePost} setBooleanState={setVisiblePost} />
           </Box>
-          <DropDownRadioBox title="내 일정과 연결" contents={scheduleContents} />
+          {bookmarkSchedule?.data?.content.length !== 0 ? (
+            <DropDownRadioBox
+              title="내 일정과 연결"
+              contents={bookmarkSchedule?.data?.content}
+              planId={planId}
+              setPlanId={setPlanId}
+            />
+          ) : (
+            <Box></Box>
+          )}
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%">

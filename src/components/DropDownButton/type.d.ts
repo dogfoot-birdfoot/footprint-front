@@ -1,3 +1,5 @@
+import { TravelPlan } from "@/pages/ScheduleSharePage/type"
+
 export interface DropDownButtonProps {
   title: string
   contents: string[][]
@@ -10,5 +12,7 @@ export interface DropDownCheckBoxProps {
 
 export interface DropDownRadioBoxProps {
   title: string
-  contents: string[]
+  contents: TravelPlan[]
+  planId: number
+  setPlanId: React.Dispatch<React.SetStateAction<number>>
 }
