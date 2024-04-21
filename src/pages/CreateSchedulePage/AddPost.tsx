@@ -1,5 +1,5 @@
 import OnOffSwitch from "@/components/Switch/OnOffSwitch"
-import React from "react"
+import React, { useState } from "react"
 import { Box, Heading, Input, Text, Tag, useColorModeValue, SimpleGrid, Button, useToast } from "@chakra-ui/react"
 
 // Recoil
@@ -13,9 +13,10 @@ import {
   copyAllowedState,
   scheduleState,
   selectedTagsState,
-  placesByDateState
+  placesByDateState,
+  allDates
 } from "@/hooks/atom"
-import { useNavigate } from "react-router-dom"
+import { redirect, useNavigate } from "react-router-dom"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
 
@@ -59,76 +60,38 @@ const AddPost: React.FC = () => {
   const resetVisible = useResetRecoilState(visibleState)
   const resetCopyAllowed = useResetRecoilState(copyAllowedState)
   const resetSchedules = useResetRecoilState(scheduleState)
-
+  const resetPlacesByDate = useResetRecoilState(placesByDateState)
+  const resetAllDates = useResetRecoilState(allDates)
   const tagBg = useColorModeValue("gray.500", "gray.500")
   const selectedTagBg = useColorModeValue("primary", "primary")
 
+  const [showConfirmation, setShowConfirmation] = useState(false)
+
   const handleSubmit = async () => {
-    const tags = Object.entries(selectedTags)
-      .filter(([_, isSelected]) => isSelected)
-      .map(([tag]) => tag)
+    // 사용자에게 확인 대화 상자 표시
+    setShowConfirmation(true)
+  }
 
-    const formattedSchedules = Object.values(placesByDate || {}).map((places, index) => ({
-      day: index + 1,
-      places: places.map(place => ({
-        kakaoPlaceId: place.kakaoPlaceId || "defaultId", // 필요시 kakaoPlaceId 추가
-        placeName: place.placeName,
-        latitude: place.latitude,
-        longitude: place.longitude,
-        address: place.address,
-        placeDetails: {
-          // 배열에서 객체로 변환
-          memo: place.placeDetails.memo || "",
-          cost: place.placeDetails.cost || 0,
-          visitTime: place.placeDetails.visitTime || ""
-        }
-      }))
-    }))
+  // 확인 대화 상자에서 확인을 클릭한 경우
+  const handleConfirmSubmit = async () => {
+    // 확인 대화 상자를 닫음
+    setShowConfirmation(false)
 
-    const totalCost = formattedSchedules.reduce((total, day) => {
-      return total + day.places.reduce((dayTotal, place) => dayTotal + place.placeDetails.cost, 0)
-    }, 0)
-
-    const data = {
-      title,
-      startDate: fromDate,
-      endDate: toDate,
-      region: regions.join(", "),
-      totalCost, // totalCost 추가
-      visible,
-      copyAllowed,
-      schedules: formattedSchedules,
-      tags
-    }
-
-    console.log("Sending the following data to the server:", data) // 로그 출력
+    // 데이터 제출
     try {
-      // useCustomFetch를 사용하여 데이터를 서버에 전송
-
-      const response = await customFetch(`${process.env.REACT_APP_API_URL}/api/plans?memberId=${memberId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to create schedule")
-      }
-
-      const responseData = await response.json()
-      console.log("Schedule created successfully", responseData)
-      toast({
-        title: "여행 일정 생성 성공",
-        description: "여행 일정이 성공적으로 생성되었습니다.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top"
-      })
-
-      // state 초기화 코드
+      // 데이터 전송 로직
+      resetTitle()
+      resetFromDate()
+      resetToDate()
+      resetRegions()
+      resetVisible()
+      resetCopyAllowed()
+      resetSchedules()
+      resetPlacesByDate()
+      resetAllDates()
+      setSelectedTags({})
+      // 추가적인 Recoil 상태 초기화
+      window.location.reload()
     } catch (error) {
       console.error("Failed to create schedule", error)
       toast({
@@ -140,6 +103,11 @@ const AddPost: React.FC = () => {
         position: "top"
       })
     }
+  }
+
+  // 확인 대화 상자에서 취소를 클릭한 경우
+  const handleCancelSubmit = () => {
+    setShowConfirmation(false)
   }
 
   // 태그 클릭 핸들러 함수
@@ -230,6 +198,30 @@ const AddPost: React.FC = () => {
           <Button onClick={() => navigate("/check")}>게시된 정보 조회</Button>
         </Box>
       </Box>
+      {/* 확인 대화 상자 */}
+      {showConfirmation && (
+        <Box position="fixed" top="0" left="0" width="100%" height="100%" bg="rgba(0, 0, 0, 0.5)" zIndex="9999">
+          <Box
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            bg="white"
+            p="4"
+            borderRadius="md"
+          >
+            <Text mb="2">여행 일정을 게시하시겠습니까?</Text>
+            <Box display="flex" justifyContent="space-between">
+              <Button colorScheme="green" onClick={handleConfirmSubmit}>
+                확인
+              </Button>
+              <Button colorScheme="red" onClick={handleCancelSubmit}>
+                취소
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      )}
     </>
   )
 }
