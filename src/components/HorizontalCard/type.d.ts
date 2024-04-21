@@ -5,6 +5,7 @@ export interface CardInfoProps {
 }
 export interface HorizontalCardProps {
   scheduleDetails: ScheduleDetails
+  nickname?: string
   size: string
 }
 export interface ScheduleDay {
@@ -13,6 +14,7 @@ export interface ScheduleDay {
 }
 export interface ScheduleDetails {
   tags: string[]
+  nickname?: string
   title: string
   startDate: string
   endDate: string
@@ -26,4 +28,5 @@ export interface ScheduleDetails {
 
 export interface UserInfoProps {
   createdAtDate: Date
+  nickname?: string
 }

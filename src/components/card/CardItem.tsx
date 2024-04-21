@@ -50,7 +50,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ day, places }) => {
 
 const CardItem: React.FC<CardItemProps> = ({
   title,
-
+  nickname,
   createdAt,
   dates,
   bookMarkCount,
@@ -93,7 +93,7 @@ const CardItem: React.FC<CardItemProps> = ({
             </VStack>
 
             <PositionedAvatar>
-              <Avatar border="2px solid white" size="md" name={author} src="https://bit.ly/kent-c-dodds" />
+              <Avatar border="2px solid white" size="md" name={nickname} />
             </PositionedAvatar>
           </Box>
         </Box>

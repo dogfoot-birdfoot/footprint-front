@@ -72,13 +72,73 @@ const AddPost: React.FC = () => {
     setShowConfirmation(true)
   }
 
+  const tags = Object.entries(selectedTags)
+    .filter(([_, isSelected]) => isSelected)
+    .map(([tag]) => tag)
+
+  const formattedSchedules = Object.values(placesByDate || {}).map((places, index) => ({
+    day: index + 1,
+    places: places.map(place => ({
+      kakaoPlaceId: place.kakaoPlaceId || "defaultId", // 필요시 kakaoPlaceId 추가
+      placeName: place.placeName,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      address: place.address,
+      placeDetails: {
+        // 배열에서 객체로 변환
+        memo: place.placeDetails.memo || "",
+        cost: place.placeDetails.cost || 0,
+        visitTime: place.placeDetails.visitTime || ""
+      }
+    }))
+  }))
+
+  const totalCost = formattedSchedules.reduce((total, day) => {
+    return total + day.places.reduce((dayTotal, place) => dayTotal + place.placeDetails.cost, 0)
+  }, 0)
+
   // 확인 대화 상자에서 확인을 클릭한 경우
   const handleConfirmSubmit = async () => {
     // 확인 대화 상자를 닫음
     setShowConfirmation(false)
-
+    const data = {
+      title,
+      startDate: fromDate,
+      endDate: toDate,
+      region: regions.join(", "),
+      totalCost, // totalCost 추가
+      visible,
+      copyAllowed,
+      schedules: formattedSchedules,
+      tags
+    }
     // 데이터 제출
     try {
+      // useCustomFetch를 사용하여 데이터를 서버에 전송
+
+      const response = await customFetch(`${process.env.REACT_APP_API_URL}/api/plans?memberId=${memberId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to create schedule")
+      }
+
+      const responseData = await response.json()
+      console.log("Schedule created successfully", responseData)
+      toast({
+        title: "여행 일정 생성 성공",
+        description: "여행 일정이 성공적으로 생성되었습니다.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+
       // 데이터 전송 로직
       resetTitle()
       resetFromDate()

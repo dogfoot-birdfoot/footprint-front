@@ -35,6 +35,7 @@ const ReviewSharePage = () => {
                 <Link key={pageIndex.toString() + itemIndex.toString()} to={`/review/${item.reviewId}`}>
                   <ReviewCardItem
                     title={item.title}
+                    nickname={item.nickname}
                     memberId={item.memberId}
                     likes={item.likes}
                     createdAt={new Date(item.createdAt)}

@@ -112,6 +112,7 @@ const SearchResultsPage: React.FC = () => {
                 <Link key={itemIndex} to={`/review/${item.reviewId}`}>
                   <ReviewCardItem
                     title={item.title}
+                    nickname={item.nickname}
                     memberId={item.memberId}
                     likes={item.likes}
                     createdAt={new Date(item.createdAt)}

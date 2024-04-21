@@ -1,6 +1,7 @@
 type ReviewType = {
   title: string
   memberId: number
+  nickname: string
   reviewId: number
   likes: number
   createdAt: string

@@ -21,6 +21,7 @@ export interface ScheduleDay {
 
 export interface ScheduleDetails {
   tags: string[]
+  nickname?: string
   title: string
   startDate: string
   endDate: string

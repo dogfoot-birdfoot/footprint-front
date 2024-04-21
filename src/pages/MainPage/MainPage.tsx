@@ -58,6 +58,7 @@ const MainPage: React.FC = () => {
             <CardItem
               key={schedule.id}
               id={schedule.id}
+              nickname={schedule.nickname}
               title={schedule.title}
               dates={`${schedule.startDate} ~ ${schedule.endDate}`}
               bookMarkCount={schedule.bookMarkCount}
@@ -82,6 +83,7 @@ const MainPage: React.FC = () => {
             <CardItem
               id={schedule.id}
               title={schedule.title}
+              nickname={schedule.nickname}
               dates={`${schedule.startDate} ~ ${schedule.endDate}`}
               bookMarkCount={schedule.bookMarkCount}
               likeCount={schedule.likeCount}

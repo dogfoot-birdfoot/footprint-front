@@ -3,7 +3,14 @@ import { Avatar, Badge, Box, Card, CardBody, Flex, Heading, Image, Stack, Text }
 import { ImageContainer, PositionedAvatar } from "@/components/card/ReviewCardItem.style"
 import { ReviewCardItemProps } from "./type"
 
-const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes, createdAt, previewImage }) => {
+const ReviewCardItem: React.FC<ReviewCardItemProps> = ({
+  title,
+  memberId,
+  nickname,
+  likes,
+  createdAt,
+  previewImage
+}) => {
   const formattedDate = createdAt
     .toLocaleDateString("ko-KR", {
       year: "numeric",
@@ -30,7 +37,7 @@ const ReviewCardItem: React.FC<ReviewCardItemProps> = ({ title, memberId, likes,
                 height={"160px"}
               />
               <PositionedAvatar>
-                <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+                <Avatar border="2px solid white" size="md" name={nickname} />
               </PositionedAvatar>
             </ImageContainer>
           </Box>

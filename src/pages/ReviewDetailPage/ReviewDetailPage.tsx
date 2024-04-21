@@ -254,7 +254,7 @@ const ReviewDetailPage = () => {
                 </Flex>
               </Box>
 
-              <UserInfo createdAtDate={new Date(query?.data?.createdAt)} />
+              <UserInfo nickname={query?.data?.nickname} createdAtDate={new Date(query?.data?.createdAt)} />
             </Box>
           </Box>
         </Box>

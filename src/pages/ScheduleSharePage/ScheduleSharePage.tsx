@@ -87,6 +87,7 @@ const ScheduleSharePage = () => {
                   <CardItem
                     id={schedule.id}
                     title={schedule.title}
+                    nickname={schedule.nickname}
                     dates={`${schedule.startDate} ~ ${schedule.endDate}`}
                     bookMarkCount={schedule.bookMarkCount}
                     likeCount={schedule.likeCount}

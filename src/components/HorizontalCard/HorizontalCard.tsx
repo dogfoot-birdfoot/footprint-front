@@ -20,7 +20,7 @@ const shareScheduleWithKakao = () => {
   console.log("카카오톡으로 일정 공유하기")
 }
 
-export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, scheduleDetails }) => {
+export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, scheduleDetails, nickname }) => {
   const mlsize: string = size === "lg" ? "50px" : "10px"
   const numberWithCommas = (x: number): string => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -53,7 +53,7 @@ export const HorizontalCardContent: React.FC<HorizontalCardProps> = ({ size, sch
               <KakaoButton onClick={shareScheduleWithKakao}>카카오톡으로 일정 공유하기</KakaoButton>
             </Box>
             <TagBox>{scheduleDetails.tags && <TagStyle>{scheduleDetails.tags}</TagStyle>}</TagBox>
-            <UserInfo createdAtDate={new Date(scheduleDetails.createdAt)} />
+            <UserInfo nickname={nickname} createdAtDate={new Date(scheduleDetails.createdAt)} />
           </Box>
         </Box>
       </Box>
@@ -110,7 +110,7 @@ export const CardInfo: React.FC<CardInfoProps> = ({ ml_size, scheduleDetails }) 
     </>
   )
 }
-export const UserInfo: React.FC<UserInfoProps> = () => {
+export const UserInfo: React.FC<UserInfoProps> = ({ nickname }) => {
   const formatDate = (date: string | number | Date) => {
     return new Date(date)
       .toLocaleDateString("ko-KR", {
@@ -128,14 +128,14 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
       <Box mt="5">
         {/* 작성자 정보 같은 다른 정보도 이렇게 표시할 수 있습니다. */}
         <Text textAlign="end" color="gray.500" fontSize="10px" mr="5px">
-          UserNickName
+          {nickname}
         </Text>
         {/* 변환된 날짜 형식을 표시 */}
         <Text textAlign="end" color="gray.500" fontSize="9px" mr="5px">
           작성일자 : {formatDate(currentDateString)}
         </Text>
       </Box>
-      <Avatar border="2px solid white" size="md" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" mt="2" />
+      <Avatar border="2px solid white" size="md" name={nickname} mt="2" />
     </Box>
   )
 }
@@ -389,7 +389,7 @@ export const HorizontalCard: React.FC<HorizontalCardProps> = ({ scheduleDetails 
       overflow="hidden"
       variant="outline"
     >
-      <HorizontalCardContent size="lg" scheduleDetails={scheduleDetails} />
+      <HorizontalCardContent nickname={scheduleDetails.nickname} size="lg" scheduleDetails={scheduleDetails} />
       <ScheduleButtons writerId={writerId} memberId={memberId} />
     </Card>
   )

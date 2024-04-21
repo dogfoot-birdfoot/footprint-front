@@ -43,6 +43,7 @@ export interface Schedule {
 }
 export interface CardItemProps {
   id: number | undefined
+  nickname?: string
   title: string
   dates: string
   bookMarkCount: number
@@ -60,6 +61,7 @@ export interface TimelineItemProps {
 export interface TravelPlan {
   createdAt: string
   author: string
+  nickname?: string
   likeCount: number
   bookMarkCount: number
   id?: number

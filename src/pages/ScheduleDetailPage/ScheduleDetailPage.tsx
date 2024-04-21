@@ -63,7 +63,7 @@ const ScheduleDetailPage: React.FC = () => {
   return (
     <>
       <Box ml="100px" mb="30px">
-        <HorizontalCard size="lg" scheduleDetails={scheduleDetails} />
+        <HorizontalCard nickname={scheduleDetails.nickname} size="lg" scheduleDetails={scheduleDetails} />
         <DayTab
           destinations={scheduleDetails.schedules.map(schedule => schedule.places.map(place => place.placeName))}
           onTabClick={setSelectedTabIndex}
