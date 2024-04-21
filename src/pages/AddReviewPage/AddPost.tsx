@@ -1,7 +1,6 @@
 import { Box, Button, Editable, EditablePreview, EditableTextarea, Input, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ImageSlider } from "@/components/ImageSlider/ImageSlider"
-import OnOffSwitch from "@/components/switch/OnOffSwitch"
 import DropDownRadioBox from "@/components/DropDownButton/DropDownRadioBox"
 import { AddPostProps } from "./type"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
@@ -9,6 +8,7 @@ import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
 import { useNavigate } from "react-router-dom"
 import { durationTime } from "@/styles/config"
+import OnOffSwitch from "@/components/Switch/OnOffSwitch"
 
 const editableProps = {
   width: "320px",
