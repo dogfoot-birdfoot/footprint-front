@@ -79,10 +79,11 @@ const MyFavorite = () => {
         }
         setBookmarks(result.data.content)
       } catch (error) {
-        console.error("Failed to fetch bookmarks:", error)
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
+        console.error("Failed to fetch bookmarks:", errorMessage)
         toast({
           title: "Error fetching bookmarks",
-          description: error.message,
+          description: errorMessage,
           status: "error",
           duration: 5000,
           isClosable: true
@@ -91,7 +92,7 @@ const MyFavorite = () => {
     }
 
     fetchData()
-  }, [])
+  }, [toast])
 
   return (
     <Favorite>
