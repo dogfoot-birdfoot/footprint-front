@@ -63,50 +63,53 @@ const ScheduleDetailPage: React.FC = () => {
   return (
     <>
       <Box ml="100px" mb="30px">
-        <HorizontalCard nickname={scheduleDetails.nickname} size="lg" scheduleDetails={scheduleDetails} />
-        <DayTab
-          destinations={scheduleDetails?.schedules.map(schedule => schedule?.places?.map(place => place.placeName))}
-          onTabClick={setSelectedTabIndex}
-        />
+        {scheduleDetails && (
+          <>
+            <HorizontalCard nickname={scheduleDetails.nickname} size="lg" scheduleDetails={scheduleDetails} />
 
-        <Box display="flex" mt="-2" ml="600px">
-          <Box mt="-10">
-            <RouteMap
-              positions={scheduleDetails?.schedules[selectedTabIndex]?.places.map(place => ({
-                title: place.placeName,
-                latlng: new window.kakao.maps.LatLng(place.latitude, place.longitude)
-              }))}
+            <DayTab
+              destinations={scheduleDetails?.schedules.map(schedule => schedule?.places?.map(place => place.placeName))}
+              onTabClick={setSelectedTabIndex}
             />
-          </Box>
-        </Box>
-
-        <ScheduleDetailStyle>
-          {scheduleDetails?.schedules[selectedTabIndex]?.places.map((place, placeIndex) => (
-            <Box width="500px" mt="10px" key={placeIndex} ml="-10px">
-              <Card fontSize="15px" fontWeight="bold" ml="-10px">
-                <CardHeader>
-                  <Box display="flex" justifyContent="space-between">
-                    <Box display="flex">
-                      <IndexStyle>{placeIndex + 1}</IndexStyle>
-                      <Text>{place.placeName}</Text>
-                    </Box>
-                    <Text color="gray.500" fontSize="15px" ml="5px">
-                      도착 시간: {place.placeDetails.visitTime}
-                    </Text>
-                  </Box>
-                </CardHeader>
-                <CardBody display="flex" justifyContent="space-between">
-                  <Text color="gray.500" fontSize="15px" ml="5px">
-                    메모: {place.placeDetails.memo}
-                  </Text>
-                  <Text color="gray.500" fontSize="12px" ml="5px">
-                    예상 경비: {place.placeDetails.cost}원
-                  </Text>
-                </CardBody>
-              </Card>
+            <Box display="flex" mt="-2" ml="600px">
+              <Box mt="-10">
+                <RouteMap
+                  positions={scheduleDetails?.schedules[selectedTabIndex]?.places.map(place => ({
+                    title: place.placeName,
+                    latlng: new window.kakao.maps.LatLng(place.latitude, place.longitude)
+                  }))}
+                />
+              </Box>
             </Box>
-          ))}
-        </ScheduleDetailStyle>
+            <ScheduleDetailStyle>
+              {scheduleDetails?.schedules[selectedTabIndex]?.places.map((place, placeIndex) => (
+                <Box width="500px" mt="10px" key={placeIndex} ml="-10px">
+                  <Card fontSize="15px" fontWeight="bold" ml="-10px">
+                    <CardHeader>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display="flex">
+                          <IndexStyle>{placeIndex + 1}</IndexStyle>
+                          <Text>{place.placeName}</Text>
+                        </Box>
+                        <Text color="gray.500" fontSize="15px" ml="5px">
+                          도착 시간: {place.placeDetails.visitTime}
+                        </Text>
+                      </Box>
+                    </CardHeader>
+                    <CardBody display="flex" justifyContent="space-between">
+                      <Text color="gray.500" fontSize="15px" ml="5px">
+                        메모: {place.placeDetails.memo}
+                      </Text>
+                      <Text color="gray.500" fontSize="12px" ml="5px">
+                        예상 경비: {place.placeDetails.cost}원
+                      </Text>
+                    </CardBody>
+                  </Card>
+                </Box>
+              ))}
+            </ScheduleDetailStyle>
+          </>
+        )}
       </Box>
     </>
   )
