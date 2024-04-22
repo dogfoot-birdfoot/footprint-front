@@ -16,14 +16,26 @@
 ## 팀원 구성
 <div align="center">
      
-
+프론트엔드
 | **김주원** | **김은솔** |
 | :------: |  :------: |
 | [<img src="https://avatars.githubusercontent.com/u/86706630?v=4" height=150 width=150> <br/> @juwonk1018](https://github.com/juwonk1018) | [<img src="https://avatars.githubusercontent.com/u/148325314?v=4" height=150 width=150> <br/> @Rungjinuna](https://github.com/Rungjinuna) |
 
+
+백엔드
+| **강원빈** | **강화석** | **손승기** | **신서연** |
+| :------: |  :------: | :------: |  :------: |
+| [<img src="https://avatars.githubusercontent.com/u/151418023?v=4" height=150 width=150> <br/> @dev-len](https://github.com/dev-len) | [<img src="https://avatars.githubusercontent.com/u/93701776?v=4" height=150 width=150> <br/> @Tomorrow-hero](https://github.com/Tomorrow-hero) | [<img src="https://avatars.githubusercontent.com/u/124570553?v=4" height=150 width=150> <br/> @polar7bear](https://github.com/polar7bear) | [<img src="https://avatars.githubusercontent.com/u/47629804?v=4" height=150 width=150> <br/> @yeon-brown](https://github.com/yeon-brown) |
+
 </div>
 
 ## 1. 개발 환경 및 작업 관리
+
+#### Front-end : React, Typescript, React-query, Recoil, styled-components
+#### 협업 도구 : Confluence, Jira, Github
+#### 디자인 : [Figma](https://www.figma.com/file/1vW1WGiyRi3QVP5RfYi8PT/%EC%97%AC%ED%96%89%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98?type=design&node-id=0-1&mode=design&t=ptdWWcXEpRvpnVy3-0)
+
+<img width="567" alt="image" src="https://github.com/dogfoot-birdfoot/footprint-front/assets/86706630/49b44998-3440-4331-ae1f-b7b2651b4049">
 
 ## 2. 기술 및 브랜치 전략
 
@@ -81,3 +93,5 @@
            └── theme.ts
 ```
 ## 4. 역할 분담
+
+## 5. 서비스 기능
