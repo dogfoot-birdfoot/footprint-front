@@ -65,14 +65,14 @@ const ScheduleDetailPage: React.FC = () => {
       <Box ml="100px" mb="30px">
         <HorizontalCard nickname={scheduleDetails.nickname} size="lg" scheduleDetails={scheduleDetails} />
         <DayTab
-          destinations={scheduleDetails.schedules.map(schedule => schedule.places.map(place => place.placeName))}
+          destinations={scheduleDetails?.schedules.map(schedule => schedule?.places?.map(place => place.placeName))}
           onTabClick={setSelectedTabIndex}
         />
 
         <Box display="flex" mt="-2" ml="600px">
           <Box mt="-10">
             <RouteMap
-              positions={scheduleDetails.schedules[selectedTabIndex].places.map(place => ({
+              positions={scheduleDetails?.schedules[selectedTabIndex]?.places.map(place => ({
                 title: place.placeName,
                 latlng: new window.kakao.maps.LatLng(place.latitude, place.longitude)
               }))}
@@ -81,7 +81,7 @@ const ScheduleDetailPage: React.FC = () => {
         </Box>
 
         <ScheduleDetailStyle>
-          {scheduleDetails.schedules[selectedTabIndex].places.map((place, placeIndex) => (
+          {scheduleDetails?.schedules[selectedTabIndex]?.places.map((place, placeIndex) => (
             <Box width="500px" mt="10px" key={placeIndex} ml="-10px">
               <Card fontSize="15px" fontWeight="bold" ml="-10px">
                 <CardHeader>
