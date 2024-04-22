@@ -8,16 +8,14 @@ import {
   ProfileInformation,
   ProfileText,
   ProfileTitle,
-  RegisterDate,
   ReviewNumber
 } from "@/pages/MyPage/Profile/MyProfile.style"
 import { Avatar, Flex } from "@chakra-ui/react"
-import OnOffSwitch from "@/components/switch/OnOffSwitch"
 import getEmail from "@/hooks/getEmail"
 import { useQuery } from "@tanstack/react-query"
 
 const MyProfile = () => {
-  const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
+  // const [visibleProfile, setVisibleProfile] = useState<boolean>(false)
   const email = getEmail()
   const nickname: string | undefined = localStorage.getItem("nickname") ?? undefined
   const { data: Reviews } = useQuery<any>({ queryKey: ["myReviews"] })

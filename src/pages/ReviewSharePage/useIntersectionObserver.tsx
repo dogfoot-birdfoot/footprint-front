@@ -15,7 +15,7 @@ export default function useIntersectionObserver() {
     return data.content
   }
 
-  const { fetchNextPage, data, status, hasNextPage, isFetchingNextPage, isPending } = useInfiniteQuery({
+  const { fetchNextPage, data, hasNextPage } = useInfiniteQuery({
     queryKey: ["reviews"],
     initialPageParam: 0,
     queryFn: ({ pageParam }) => getReviews({ page: pageParam }),

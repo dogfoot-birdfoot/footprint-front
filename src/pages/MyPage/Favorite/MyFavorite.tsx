@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { Box, Button, Text, useToast, VStack, Icon, Divider, Card, SimpleGrid } from "@chakra-ui/react"
+import { Box, Button, Text, useToast, VStack, Icon, SimpleGrid } from "@chakra-ui/react"
 import { CiStar } from "react-icons/ci"
 import getMemberId from "@/hooks/getMemberId"
 import useCustomFetch from "@/hooks/useCustomFetch"
-import { Favorite, FavoriteList, FavoriteTitle, ListBox, ViewAllButton } from "@/pages/MyPage/Favorite/MyFavorite.style"
-import CardItem from "@/components/card/CardItem"
+import { Favorite, FavoriteTitle, ViewAllButton } from "@/pages/MyPage/Favorite/MyFavorite.style"
+
 // 즐겨찾기 항목의 타입 정의
 interface Bookmark {
   planId: number

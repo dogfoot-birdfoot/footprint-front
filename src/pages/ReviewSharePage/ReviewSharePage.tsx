@@ -1,12 +1,8 @@
 import React, { useState } from "react"
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
-import { FiChevronDown } from "react-icons/fi"
 import { TbLoader } from "react-icons/tb"
-import { Button } from "@chakra-ui/button"
 
 // component
 import { CardListBox } from "@/pages/MainPage/MainPage.style"
-import { SortButton } from "@/pages/ScheduleSharePage/ScheduleSharePage.style"
 import ReviewCardItem from "@/components/card/ReviewCardItem"
 import { Box, Heading, Text } from "@chakra-ui/react"
 
