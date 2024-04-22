@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import CardItem from "@/components/Card/CardItem"
+import CardItem from "@/components/card/CardItem"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { FiChevronDown } from "react-icons/fi"
 import { Button } from "@chakra-ui/button"

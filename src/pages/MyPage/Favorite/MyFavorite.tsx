@@ -4,7 +4,7 @@ import { CiStar } from "react-icons/ci"
 import getMemberId from "@/hooks/getMemberId"
 import useCustomFetch from "@/hooks/useCustomFetch"
 import { Favorite, FavoriteList, FavoriteTitle, ListBox, ViewAllButton } from "@/pages/MyPage/Favorite/MyFavorite.style"
-import CardItem from "@/components/Card/CardItem"
+import CardItem from "@/components/card/CardItem"
 // 즐겨찾기 항목의 타입 정의
 interface Bookmark {
   planId: number

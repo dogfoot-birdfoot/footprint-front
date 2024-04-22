@@ -8,7 +8,7 @@ import useCustomFetch from "@/hooks/useCustomFetch"
 import getMemberId from "@/hooks/getMemberId"
 import { useNavigate } from "react-router-dom"
 import { durationTime } from "@/styles/config"
-import OnOffSwitch from "@/components/Switch/OnOffSwitch"
+import OnOffSwitch from "@/components/switch/OnOffSwitch"
 
 const editableProps = {
   width: "320px",

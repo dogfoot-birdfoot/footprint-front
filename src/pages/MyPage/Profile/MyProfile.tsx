@@ -12,7 +12,7 @@ import {
   ReviewNumber
 } from "@/pages/MyPage/Profile/MyProfile.style"
 import { Avatar, Flex } from "@chakra-ui/react"
-import OnOffSwitch from "@/components/Switch/OnOffSwitch"
+import OnOffSwitch from "@/components/switch/OnOffSwitch"
 import getEmail from "@/hooks/getEmail"
 import { useQuery } from "@tanstack/react-query"
 

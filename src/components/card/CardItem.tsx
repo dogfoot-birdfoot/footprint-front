@@ -14,7 +14,7 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react"
-import { PositionedAvatar } from "@/components/Card/CardItem.style"
+import { PositionedAvatar } from "@/components/card/CardItem.style"
 import { useLocation } from "react-router-dom"
 import { MdPlace } from "react-icons/md"
 import { BsThreeDots } from "react-icons/bs"

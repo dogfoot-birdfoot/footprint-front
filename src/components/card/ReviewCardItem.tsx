@@ -1,6 +1,6 @@
 import React from "react"
 import { Avatar, Badge, Box, Card, CardBody, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react"
-import { ImageContainer, PositionedAvatar } from "@/components/Card/ReviewCardItem.style"
+import { ImageContainer, PositionedAvatar } from "@/components/card/ReviewCardItem.style"
 import { ReviewCardItemProps } from "@/components/Card/type"
 
 const ReviewCardItem: React.FC<ReviewCardItemProps> = ({

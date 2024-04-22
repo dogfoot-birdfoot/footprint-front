@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { Favorite, FavoriteList, FavoriteTitle } from "./MyReview.style"
 import Loading from "@/pages/LoadingPage/Loading"
 import { Box, Text } from "@chakra-ui/react"
-import ReviewCardItem from "@/components/Card/ReviewCardItem"
+import ReviewCardItem from "@/components/card/ReviewCardItem"
 
 const MyReview = () => {
   const { data: myReviews } = useQuery<any>({ queryKey: ["myReviews"] })
